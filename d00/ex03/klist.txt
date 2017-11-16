@@ -1,0 +1,5 @@
+Credentials cache: API:30268
+        Principal: bchan@42.US.ORG
+
+		  Issued                Expires               Principal
+		  Oct 23 13:27:53 2017  Oct 23 23:27:53 2017  krbtgt/42.US.ORG@42.US.ORG
