@@ -16,14 +16,14 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
 	char			*result;
 	unsigned int	i;
-	int				j;
+	size_t			j;
 
 	result = (char *)malloc(len + 1);
-	if (result)
+	if (s && result)
 	{
 		i = start;
 		j = 0;
-		while (j < (int)len)
+		while (j < len)
 		{
 			result[j] = s[i];
 			i++;

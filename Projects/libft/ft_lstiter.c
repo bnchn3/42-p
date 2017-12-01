@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/28 13:52:46 by bchan             #+#    #+#             */
-/*   Updated: 2017/11/30 13:02:37 by bchan            ###   ########.fr       */
+/*   Created: 2017/12/01 13:56:28 by bchan             #+#    #+#             */
+/*   Updated: 2017/12/01 13:59:22 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	char			*result;
-	unsigned int	i;
+	t_list	*list;
 
-	if (s && f)
+	while (lst)
 	{
-		i = 0;
-		result = (char *)malloc(ft_strlen(s) + 1);
-		while (s[i])
-		{
-			result[i] = f(i, s[i]);
-			i++;
-		}
-		result[i] = '\0';
-		return (result);
+		list = lst->next;
+		f(lst);
+		lst = list;
 	}
-	return (NULL);
 }

@@ -41,20 +41,24 @@ char			*ft_strtrim(char const *s)
 	int		i;
 	size_t	j;
 
-	result = (char *)malloc(ft_trimlen(s));
-	i = 0;
-	j = 0;
-	if (result)
+	if (s)
 	{
-		while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
-			i++;
-		while (j < ft_trimlen(s))
+		result = (char *)malloc(ft_trimlen(s));
+		i = 0;
+		j = 0;
+		if (result)
 		{
-			result[j] = s[i];
-			i++;
-			j++;
+			while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
+				i++;
+			while (j < ft_trimlen(s))
+			{
+				result[j] = s[i];
+				i++;
+				j++;
+			}
+			result[j] = '\0';
 		}
-		result[j] = '\0';
+		return (result);
 	}
-	return (result);
+	return (NULL);
 }

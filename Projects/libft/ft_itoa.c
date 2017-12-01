@@ -39,23 +39,22 @@ char			*ft_itoa(int n)
 	char	*result;
 	int		i;
 
-	result = (char *)malloc(ft_intlen(n) + 1);
+	result = ft_strnew(ft_intlen(n));
 	i = ft_intlen(n) - 1;
 	if (n == -2147483648)
-	{
-		result = "-2147483648";
-		return (result);
-	}
+		return ("-2147483648");
 	if (n < 0)
+	{
 		result[0] = '-';
+		n *= -1;
+	}
 	if (n == 0)
 		result = "0";
 	while (n != 0)
 	{
-		result[i] = n % 10;
+		result[i] = n % 10 + '0';
 		n /= 10;
 		i--;
 	}
-	result[ft_intlen(n)] = '\0';
 	return (result);
 }
