@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 13:59:35 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/01 14:54:31 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/05 14:48:18 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 		if (!newlist)
 			return (NULL);
 		newlist = f(newlist);
-		list = newlist->next;
+		list = newlist;
 		lst = lst->next;
 		while (lst)
 		{
-			list = ft_lstnew(lst->content, lst->content_size);
+			list->next = ft_lstnew(lst->content, lst->content_size);
 			if (!list)
 				return (NULL);
-			list = f(list);
+			list->next = f(list->next);
 			list = list->next;
 			lst = lst->next;
 		}

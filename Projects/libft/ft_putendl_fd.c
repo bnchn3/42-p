@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 11:40:29 by bchan             #+#    #+#             */
-/*   Updated: 2017/11/30 11:41:34 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/05 12:03:00 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_putendl_fd(char const *s, int fd)
 {
-	ft_putstr_fd(s, fd);
+	if (s)
+		ft_putstr_fd(s, fd);
 	ft_putchar_fd('\n', fd);
 }

@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 13:55:36 by bchan             #+#    #+#             */
-/*   Updated: 2017/11/30 12:58:36 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/05 12:00:06 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 size_t	ft_strlen(const char *s)
 {
-	int		i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
 		i++;
-	return ((size_t)i);
+	return (i);
 }
