@@ -17,9 +17,8 @@ t_btree	*btree_create_node(void *item)
 {
 	t_btree		*node;
 
-	btree = NULL;
-	node = (t_btree)malloc(sizeof(t_btree));
-	if (btree)
+	node = (t_btree *)malloc(sizeof(t_btree *));
+	if (node)
 	{
 		node->left = NULL;
 		node->right = NULL;
