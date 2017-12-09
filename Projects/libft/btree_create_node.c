@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_btree.h"
-#include <stdlib.h>
+#include "libft.h"
 
-t_btree	*btree_create_node(void *item)
+t_btree	*ft_btree_create_node(void *item)
 {
 	t_btree		*node;
 

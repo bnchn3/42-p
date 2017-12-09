@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   btree_create_node.c                                :+:      :+:    :+:   */
+/*   btree_search_item.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/10 11:02:13 by bchan             #+#    #+#             */
-/*   Updated: 2017/11/10 11:06:40 by bchan            ###   ########.fr       */
+/*   Created: 2017/11/10 11:53:17 by bchan             #+#    #+#             */
+/*   Updated: 2017/11/10 11:58:39 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_btree.h"
-#include <stdlib.h>
+#include "libft.h"
 
-t_btree	*btree_create_node(void *item)
+void	*ft_btree_search_item(t_btree *root, void *data_ref,
+		int (*cmpf)(void *, void *))
 {
-	t_btree		*node;
-
-	node = (t_btree *)malloc(sizeof(t_btree *));
-	if (node)
+	if (root)
 	{
-		node->left = NULL;
-		node->right = NULL;
-		node->item = item;
+		ft_btree_search_item(root->left, data_ref, cmpf);
+		if (cmpf(data_ref, root->item) == 0)
+			return (root);
+		ft_btree_search_item(root->right, data_ref, cmpf);
 	}
-	return (node);
+	return (0);
 }
