@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 11:25:19 by bchan             #+#    #+#             */
-/*   Updated: 2017/11/30 13:01:17 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/09 12:57:08 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static size_t	ft_intlen(int n)
 	size_t	len;
 
 	len = 0;
-	if (n < 0)
-		len++;
-	if (n == -2147483648 || n == 2147483647)
+	if (n == -2147483648)
 	{
-		len += 10;
+		len += 11;
 		return (len);
 	}
+	if (n < 0)
+		len++;
 	if (n == 0)
 		return (len + 1);
 	while (n != 0)
@@ -34,27 +34,45 @@ static size_t	ft_intlen(int n)
 	return (len);
 }
 
+static char		*ft_intmin(char *result)
+{
+	result[0] = '-';
+	result[1] = '2';
+	result[2] = '1';
+	result[3] = '4';
+	result[4] = '7';
+	result[5] = '4';
+	result[6] = '8';
+	result[7] = '3';
+	result[8] = '6';
+	result[9] = '4';
+	result[10] = '8';
+	return (result);
+}
+
 char			*ft_itoa(int n)
 {
 	char	*result;
 	int		i;
 
-	result = ft_strnew(ft_intlen(n));
-	i = ft_intlen(n) - 1;
-	if (n == -2147483648)
-		return ("-2147483648");
-	if (n < 0)
+	result = (char *)ft_strnew(ft_intlen(n));
+	if (result)
 	{
-		result[0] = '-';
-		n *= -1;
-	}
-	if (n == 0)
-		result = "0";
-	while (n != 0)
-	{
-		result[i] = n % 10 + '0';
-		n /= 10;
-		i--;
+		i = ft_intlen(n) - 1;
+		if (n == -2147483648)
+			result = ft_intmin(result);
+		else if (n < 0)
+		{
+			result[0] = '-';
+			n *= -1;
+		}
+		else if (n == 0)
+			result[0] = '0';
+		while (n != 0 && n != -2147483648)
+		{
+			result[i--] = n % 10 + '0';
+			n /= 10;
+		}
 	}
 	return (result);
 }

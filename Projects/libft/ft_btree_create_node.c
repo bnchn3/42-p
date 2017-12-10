@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   btree_create_node.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/28 14:31:02 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/07 10:59:21 by bchan            ###   ########.fr       */
+/*   Created: 2017/11/10 11:02:13 by bchan             #+#    #+#             */
+/*   Updated: 2017/11/10 11:06:40 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+t_btree	*ft_btree_create_node(void *item)
 {
-	char			*result;
-	unsigned int	i;
-	size_t			j;
+	t_btree		*node;
 
-	result = (char *)malloc(len + 1);
-	if (s && result)
+	node = (t_btree *)malloc(sizeof(t_btree *));
+	if (node)
 	{
-		i = start;
-		j = 0;
-		while (j < len)
-		{
-			result[j] = s[i];
-			i++;
-			j++;
-		}
-		result[j] = '\0';
-		return (result);
+		node->left = NULL;
+		node->right = NULL;
+		node->item = item;
 	}
-	return (NULL);
+	return (node);
 }

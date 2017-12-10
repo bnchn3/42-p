@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:46:42 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/05 14:18:56 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/07 11:47:11 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char			*ft_strtrim(char const *s)
 
 	if (s)
 	{
-		result = (char *)malloc(ft_trimlen(s));
+		result = (char *)malloc(ft_trimlen(s) + 1);
 		i = 0;
 		j = 0;
 		if (result)

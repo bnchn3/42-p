@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 11:17:01 by bchan             #+#    #+#             */
-/*   Updated: 2017/11/30 12:54:19 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/07 14:55:40 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ static int		ft_wordcount(char const *s, char c)
 	int		wordcount;
 	int		sym;
 
-	i = 0;
+	i = -1;
 	wordcount = 0;
-	while (s[i])
+	if (!s)
+		return (-2);
+	while (s[++i])
 	{
 		while (s[i] != c && s[i])
 		{
@@ -47,7 +49,6 @@ static int		ft_wordcount(char const *s, char c)
 				wordcount++;
 				sym = 0;
 			}
-			i++;
 		}
 	}
 	return (wordcount);

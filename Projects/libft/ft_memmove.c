@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 13:30:35 by bchan             #+#    #+#             */
-/*   Updated: 2017/11/30 13:51:28 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/07 12:22:38 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,22 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char		*temp;
 	size_t		i;
-	char		*ptr;
-	char		*ptr2;
+	char		*dest;
+	char		*sour;
 
-	temp = (char *)malloc(len);
-	ptr = (char *)dst;
-	ptr2 = (char *)src;
-	i = 0;
-	while (i < len)
+	if (!((int *)dst > (int *)src && (int *)src + len > (int *)dst))
+		ft_memcpy(dst, src, len);
+	else
 	{
-		temp[i] = ptr2[i];
-		i++;
+		i = len;
+		dest = (char *)dst;
+		sour = (char *)src;
+		while (i > 0)
+		{
+			i--;
+			dest[i] = sour[i];
+		}
 	}
-	i = 0;
-	while (i < len)
-	{
-		ptr[i] = temp[i];
-		i++;
-	}
-	free(temp);
 	return (dst);
 }

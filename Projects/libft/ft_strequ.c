@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:03:57 by bchan             #+#    #+#             */
-/*   Updated: 2017/11/28 14:07:41 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/07 12:51:46 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 int		ft_strequ(char const *s1, char const *s2)
 {
-	if (ft_strcmp(s1, s2) == 0)
+	if (s1 && s2)
+	{
+		if (ft_strcmp(s1, s2) == 0)
+			return (1);
+	}
+	if (!s1 && !s2)
 		return (1);
 	return (0);
 }

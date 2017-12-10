@@ -1,36 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   btree_insert_data.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/28 14:31:02 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/07 10:59:21 by bchan            ###   ########.fr       */
+/*   Created: 2017/11/10 11:34:56 by bchan             #+#    #+#             */
+/*   Updated: 2017/11/10 11:52:27 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+void	ft_btree_insert_data(t_btree **root, void *item,
+		int (*cmpf)(void *, void *))
 {
-	char			*result;
-	unsigned int	i;
-	size_t			j;
-
-	result = (char *)malloc(len + 1);
-	if (s && result)
-	{
-		i = start;
-		j = 0;
-		while (j < len)
-		{
-			result[j] = s[i];
-			i++;
-			j++;
-		}
-		result[j] = '\0';
-		return (result);
-	}
-	return (NULL);
+	if (*root == 0)
+		*root = ft_btree_create_node(item);
+	else if (cmpf(item, (*root)->item) < 0)
+		ft_btree_insert_data(&(*root)->left, item, cmpf);
+	else if (cmpf(item, (*root)->item) >= 0)
+		ft_btree_insert_data(&(*root)->right, item, cmpf);
 }

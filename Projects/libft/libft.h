@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 13:11:54 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/01 15:00:20 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/09 12:35:08 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,15 @@ void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-t_btree			*ft_btree_create_node(void *item);
-void 				ft_btree_apply_infix(t_btree *root, void (*applyf)(void *));
-void				ft_btree_apply_prefix(t_btree *root, void (*applyf)(void *));
-void				ft_btree_apply_suffix(t_btree *root, void (*applyf)(void *));
+t_btree				*ft_btree_create_node(void *item);
+void				ft_btree_apply_infix(t_btree *root, void (*applyf)(void *));
+void				ft_btree_apply_prefix(t_btree *root, void
+									(*applyf)(void *));
+void				ft_btree_apply_suffix(t_btree *root, void
+									(*applyf)(void *));
 void				ft_btree_insert_data(t_btree **root, void *item,
 									int (*cmpf)(void *, void *));
 void				*ft_btree_search_item(t_btree *root, void *data_ref,
-									int (*cmpf)(void *, void *))									
+									int (*cmpf)(void *, void *));
 
 #endif
