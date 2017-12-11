@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   btree_create_node.c                                :+:      :+:    :+:   */
+/*   ft_btree_create_node.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 11:02:13 by bchan             #+#    #+#             */
-/*   Updated: 2017/11/10 11:06:40 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/11 11:23:36 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_btree	*ft_btree_create_node(void *item)
 {
 	t_btree		*node;
 
-	node = (t_btree *)malloc(sizeof(t_btree *));
+	node = (t_btree *)malloc(sizeof(t_btree));
 	if (node)
 	{
 		node->left = NULL;

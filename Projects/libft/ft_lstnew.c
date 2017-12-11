@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 13:36:46 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/07 15:01:36 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/11 11:23:19 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	{
 		if (content)
 		{
-			list->content = malloc(sizeof(void const *));
+			list->content = malloc(content_size);
 			if (!(list->content))
 				return (NULL);
 			ft_memcpy((list->content), content, content_size);
