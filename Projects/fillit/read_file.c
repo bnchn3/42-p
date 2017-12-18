@@ -6,15 +6,22 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 14:20:28 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/13 13:39:52 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/18 12:09:03 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <fcntl.h>
-#define BUF_SIZE 1
 
-static char	*copy_file(int fd, unsigned int buffer_size)
+/*
+** This function will go through the file indicated by fd and write the file
+** to a malloc'd string to be returned. This is done through a loop of read
+** and write commands that will go through the file until no bytes are left
+** to be read. The data is bounced between the temp and input strings in
+** order to use the least amount of allocated memory possible.
+*/
+
+char	*copy_file(int fd, unsigned int buffer_size)
 {
 	char			buffer[4096];
 	char			*temp;
@@ -42,60 +49,48 @@ static char	*copy_file(int fd, unsigned int buffer_size)
 	return (input);
 }
 
-static int	tetcount(char **tmp2)
+/*
+** This function will give the number of tetriminos to be solved. It takes
+** a single string (assumed to be valid) as input. It will first skip through
+** any leading newlines, then walk through the string and iterate a counter
+** when two consecutive newlines (denoting the end of a tetrimino) are
+** encountered.
+*/
+
+int		tetcount(char *tetri)
 {
 	int		i;
 	int		count;
 
 	i = 0;
 	count = 0;
-	while (tmp2[i][0] == '\0')
+	while (tetri[i] == '\n')
 		i++;
-	while (tmp2[i])
+	while (tetri[i])
 	{
-		if (tmp2[i][0] == '\0')
+		if (tetri[i] == '\n' && tetri[i - 1] == '\n')
 			count++;
 		i++;
 	}
-	return (count + 1);
+	return (count);
 }
 
-static char	***split_split(char **tmp2, char ***result)
-{
-	int		i;
-	int		j;
-	
-	i = 0;
-	j = 0;
-	while (tmp2[j][0] == '\0')
-		j++;
-	while (result[i] && tmp[j])
-	{
-		result[i] = &(tmp[j]);
-		i++;
-		while (tmp[j][0] != '\0')
-			j++;
-		j++;
-	}
-	return (result);
-}
+/*
+** This simple function just opens the file pointed at by the filename
+** given as a parameter. If the file is valid and there are no errors in
+** opening it, the copy_file function is called on to write the contents of
+** the file to the result string, which is then returned. If any errors
+** occurred in the opening or copying, NULL is returned.
+*/
 
-char		***read_file(char *str);
+char	*read_file(char *str)
 {
 	int		fd;
-	char	*tmp;
-	char	**tmp2;
-	char	***result;
+	char	*result;
 
 	result = NULL;
 	fd = open(str, O_RDONLY);
 	if (fd != -1)
-	{
-		tmp = copy_file(fd, 0);
-		tmp2 = ft_strsplit(tmp, '\n');
-		result = (char ***)malloc(sizeof(char **) * tetcount(tmp2));
-		result = split_split(tmp2, result);
-		free(tmp);
-	}
+		result = copy_file(fd, 0);
 	return (result);
 }

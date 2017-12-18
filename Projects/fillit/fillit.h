@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/11 14:03:29 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/15 15:49:08 by bchan            ###   ########.fr       */
+/*   Created: 2017/12/15 12:51:38 by bchan             #+#    #+#             */
+/*   Updated: 2017/12/16 11:23:24 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#ifndef FILLIT_H
+# define FILLIT_H
 
-int		main(int argc, char **argv)
+typedef struct		s_coor
 {
-	char	*tetri;
+	int				*row;
+	int				*col;
+}					t_coor;
 
-	if (argc != 2)
-		ft_putendl("usage: ./fillit file_name");
-	else
-	{
-		tetri = read_file(argv[1]);
-		if (!(check_file(tetri)) && !(are_blocks_connected(tetri)))
-			ft_putendl("error");
-		else
-			print_square(tetri);
-	}
-	return (0);
-}
+char				*read_file(char *str);
+int					tetcount(char *tetri);
+int					check_file(char *tetri);
+void				free_four(char **four_by_four)
+int					are_blocks_connected(char *tetri);
+#endif

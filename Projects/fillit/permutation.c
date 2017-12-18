@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   permutation.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/11 14:03:29 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/15 15:49:08 by bchan            ###   ########.fr       */
+/*   Created: 2017/12/18 13:57:25 by bchan             #+#    #+#             */
+/*   Updated: 2017/12/18 13:59:02 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		main(int argc, char **argv)
+void  twod_memcpy(char **dest, char **src, t_coor coor, char c)
 {
-	char	*tetri;
+	int i;
+	int j;
+	int x;
+	int y;
 
-	if (argc != 2)
-		ft_putendl("usage: ./fillit file_name");
-	else
+	i = 0;
+	x = coor->row;
+	y = coor->col;
+	while(src[i])
 	{
-		tetri = read_file(argv[1]);
-		if (!(check_file(tetri)) && !(are_blocks_connected(tetri)))
-			ft_putendl("error");
-		else
-			print_square(tetri);
+		j = 0;
+		while(src[i][j])
+		{
+			dest[x][y] = c;
+			y++;
+			j++;
+		}
+		x++;
+		i++;
 	}
-	return (0);
 }

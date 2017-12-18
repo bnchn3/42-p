@@ -6,49 +6,97 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 12:40:23 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/13 13:40:41 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/15 16:50:58 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static int	check_box(char ***tetri)
+int	char_check(char *tetrimino)
 {
-	int	i;
-	int	j;
-	int	k;
+	int		i;
 
 	i = 0;
-	while (tetri[i])
+	while (tetrimino[i])
 	{
-		j = 0;
-		while (tetri[i][j][0] != '\0')
+		if (tetrimino[i] != '\n' && tetrimino[i] != '#'
+				&& tetrimino[i] != '.')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	height_check(char *tetrimino)
+{
+	int	line_count;
+	int	i;
+
+	line_count = 0;
+	i = 0;
+	while (tetrimino[i])
+	{
+		if (tetrimino[i] == '\n')
+			line_count++;
+		i++;
+	}
+	if (line_count == 4)
+		return (1);
+	else
+		return (0);
+}
+
+int	width_check(char *tetrimino)
+{
+	int	width_count;
+	int	i;
+
+	width_count = 0;
+	i = 0;
+	while (tetrimino[i])
+	{
+		if (tetrimino[i] != '\n')
+			width_count++;
+		else
 		{
-			if (j > 3)
+			if (width_count != 4)
 				return (0);
-			k = 0;
-			while (tetri[i][j][k])
-			{
-				if (k > 3 || (tetri[i][j][k] != '.' && tetri[i][j][k] != '#'))
-					return (0);
-				k++;
-			}
-			j++;
+			else
+				width_count = 0;
 		}
 		i++;
 	}
 	return (1);
 }
 
-static int	check_tetri(char ***tetri)
+int	block_number_check(char *tetrimino)
 {
-	
+	int	block_count;
+	int	i;
 
-int			check_file(char ***tetri)
-{
-	if (check_box(tetri))
+	block_count = 0;
+	i = 0;
+	while (tetrimino[i])
+	{
+		if (tetrimino[i] == '#')
+			block_count++;
+		i++;
+	}
+	if (block_count != 4)
+		return (0);
+	else
 		return (1);
-	if (check_tetri(tetri))
+}
+
+int	check_file(char *tetri)
+{
+	if (char_check(tetri))
+		return (1);
+	if (height_check(tetri))
+		return (1);
+	if (width_check(tetri))
+		return (1);
+	if (block_number_check(tetri))
 		return (1);
 	return (0);
 }
