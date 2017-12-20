@@ -6,11 +6,40 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 12:56:15 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/18 14:09:03 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/19 16:50:16 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+/*
+** This function helps us recognize the '.' characters that we need to include
+** in the tetrimino we grab with pull_tetri.
+*/
+
+int			hashcount(char **tetri, int i, int j)
+{
+	int	count;
+
+	count = 0;
+	if (tetri[i + 1][j] == '#')
+		count++;
+	if (tetri[i - 1][j] == '#')
+		count++;
+	if (tetri[i][j - 1] == '#')
+		count++;
+	if (tetri[i][j + 1] == '#')
+		count++;
+	if (tetri[i + 1][j] == '.' && hashcount(tetri, i + 1, j) == 2)
+		count++;
+	if (tetri[i - 1][j] == '.' && hashcount(tetri, i - 1, j) == 2)
+		count++;
+	if (tetri[i][j - 1] == '.' && hashcount(tetri, i, j - 1) == 2)
+		count++;
+	if (tetri[i][j + 1] == '.' && hashcount(tetri, i, j + 1) == 2)
+		count++;
+	return (count);
+}
 
 /*
 ** This function will take a 2D array and a string, and copy only the 
@@ -20,7 +49,7 @@
 ** that result.
 */
 
-char		**pull_tetri(char **four_by_four, char *tmp)
+char		**pull_tetri(char **tetri, char *tmp)
 {
 	int		i;
 	int		j;
@@ -33,11 +62,10 @@ char		**pull_tetri(char **four_by_four, char *tmp)
 		j = 0;
 		while (j < 4)
 		{
-			if (four_by_four[i][j] == '#')
-			{
-				tmp[k] = '#';
-				k++;
-			}
+			if (tetri[i][j] == '.' && hashcount(tetri, i , j) == 2)
+				tmp[k++] = '.';
+			if (tetri[i][j] == '#')
+				tmp[k++] = '#';
 			j++;
 		}
 		if (tmp[k - 1] == '#')
@@ -99,6 +127,7 @@ char		**create_test(***tetrimino)
 	while(test[i])
 	{
 		test[i] = (char *)malloc(max_width(tetrimino) + 1);
+		test = (char *)ft_memset(test, '.', max_width(tetrimino));
 		test[max_width(tetrimino)] = '\0';
 		i++;
 	}
@@ -117,7 +146,7 @@ void		print_square(char *tetri)
 	{
 		order[tetcount(tetri)] = 0;
 		tetrimino = simplify_tetri(tetrimino, tetri);
-		printer(tetrimino);
+		printer(tetrimino, order);
 		i = 0;
 		while (tetrimino[i])
 		{
@@ -125,5 +154,6 @@ void		print_square(char *tetri)
 			i++;
 		}
 		free(tetrimino);
+		free(order);
 	}
 }
