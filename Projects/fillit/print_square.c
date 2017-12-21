@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 12:56:15 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/19 16:50:16 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/21 15:48:54 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,19 @@ char		***simplify_tetri(char ***tetrimino, char *tetri)
 ** every permutation possible.
 */
 
-char		**create_test(***tetrimino)
+char		**create_test(int x, int y)
 {
 	char	**test;
 	int		i;
 
-	test = (char **)malloc(sizeof(char *) * max_length(tetrimino) + 1);
-	test[max_length(tetrimino)] = NULL;
+	test = (char **)malloc(sizeof(char *) * x + 1);
+	test[x] = NULL;
 	i = 0;
 	while(test[i])
 	{
-		test[i] = (char *)malloc(max_width(tetrimino) + 1);
-		test = (char *)ft_memset(test, '.', max_width(tetrimino));
-		test[max_width(tetrimino)] = '\0';
+		test[i] = (char *)malloc(y + 1);
+		test = (char *)ft_memset(test, '.', y);
+		test[y] = '\0';
 		i++;
 	}
 	return (test);
@@ -140,11 +140,11 @@ void		print_square(char *tetri)
 	char	***tetrimino;
 	int		i;
 
-	order = (int *)malloc(sizeof(int) * tetcount(tetri) + 1);
+	order = (int *)malloc(sizeof(int) * tetcount(tetri) + 2);
 	tetrimino = (char ***)malloc(sizeof(char **) * tetcount(tetri) + 1);
 	if (tetrimino && order)
 	{
-		order[tetcount(tetri)] = 0;
+		order = create_order(order, tetcount(tetri));
 		tetrimino = simplify_tetri(tetrimino, tetri);
 		printer(tetrimino, order);
 		i = 0;

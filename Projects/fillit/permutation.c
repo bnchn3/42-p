@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 13:57:25 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/19 16:50:12 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/21 15:48:04 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,21 @@ void	twod_memcpy(char **dest, char **src, t_coor coor, char c)
 ** A simple function to malloc and initialize a t_coor struct.
 */
 
-t_coor	set_coor(int x, int y)
+t_coor	create_coor(void)
 {
 	t_coor	coor;
 
 	coor = (t_coor *)malloc(sizeof(t_coor));
+	if (coor)
+	{
+		coor->row = NULL;
+		coor->col = NULL;
+	}
+	return (coor);
+}
+
+t_coor	set_coor(t_coor coor, int x, int y)
+{
 	if (coor)
 	{
 		coor->row = x;
@@ -108,13 +118,13 @@ void	place_tetri(char **dest, char **src, t_coor coor, char c)
 		{
 			if (check_place(dest, src, i, j))
 			{
-				coor = set_coor(i, j);
+				coor = set_coor(coor, i, j);
 				twod_memcpy(dest, src, coor, c);
 				return ;
 			}
 			if (check_place(dest, src, j, i))
 			{
-				coor = set_coor(i, j);
+				coor = set_coor(coor, i, j);
 				twod_memcpy(dest, src, coor, c);
 				return ;
 			}
@@ -124,11 +134,135 @@ void	place_tetri(char **dest, char **src, t_coor coor, char c)
 	}
 }
 
-t_coor	test_perm(char ***tetrimino)
-
-void	printer(char ***tetrimino, order);
+int		perm_dimen(char **test)
 {
-	t_coor	coor;
-	t_coor	dimen;
+	int		i;
+	int		j;
+	int		count;
 
-	
+	i = 0;
+	count = 1;
+	while(test[i])
+	{
+		j = 0;
+		while(test[i][j])
+		{
+			if (test[i][j] != '.' && j > count - 1)
+				count = j + 1;
+			if (test[i][j] != '.' && i > count - 1)
+				count = i + 1;
+			j++;
+		}
+		i++;
+	}
+	return (count);
+}
+
+int		test_perm(char ***tetrimino, int *order, int dimen)
+{
+	int		i;
+	char	**test;
+	t_coor	coor;
+
+	i = 1;
+	test = create_test(max_length(tetrimino), max_width(tetrimino));
+	while(order[i] && test)
+	{
+		coor = create_coor();
+		place_tetri(test, tetrimino[order[i] - 1], coor, '#');
+		i++;
+	}
+	if (perm_dimen(test) < dimen)
+		dimen = perm_dimen(test);
+	free_four(test);
+	return (dimen);
+}
+
+int		*create_order(int *order, int count)
+{
+	int		i;
+	int		num;
+
+	i = 1;
+	num = 1;
+	order[0] = 104;
+	while(i < count)
+	{
+		order[i] = num;
+		num++;
+		i++;
+	}
+	order[i] = 0;
+	return (order);
+}
+
+void	swap(int *order, int i, int j)
+{
+	temp = order[i];
+	order[i] = order[j];
+	order[j] = temp;
+}
+
+int		*permute(char ***tetrimino, int *order, int start, int end)
+{
+	int	i;
+	int *temp;
+
+	i = start;
+	if (start == end)
+	{
+		if (test_perm(tetrimino, order, order[0]) < order[0])
+		{
+			order[0] = test_perm(tetrimino, order, order[0]);
+			return (order);
+		}
+		return (NULL);
+	}
+	while (i < end)
+	{
+		swap(order, start, i);
+		if (temp = permute(order, start + 1, end))
+			order = temp;
+		swap(order, start, i);
+		i++;
+	}
+	return (order);
+}
+
+void	final_print(char **final)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while(final[i])
+	{
+		j = 0;
+		while(final[i][j])
+		{
+			ft_putchar(final[i][j]);
+			j++;
+		}
+		ft_putchar('\n');
+		i++;
+	}
+}
+
+void	printer(char ***tetrimino, int *order);
+{
+	int 	i;
+	char	**final;
+	t_coor	coor;
+
+	i = 1;
+	order = permute(tetrimino, order, start, end);
+	final = create_test(order[0], order[0]);
+	while(order[i] && final)
+	{
+		coor = create_coor();
+		place_tetri(final, tetrimino[order[i] - 1], coor, i + 64);
+		i++;
+	}
+	final_print(final);
+	free_four(final);
+}
