@@ -104,7 +104,7 @@ char		***simplify_tetri(char ***tetrimino, char *tetri)
 		i += 4;
 		j++;
 	}
-	free_four(tmp2);
+	ft_memdel((void **)tmp2);
 	tetrimino[j] = NULL;
 	return (tetrimino);
 }
@@ -150,7 +150,7 @@ void		print_square(char *tetri)
 		i = 0;
 		while (tetrimino[i])
 		{
-			free_four(tetrimino[i]);
+			ft_memdel((void **)tetrimino[i]);
 			i++;
 		}
 		free(tetrimino);

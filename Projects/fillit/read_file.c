@@ -75,6 +75,23 @@ int		tetcount(char *tetri)
 	return (count);
 }
 
+int		check_file(char *file)
+{
+	if (check_characters(file) == 0)
+		return (0);
+	if (check_newlines(file) == 0)
+		return (0);
+	if (check_line_count(file) == -1)
+		return (0);
+	if (check_block_count(file) == 0)
+		return (0);
+	if (are_blocks_connected(file) == 0)
+		return (0);
+	if (check_width(file) == 0)
+		return (0);
+	return (1);
+}
+
 /*
 ** This simple function just opens the file pointed at by the filename
 ** given as a parameter. If the file is valid and there are no errors in

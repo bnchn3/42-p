@@ -174,7 +174,7 @@ int		test_perm(char ***tetrimino, int *order, int dimen)
 	}
 	if (perm_dimen(test) < dimen)
 		dimen = perm_dimen(test);
-	free_four(test);
+	ft_memdel((void **)test);
 	return (dimen);
 }
 
@@ -264,5 +264,5 @@ void	printer(char ***tetrimino, int *order);
 		i++;
 	}
 	final_print(final);
-	free_four(final);
+	ft_memdel((void **)final);
 }

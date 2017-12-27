@@ -12,6 +12,8 @@
 
 #ifndef FILLIT_H
 # define FILLIT_H
+# include "libft.h"
+# include <fcntl.h>
 
 typedef struct		s_coor
 {
@@ -20,8 +22,29 @@ typedef struct		s_coor
 }					t_coor;
 
 char				*read_file(char *str);
-int					tetcount(char *tetri);
-int					check_file(char *tetri);
-void				free_four(char **four_by_four)
-int					are_blocks_connected(char *tetri);
+int				tetcount(char *tetri);
+int				check_file(char *tetri);
+char				*copy_file(int fd, unsigned int buffer_size);
+int				are_blocks_connected(char *tetri);
+void				twod_memcpy(char **dest, char **src, t_coor coor, char c);
+t_coor				create_coor(void);
+t_coor				set_coor(t_coor coor, int x, int y);
+int				check_place(char **dest, char **src, int x, int y);
+void				place_tetri(char **dest, char **src, t_coor coor, char c);
+int				perm_dimen(char **test);
+int				test_perm(char ***tetrimino, int *order, int dimen);
+int				*create_order(int *order, int count);
+void				swap(int *order, int i, int j);
+int				*permute(char ***tetrimino, int *order, int start, int end);
+void				final_print(char **final);
+void				printer(char ***tetrimino, int *order);
+int				find_width(char **tetri);
+int				max_width(char ***tetri);
+int				find_length(char **tetri);
+int				max_length(char ***tetri);
+int				check_characters(char *file);
+int				check_newlines(char *file);
+int				check_line_count(char *file);
+int				check_block_count(char *file);
+int				check_width(char *file);
 #endif

@@ -12,77 +12,53 @@
 
 #include "fillit.h"
 
-int		check_index(int index)
+int		are_blocks_connected(char *file)
 {
-	if (0 <= index && index <= 3)
-		return (1);
-	else
-		return (0);
+	int	index;
+	int	tetrimino_index;
+
+	tetrimino_index = 0;
+	while (tetrimino_index < check_line_count(file))
+	{
+		index = 0;
+		while (index < 21)
+		{
+			if (file[tetrimino_index * 21 + index]
+					== '#')
+			{
+				if (is_block_connected(file, tetrimino_index,
+						index) == 0)
+					return (0);
+			}
+			index++;
+		}
+		tetrimino_index++;
+	}
+	return (1);
 }
 
-int		check_around(char **four_by_four, int row_index,
-			int column_index)
+int		is_block_connected(char *file, int tetrimino_index, int index)
 {
-	int	add_to_row;
-	int	add_to_column;
-
-	add_to_row = -1;
-	while (add_to_row < 2)
+	file += tetrimino_index;
+	if (index / 5 > 0)
 	{
-		if (check_index(row_index + add_to_row))
-		{
-			add_to_column = -1;
-			while (add_to_column < 2)
-			{
-				if (check_index(column_index + add_to_column) &&
-						(add_to_column != 0 || add_to_row != 0) &&
-						four_by_four[row_index][column_index] == '#')
-					return (1);
-				add_to_column++;
-			}
-		}
-		add_to_row++;
+		if (file[index - 5] == '#')
+			return (1);
+	}
+	if (index / 5 < 3)
+	{
+		if (file[index + 5] == '#')
+			return (1);
+	}
+	if (index % 5 < 0)
+	{
+		if (file[index + 1] == '#')
+			return (1);
+	}
+	if (index % 5 < 3)
+	{
+		if (file[index - 1] == '#')
+			return (1);
 	}
 	return (0);
-}
-
-void	free_four(char **four_by_four)
-{
-	int	i;
-
-	i = 0;
-	while (four_by_four[i])
-	{
-		free(four_by_four[i]);
-		i++;
-	}
-	free(four_by_four);
-}
-
-int		are_blocks_connected(char *tetri)
-{
-	int		row_index;
-	int		column_index;
-	char	**four_by_four;
-
-	four_by_four = ft_strsplit(tetri, '\n');
-	row_index = 0;
-	while (four_by_four[row_index])
-	{
-		column_index = 0;
-		while (four_by_four[row_index][column_index])
-		{
-			if (four_by_four[row_index][column_index] == '#'
-					&& check_around(four_by_four, row_index, column_index)
-					== 0)
-			{
-				free_four(four_by_four);
-				return (0);
-			}
-			column_index++;
-		}
-		row_index++;
-	}
-	free_four(four_by_four);
-	return (1);
 }

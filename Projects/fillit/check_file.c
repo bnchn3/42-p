@@ -12,91 +12,107 @@
 
 #include "fillit.h"
 
-int	char_check(char *tetrimino)
+int	check_characters(char *file_string)
 {
-	int		i;
-
-	i = 0;
-	while (tetrimino[i])
+	while (*file_string)
 	{
-		if (tetrimino[i] != '\n' && tetrimino[i] != '#'
-				&& tetrimino[i] != '.')
+		if (*file_string != '#' && *file_string != '\n'
+				&& *file_string != '.')
 			return (0);
-		i++;
+		file_string++;
 	}
 	return (1);
 }
 
-int	height_check(char *tetrimino)
+int	check_newlines(char *file_string)
 {
-	int	line_count;
-	int	i;
+	int	index;
 
-	line_count = 0;
-	i = 0;
-	while (tetrimino[i])
+	index = 20;
+	while (file_string[index])
 	{
-		if (tetrimino[i] == '\n')
-			line_count++;
-		i++;
-	}
-	if (line_count == 4)
-		return (1);
-	else
-		return (0);
-}
-
-int	width_check(char *tetrimino)
-{
-	int	width_count;
-	int	i;
-
-	width_count = 0;
-	i = 0;
-	while (tetrimino[i])
-	{
-		if (tetrimino[i] != '\n')
-			width_count++;
-		else
-		{
-			if (width_count != 4)
-				return (0);
-			else
-				width_count = 0;
-		}
-		i++;
+		if (file_string[index] != '\n')
+			return (0);
+		index += 21;
 	}
 	return (1);
 }
 
-int	block_number_check(char *tetrimino)
+int	check_block_count(char *file_string)
 {
 	int	block_count;
-	int	i;
+	int	newline_count;
 
+	newline_count = 0;
 	block_count = 0;
-	i = 0;
-	while (tetrimino[i])
+	while (*file_string)
 	{
-		if (tetrimino[i] == '#')
+		if (*file_string == '#')
 			block_count++;
-		i++;
+		if (*file_string == '\n')
+		{
+			if (newline_count == 4)
+			{
+				if (block_count != 4)
+					return (0);
+				block_count = 0;
+				newline_count = 0;
+			}
+			else
+				newline_count++;
+		}
+		file_string++;
 	}
-	if (block_count != 4)
-		return (0);
-	else
-		return (1);
+	return (1);
 }
 
-int	check_file(char *tetri)
+int	check_line_count(char *file)
 {
-	if (char_check(tetri))
-		return (1);
-	if (height_check(tetri))
-		return (1);
-	if (width_check(tetri))
-		return (1);
-	if (block_number_check(tetri))
-		return (1);
-	return (0);
+	int	line_count;
+
+	line_count = 0;
+	while (*file)
+	{
+		if (*file != '\n')
+		{
+			line_count++;
+			while (*file && *file != '\n')
+			{
+				file++;
+			}
+		}
+		else
+		{
+			while (*file && *file == '\n')
+				file++;
+		}
+	}
+	if (line_count % 4 == 0)
+		return (line_count / 4);
+	else
+		return (-1);
+}
+
+int	check_width(char *file_string)
+{
+	int	width;
+
+	width = 0;
+	while (*file_string)
+	{
+		if (*file_string == '\n')
+		{
+			if (width != 4)
+				return (0);
+			while (*file_string && *file_string == '\n')
+				file_string++;
+			width = 0;
+		}
+		else
+		{
+			width++;
+			file_string++;
+		}
+	}
+	return (1);
 }
