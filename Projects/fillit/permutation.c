@@ -6,12 +6,11 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 13:57:25 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/28 17:51:04 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/28 18:00:10 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 /*
 ** This function is basically memcpy but for a 2D array. It will copy the src
