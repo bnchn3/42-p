@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 13:11:54 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/09 12:35:08 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/26 13:08:05 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,7 @@ void				ft_btree_insert_data(t_btree **root, void *item,
 									int (*cmpf)(void *, void *));
 void				*ft_btree_search_item(t_btree *root, void *data_ref,
 									int (*cmpf)(void *, void *));
+void				ft_strpstr(char **destination, char *source);
+void				ft_strpchar(char **destination, char c);
 
 #endif

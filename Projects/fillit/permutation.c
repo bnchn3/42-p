@@ -6,11 +6,12 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 13:57:25 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/21 15:48:04 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/28 17:51:04 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
 /*
 ** This function is basically memcpy but for a 2D array. It will copy the src
@@ -19,7 +20,7 @@
 ** specify later what to put into our dest array.
 */
 
-void	twod_memcpy(char **dest, char **src, t_coor coor, char c)
+void	twod_memcpy(char **dest, char **src, t_coor *coor, char c)
 {
 	int i;
 	int j;
@@ -47,20 +48,20 @@ void	twod_memcpy(char **dest, char **src, t_coor coor, char c)
 ** A simple function to malloc and initialize a t_coor struct.
 */
 
-t_coor	create_coor(void)
+t_coor	*create_coor(void)
 {
-	t_coor	coor;
+	t_coor	*coor;
 
 	coor = (t_coor *)malloc(sizeof(t_coor));
 	if (coor)
 	{
-		coor->row = NULL;
-		coor->col = NULL;
+		coor->row = 0;
+		coor->col = 0;
 	}
 	return (coor);
 }
 
-t_coor	set_coor(t_coor coor, int x, int y)
+t_coor	*set_coor(t_coor *coor, int x, int y)
 {
 	if (coor)
 	{
@@ -105,11 +106,12 @@ int		check_place(char **dest, char **src, int x, int y)
 ** algorithm that will ensure the pieces will be in the upper left.
 */
 
-void	place_tetri(char **dest, char **src, t_coor coor, char c)
+void	place_tetri(char **dest, char **src, t_coor *coor, char c)
 {
 	int	i;
 	int	j;
 
+	i = 0;
 	j = 0;
 	while (dest[i][j] && dest[j][i])
 	{
@@ -162,7 +164,7 @@ int		test_perm(char ***tetrimino, int *order, int dimen)
 {
 	int		i;
 	char	**test;
-	t_coor	coor;
+	t_coor	*coor;
 
 	i = 1;
 	test = create_test(max_length(tetrimino), max_width(tetrimino));
@@ -174,7 +176,7 @@ int		test_perm(char ***tetrimino, int *order, int dimen)
 	}
 	if (perm_dimen(test) < dimen)
 		dimen = perm_dimen(test);
-	ft_memdel((void **)test);
+	free_four(test);
 	return (dimen);
 }
 
@@ -186,7 +188,7 @@ int		*create_order(int *order, int count)
 	i = 1;
 	num = 1;
 	order[0] = 104;
-	while(i < count)
+	while(i <= count)
 	{
 		order[i] = num;
 		num++;
@@ -198,6 +200,8 @@ int		*create_order(int *order, int count)
 
 void	swap(int *order, int i, int j)
 {
+	int	temp;
+
 	temp = order[i];
 	order[i] = order[j];
 	order[j] = temp;
@@ -218,10 +222,10 @@ int		*permute(char ***tetrimino, int *order, int start, int end)
 		}
 		return (NULL);
 	}
-	while (i < end)
+	while (i <= end)
 	{
 		swap(order, start, i);
-		if (temp = permute(order, start + 1, end))
+		if ((temp = permute(tetrimino, order, start + 1, end)))
 			order = temp;
 		swap(order, start, i);
 		i++;
@@ -248,21 +252,21 @@ void	final_print(char **final)
 	}
 }
 
-void	printer(char ***tetrimino, int *order);
+void	printer(char ***tetrimino, int *order, int count)
 {
 	int 	i;
 	char	**final;
-	t_coor	coor;
+	t_coor	*coor;
 
 	i = 1;
-	order = permute(tetrimino, order, start, end);
+	order = permute(tetrimino, order, 1, count);
 	final = create_test(order[0], order[0]);
-	while(order[i] && final)
+	while(order[i] != 0 && final)
 	{
 		coor = create_coor();
 		place_tetri(final, tetrimino[order[i] - 1], coor, i + 64);
 		i++;
 	}
 	final_print(final);
-	ft_memdel((void **)final);
+	free_four(final);
 }

@@ -6,37 +6,60 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 12:56:15 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/21 15:48:54 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/28 16:48:26 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+void		free_four(char **tetri)
+{
+	int	i;
+
+	i = 0;
+	while(tetri[i])
+	{
+		free(tetri[i]);
+		i++;
+	}
+	free(tetri);
+}
 
 /*
 ** This function helps us recognize the '.' characters that we need to include
 ** in the tetrimino we grab with pull_tetri.
 */
 
-int			hashcount(char **tetri, int i, int j)
+int         hashcount(char **tetri, int i, int j)
 {
-	int	count;
+	int count;
 
 	count = 0;
-	if (tetri[i + 1][j] == '#')
+	if (tetri[i][j] == '#')
+		return (count);
+	if (i < 3 && tetri[i + 1][j] == '#')
 		count++;
-	if (tetri[i - 1][j] == '#')
+	if (i > 0 && tetri[i - 1][j] == '#')
 		count++;
-	if (tetri[i][j - 1] == '#')
+	if (j > 0 && tetri[i][j - 1] == '#')
 		count++;
-	if (tetri[i][j + 1] == '#')
+	if (j < 3 && tetri[i][j + 1] == '#')
 		count++;
-	if (tetri[i + 1][j] == '.' && hashcount(tetri, i + 1, j) == 2)
+	return (count);
+}
+
+int         adj_hashcount(char **tetri, int i, int j)
+{
+	int count;
+
+	count = 0;
+	if (i < 3 && hashcount(tetri, i + 1, j) == 2)
 		count++;
-	if (tetri[i - 1][j] == '.' && hashcount(tetri, i - 1, j) == 2)
+	if (i > 0 && hashcount(tetri, i - 1, j) == 2)
 		count++;
-	if (tetri[i][j - 1] == '.' && hashcount(tetri, i, j - 1) == 2)
+	if (j > 0 && hashcount(tetri, i, j - 1) == 2)
 		count++;
-	if (tetri[i][j + 1] == '.' && hashcount(tetri, i, j + 1) == 2)
+	if (j < 3 && hashcount(tetri, i, j + 1) == 2)
 		count++;
 	return (count);
 }
@@ -62,16 +85,16 @@ char		**pull_tetri(char **tetri, char *tmp)
 		j = 0;
 		while (j < 4)
 		{
-			if (tetri[i][j] == '.' && hashcount(tetri, i , j) == 2)
+			if (tetri[i][j] == '.' && hashcount(tetri, i, j) + adj_hashcount(tetri, i, j) == 2)
 				tmp[k++] = '.';
 			if (tetri[i][j] == '#')
 				tmp[k++] = '#';
 			j++;
 		}
-		if (tmp[k - 1] == '#')
-			tmp[k++] = '\n';
+		tmp[k++] = '\n';
 		i++;
 	}
+	tmp[k] = '\0';
 	return (ft_strsplit(tmp, '\n'));
 }
 
@@ -97,14 +120,14 @@ char		***simplify_tetri(char ***tetrimino, char *tetri)
 	free(tetri);
 	while (tmp2[i])
 	{
-		tmp = (char *)malloc(7);
-		tmp3 = pull_tetri(tmp2[i], tmp);
+		tmp = (char *)malloc(9);
+		tmp3 = pull_tetri(&(tmp2[i]), tmp);
 		free(tmp);
-		tetrimino[j] = &(tmp3);
+		tetrimino[j] = tmp3;
 		i += 4;
 		j++;
 	}
-	ft_memdel((void **)tmp2);
+	free_four(tmp2);
 	tetrimino[j] = NULL;
 	return (tetrimino);
 }
@@ -121,16 +144,16 @@ char		**create_test(int x, int y)
 	char	**test;
 	int		i;
 
-	test = (char **)malloc(sizeof(char *) * x + 1);
-	test[x] = NULL;
+	test = (char **)malloc(sizeof(char *) * y + 1);
 	i = 0;
-	while(test[i])
+	while(i < y)
 	{
 		test[i] = (char *)malloc(y + 1);
-		test = (char *)ft_memset(test, '.', y);
-		test[y] = '\0';
+		test[i] = (char *)ft_memset(test[i], '.', x);
+		test[i][x] = '\0';
 		i++;
 	}
+	test[i] = NULL;
 	return (test);
 }
 
@@ -139,14 +162,16 @@ void		print_square(char *tetri)
 	int		*order;
 	char	***tetrimino;
 	int		i;
+	int		count;
 
-	order = (int *)malloc(sizeof(int) * tetcount(tetri) + 2);
-	tetrimino = (char ***)malloc(sizeof(char **) * tetcount(tetri) + 1);
+	count = tetcount(tetri);
+	order = (int *)malloc(sizeof(int) * (count + 2));
+	tetrimino = (char ***)malloc(sizeof(char **) * (count + 1));
 	if (tetrimino && order)
 	{
-		order = create_order(order, tetcount(tetri));
+		order = create_order(order, count);
 		tetrimino = simplify_tetri(tetrimino, tetri);
-		printer(tetrimino, order);
+		printer(tetrimino, order, count);
 		i = 0;
 		while (tetrimino[i])
 		{
