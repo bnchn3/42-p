@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 12:40:23 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/15 16:50:58 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/29 14:22:17 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	check_newlines(char *file_string)
 	{
 		if (file_string[index] != '\n')
 			return (0);
+		if (file_string[index + 1] == '\0')
+			return (0);
 		index += 21;
 	}
 	return (1);
@@ -51,15 +53,15 @@ int	check_block_count(char *file_string)
 			block_count++;
 		if (*file_string == '\n')
 		{
+			newline_count++;
 			if (newline_count == 4)
 			{
 				if (block_count != 4)
 					return (0);
 				block_count = 0;
 				newline_count = 0;
+				file_string++;
 			}
-			else
-				newline_count++;
 		}
 		file_string++;
 	}

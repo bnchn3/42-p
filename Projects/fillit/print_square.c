@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 12:56:15 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/28 16:48:26 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/29 15:20:52 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,18 +139,18 @@ char		***simplify_tetri(char ***tetrimino, char *tetri)
 ** every permutation possible.
 */
 
-char		**create_test(int x, int y)
+char		**create_test(int row, int col)
 {
 	char	**test;
 	int		i;
 
-	test = (char **)malloc(sizeof(char *) * y + 1);
+	test = (char **)malloc(sizeof(char *) * (row + 1));
 	i = 0;
-	while(i < y)
+	while(i < row)
 	{
-		test[i] = (char *)malloc(y + 1);
-		test[i] = (char *)ft_memset(test[i], '.', x);
-		test[i][x] = '\0';
+		test[i] = (char *)malloc(col + 1);
+		test[i] = (char *)ft_memset(test[i], '.', col);
+		test[i][col] = '\0';
 		i++;
 	}
 	test[i] = NULL;
@@ -175,7 +175,7 @@ void		print_square(char *tetri)
 		i = 0;
 		while (tetrimino[i])
 		{
-			ft_memdel((void **)tetrimino[i]);
+			free_four(tetrimino[i]);
 			i++;
 		}
 		free(tetrimino);

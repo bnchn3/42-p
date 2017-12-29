@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 14:20:28 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/28 13:45:54 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/29 14:15:42 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,7 @@ int		check_file(char *file)
 	if (check_block_count(file) == 0)
 		return (0);
 	if (are_blocks_connected(file) == 0)
-	{
-		ft_putendl("here");
 		return (0);
-	}
 	if (check_width(file) == 0)
 		return (0);
 	return (1);

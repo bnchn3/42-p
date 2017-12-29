@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 12:51:38 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/28 17:11:24 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/29 14:02:32 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int					perm_dimen(char **test);
 int					test_perm(char ***tetrimino, int *order, int dimen);
 int					*create_order(int *order, int count);
 void				swap(int *order, int i, int j);
-int					*permute(char ***tetrimino, int *order, int start, int end);
+int					*permute(char ***tetrimino, int *order, int end);
 void				final_print(char **final);
 void				printer(char ***tetrimino, int *order, int count);
 int					find_width(char **tetri);

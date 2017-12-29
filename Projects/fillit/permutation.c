@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 13:57:25 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/28 18:00:10 by bchan            ###   ########.fr       */
+/*   Updated: 2017/12/29 15:51:42 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	twod_memcpy(char **dest, char **src, t_coor *coor, char c)
 		while(src[i][j])
 		{
 			if (src[i][j++] == '#')
-				dest[x][y++] = c;
+				dest[x][y] = c;
+			y++;
 		}
 		x++;
 		i++;
@@ -125,7 +126,7 @@ void	place_tetri(char **dest, char **src, t_coor *coor, char c)
 			}
 			if (check_place(dest, src, j, i))
 			{
-				coor = set_coor(coor, i, j);
+				coor = set_coor(coor, j, i);
 				twod_memcpy(dest, src, coor, c);
 				return ;
 			}
@@ -142,21 +143,21 @@ int		perm_dimen(char **test)
 	int		count;
 
 	i = 0;
-	count = 1;
+	count = 0;
 	while(test[i])
 	{
 		j = 0;
 		while(test[i][j])
 		{
-			if (test[i][j] != '.' && j > count - 1)
-				count = j + 1;
-			if (test[i][j] != '.' && i > count - 1)
-				count = i + 1;
+			if (test[i][j] != '.' && j > count)
+				count = j;
+			if (test[i][j] != '.' && i > count)
+				count = i;
 			j++;
 		}
 		i++;
 	}
-	return (count);
+	return (count + 1);
 }
 
 int		test_perm(char ***tetrimino, int *order, int dimen)
@@ -197,6 +198,23 @@ int		*create_order(int *order, int count)
 	return (order);
 }
 
+void	*int_memcpy(int *dst, int *src, size_t n)
+{
+	size_t				i;
+	int		*ptr;
+	int		*ptr2;
+
+	i = 0;
+	ptr = dst;
+	ptr2 = src;
+	while (i < n)
+	{
+		ptr[i] = ptr2[i];
+		i++;
+	}
+	return (dst);
+}
+
 void	swap(int *order, int i, int j)
 {
 	int	temp;
@@ -206,29 +224,92 @@ void	swap(int *order, int i, int j)
 	order[j] = temp;
 }
 
-int		*permute(char ***tetrimino, int *order, int start, int end)
+int     descending(int *order, int end)
 {
-	int	i;
-	int *temp;
+	int i;
 
-	i = start;
-	if (start == end)
+	i = 1;
+	while (i < end)
 	{
-		if (test_perm(tetrimino, order, order[0]) < order[0])
-		{
-			order[0] = test_perm(tetrimino, order, order[0]);
-			return (order);
-		}
-		return (NULL);
-	}
-	while (i <= end)
-	{
-		swap(order, start, i);
-		if ((temp = permute(tetrimino, order, start + 1, end)))
-			order = temp;
-		swap(order, start, i);
+		if (order[i] < order[i + 1])
+			return (0);
 		i++;
 	}
+	return (1);
+}
+
+int     find_ceiling(int *order, int lowest, int end)
+{
+	int i;
+	int result;
+
+	i = lowest;
+	result = lowest;
+	while(i <= end)
+	{
+		if (order[i] > order[lowest])
+		{
+			result = i;
+			break ;
+		}
+		i++;
+	}
+	i = result;
+	while(i <= end)
+	{
+		if ((order[result] > order[i]) && (order[i] > order[lowest]))
+			result = i;
+		i++;
+	}
+	return (result);
+}
+
+void    sort(int *order, int start, int end)
+{
+	int i;
+
+	i = start;
+	while(i < end)
+	{
+		if (order[i] > order[i + 1])
+		{
+			swap(order, i, i + 1);
+			i = start;
+		}
+		i++;
+	}
+}
+
+int     *permute(char ***tetrimino, int *order, int end)
+{
+	int *temp;
+	int i;
+	int lowest;
+
+	temp = (int *)malloc(sizeof(int) * (end + 2));
+	temp = int_memcpy(temp, order, end + 2);
+	temp[0] = test_perm(tetrimino, temp, temp[0]);
+	if (temp[0] < order[0])
+		int_memcpy(order, temp, end + 2);
+	while(!(descending(temp, end)))
+	{	
+		i = 1;
+		while(i < end)
+		{
+			if (temp[i] < temp[i + 1])
+				lowest = i;
+			i++;
+		}
+		i = find_ceiling(temp, lowest, end);
+		if (i == lowest)
+			break ;
+		swap(temp, i, lowest);
+		sort(temp, lowest + 1, end);
+		temp[0] = test_perm(tetrimino, temp, temp[0]);
+		if (temp[0] < order[0])
+			int_memcpy(order, temp, end + 2);
+	}
+	free (temp);
 	return (order);
 }
 
@@ -258,12 +339,12 @@ void	printer(char ***tetrimino, int *order, int count)
 	t_coor	*coor;
 
 	i = 1;
-	order = permute(tetrimino, order, 1, count);
+	order = permute(tetrimino, order, count);
 	final = create_test(order[0], order[0]);
-	while(order[i] != 0 && final)
+	while(i <= count && final)
 	{
 		coor = create_coor();
-		place_tetri(final, tetrimino[order[i] - 1], coor, i + 64);
+		place_tetri(final, tetrimino[order[i] - 1], coor, order[i] + 64);
 		i++;
 	}
 	final_print(final);
