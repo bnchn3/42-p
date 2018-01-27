@@ -119,6 +119,22 @@ char *apply_width(const char *format, char *result, int wid)
 	return (save);
 }
 
+char *apply_precision(const char *format, char *result, int wid)
+{
+	int i;
+
+	i = 0;
+	while(!(check_spec(format[i])))
+		i++;
+	if (format[i] == 'd' || format[i] == 'D' || format[i] == 'i' || format[i] ==
+			'u' || format[i] == 'U' || format[i] == 'o' || format[i] == 'O' ||
+			format[i] == 'x' || format[i] == 'X')
+		result = minimum_digits(format, result, wid);
+	else if (format[i] == 's')
+		result = max_char(format, result, wid);
+	return (result);
+}
+
 char *modify_string(const char *format, char *result)
 {
 	int i;
@@ -139,7 +155,7 @@ char *modify_string(const char *format, char *result)
 	}
 	if (format[i] == '.' && ((wid = ft_atoi(&(format[i + 1]))) ||
 			format[i + 1] == '0'))
-		result = apply_precision(result, wid);
+		result = apply_precision(format, result, wid);
 	return (result);
 }
 
