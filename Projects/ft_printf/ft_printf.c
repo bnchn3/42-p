@@ -182,6 +182,20 @@ int find_digits(char *save)
 	return (count);
 }
 
+int find_flag(const char *wid, char c)
+{
+	char *temp;
+
+	temp = wid;
+	while (*temp != '%')
+	{
+		if (*temp == c)
+			return (1);
+		temp--;
+	}
+	return (0);
+}
+
 void remove_zero(const char *wid, char *save, char *result)
 {
 	int left;
@@ -189,12 +203,8 @@ void remove_zero(const char *wid, char *save, char *result)
 
 	left = 0;
 	temp = wid;
-	while (*temp != '%')
-	{
-		if (*temp == '-')
-			left = 1;
-		temp--;
-	}
+	if (find_flag(wid, '-'))
+		left = 1;
 	ft_memmove(save, save + 1, ft_strlen(save));
 	if (ft_atoi(wid))
 	{
@@ -206,28 +216,30 @@ void remove_zero(const char *wid, char *save, char *result)
 	}
 }
 
-void add_zero(const char *wid, char *save, char *result)
+char *add_zero(const char *wid, char *save, char *result)
 {
 	int left;
 	char *temp;
 
 	left = 0;
 	temp = wid;
-	while (*temp != '%')
+	if (find_flag(wid, '-'))
+		left = 1;
+	while (find_digits(save) + find_zeroes(save) < prec)
 	{
-		if (*temp == '-')
-			left = 1;
-		temp--;
+		ft_meminsert(save, '0', ft_strlen(save));
+		if (ft_atoi(wid))
+		{
+			temp = &(save[ft_strlen(save)]);
+			if (left == 1 && *(temp - 1) == ' ')
+				ft_memmove(temp - 1, temp, 1);
+			else if (left != 1 && *result == ' ')
+				ft_memmove(result, result + 1, ft_strlen(result));
+		}
 	}
-	ft_meminsert(save, '0', ft_strlen(save));
-	if (ft_atoi(wid))
-	{
-		temp = &(save[ft_strlen(save)]);
-		if (left == 1 && *(temp - 1) == ' ')
-			ft_memmove(temp - 1, temp, 1);
-		else if (left != 1 && *result == ' ')
-			ft_memmove(result, result + 1, ft_strlen(result));
-	}
+	save = ft_strdup(result);
+	free(result);
+	return (save);
 }
 
 char *precision_int(char *result, const char *wid, int prec)
@@ -246,23 +258,8 @@ char *precision_int(char *result, const char *wid, int prec)
 		while (find_digits(save) + find_zeroes(save) > prec)
 			remove_zero(wid, save, result);
 	else
-		while (find_digits(save) + find_zeroes(save) < prec)
-			add_zero(wid, save, result);
+			result = add_zero(wid, save, result);
 	return (result);
-}
-
-int find_pound(const char *wid)
-{
-	char *temp;
-
-	temp = wid;
-	while (*temp != '%')
-	{
-		if (*temp == '#')
-			return (1);
-		temp--;
-	}
-	return (0);
 }
 
 char *precision_oct(char *result, const char *wid, int prec)
@@ -274,7 +271,7 @@ char *precision_oct(char *result, const char *wid, int prec)
 	save = result;
 	while (!(ft_isdigit(*save)))
 		save++;
-	if (find_pound(wid))
+	if (find_flag(wid, '#'))
 		save++;
 	if (find_digits(save) > prec)
 		while (find_zeroes(save))
@@ -283,8 +280,7 @@ char *precision_oct(char *result, const char *wid, int prec)
 		while (find_digits(save) + find_zeroes(save) > prec)
 			remove_zero(wid, save, result);
 	else
-		while (find_digits(save) + find_zeroes(save) < prec)
-			add_zero(wid, save, result);
+		result = add_zero(wid, save, result);
 	return (result);
 }
 
@@ -297,7 +293,7 @@ char *precision_hex(char *result, const char *wid, int prec)
 	save = result;
 	while (!(ft_isdigit(*save)))
 		save++;
-	if (find_pound(wid))
+	if (find_flag(wid, '#'))
 		save += 2;
 	if (find_digits(save) > prec)
 		while (find_zeroes(save))
@@ -306,8 +302,7 @@ char *precision_hex(char *result, const char *wid, int prec)
 		while (find_digits(save) + find_zeroes(save) > prec)
 			remove_zero(wid, save, result);
 	else
-		while (find_digits(save) + find_zeroes(save) < prec)
-			add_zero(wid, save, result);
+		result = add_zero(wid, save, result);
 	return (result);
 }
 
