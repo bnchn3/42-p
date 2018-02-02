@@ -511,7 +511,7 @@ size_t print_arg(const char *format, va_list ap)
 int ft_printf(const char *format, ...)
 {
 	va_list ap;
-	size_t	result;
+	char *result;
 	int	i;
 
 	result = 0;
@@ -527,11 +527,8 @@ int ft_printf(const char *format, ...)
 					break ;
 		}
 		else
-		{
-			ft_putchar(format[i++]);
-			result++;
-		}
+			result = ft_insert_char(result, format[i++], ft_strlen(result))
 	}
 	va_end(ap);
-	return (result);
+	return (ft_strlen(result));
 }
