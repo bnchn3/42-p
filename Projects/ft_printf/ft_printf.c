@@ -324,12 +324,8 @@ char *max_char(char *result, const char *wid, int prec)
 
 	temp = wid;
 	left = 0;
-	while (*temp != '%')
-	{
-		if (*temp == '-')
-			left = 1;
-		temp--;
-	}
+	if (find_flag(wid, '-'))
+		left = 1;
 	ft_memmove()
 }
 
