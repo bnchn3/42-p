@@ -326,7 +326,17 @@ char *max_char(char *result, const char *wid, int prec)
 	left = 0;
 	if (find_flag(wid, '-'))
 		left = 1;
-	ft_memmove()
+	ft_memmove(&(result[prec]), &(result[ft_strlen(result)]), 1);
+	if (ft_atoi(wid))
+	{
+		if (left == 1)
+			while (ft_atoi(wid) - prec > 0)
+				result = ft_insert_char(result, ' ', prec++);
+		else
+			while (ft_atoi(wid) - prec++ > 0)
+				result = ft_insert_char(result, ' ', 0);
+	}
+	return (result);
 }
 
 char *apply_precision(const char *format, char *result, const char *wid,
@@ -381,25 +391,25 @@ char *pull_int(const char *format, va_list ap, int spec)
 	return (result);
 }
 
-char *pull_un_int(const char *format, va_list ap, int spec)
+char *pull_un_int(const char *format, va_list ap, char c)
 {
 	unsigned int arg;
 	char *result;
 
 	arg = va_arg(ap, unsigned int);
-	if (format[spec] == 'u')
+	if (c == 'u')
 		result = ft_unsigned_itoa(arg);
-	if (format[spec] == 'o')
+	if (c == 'o')
 		result = ft_octal_convert(arg);
-	if (format[spec] == 'x')
+	if (c == 'x')
 		result = ft_hex_convert(arg);
-	if (format[spec] == 'X')
+	if (c == 'X')
 		result = ft_toupper(ft_hex_convert(arg));
 	result = modify_string(format, result);
 	return (result);
 }
 
-char *pull_string(const char *format, va_list ap, int spec)
+char *pull_string(const char *format, va_list ap)
 {
 	char *arg;
 
@@ -408,7 +418,7 @@ char *pull_string(const char *format, va_list ap, int spec)
 	return (arg);
 }
 
-char *pull_voidp(const char *format, va_list ap, int spec)
+char *pull_voidp(const char *format, va_list ap)
 {
 	void *arg;
 	char *result;
@@ -422,41 +432,43 @@ char *pull_voidp(const char *format, va_list ap, int spec)
 	return (result);
 }
 
-char *length_l(const char *format, va_list ap, int i)
+char *length_hh(const char *format, va_list ap, char c)
 {
-	if (format[i] == 'd' || format[i] == 'i' || format[i] == 'D')
-		return (pull_l_int(format, ap, i));
-	if (format[i] == 'u' || format[i] == 'U' || format[i] == 'o' || format[i] ==
-			'O' || format == 'x' || format == 'X')
-		return (pull_un_l_int(format, ap, i));
-	if (format[i] == 'c' || format[i] == 'C')
-		return (pull_wint(format, ap, i));
-	if (format[i] == 's' || format[i] == 'S')
-		return (pull_wchar(format, ap, i));
-	if (format[i] == 'n')
-		return (pull_l_intp(format, ap, i));
-	return (length_none(format, ap, i));
+		if ()
 }
 
-char *length_none(const char *format, va_list ap, int i)
+char *length_l(const char *format, va_list ap, char c)
 {
-	if (format[i] == 'd' || format[i] == 'i' || format[i] == 'c')
-		return (pull_int(format, ap, i));
-	if (format[i] == 'u' || format[i] == 'o' || format == 'x' || format == 'X')
-		return (pull_un_int(format, ap, i));
-	if (format[i] == 'f' || format[i] == 'F' || format[i] == 'e' ||
-			format[i] == 'E' || format[i] == 'g' || format[i] == 'G' ||
-			format[i] == 'a' || format[i] == 'A')
-		return (pull_double(format, ap, i));
-	if (format[i] == 's')
-		return (pull_string(format, ap, i));
-	if (format[i] == 'p')
-		return (pull_voidp(format, ap, i));
-	if (format[i] == 'n')
-		return (pull_intp(format, ap, i));
-	if (format[i] == 'D' || format[i] == 'U' || format[i] == 'O' || format[i] ==
-			'C' || format[i] == 'S')
-		return(length_l(format, ap, i));
+	if (c == 'd' || c == 'i' || c == 'D')
+		return (pull_l_int(format, ap, c));
+	if (c == 'u' || c == 'U' || c == 'o' || c == 'O' || c == 'x' || c == 'X')
+		return (pull_un_l_int(format, ap, c));
+	if (c == 'c' || c == 'C')
+		return (pull_wint(format, ap, c));
+	if (c == 's' || c == 'S')
+		return (pull_wchar(format, ap, c));
+	if (c == 'n')
+		return (pull_l_intp(format, ap, c));
+	return (length_none(format, ap, c));
+}
+
+char *length_none(const char *format, va_list ap, char c)
+{
+	if (c == 'd' || c == 'i' || c == 'c')
+		return (pull_int(format, ap, c));
+	if (c == 'u' || c == 'o' || c == 'x' || c == 'X')
+		return (pull_un_int(format, ap, c));
+	if (c == 'f' || c == 'F' || c == 'e' || c == 'E' || c == 'g' || c == 'G' ||
+			c == 'a' || c == 'A')
+		return (pull_double(format, ap, c));
+	if (c == 's')
+		return (pull_string(format, ap));
+	if (c == 'p')
+		return (pull_voidp(format, ap));
+	if (c == 'n')
+		return (pull_intp(format, ap, c));
+	if (c == 'D' || c == 'U' || c == 'O' || c == 'C' || c == 'S')
+		return(length_l(format, ap, c));
 	return (NULL);
 }
 
@@ -470,20 +482,20 @@ char	*check_length(const char *format, va_list ap)
 	if (format[i - 1] == 'h')
 	{
 		if (format[i - 2] == 'h')
-			return (length_hh(format, ap));
-		return (length_h(format, ap));
+			return (length_hh(format, ap, format[i]));
+		return (length_h(format, ap, format[i]));
 	}
 	if (format[i - 1] == 'l')
 	{
 		if (format[i - 2] == 'l')
-			return (length_ll(format, ap));
-		return (length_l(format, ap));
+			return (length_ll(format, ap, format[i]));
+		return (length_l(format, ap, format[i]));
 	}
 	if (format[i - 1] == 'j')
-		return (length_j(format, ap));
+		return (length_j(format, ap, format[i]));
 	if (format[i - 1] == 'z')
-		return (length_z(format, ap));
-	return (length_none(format, ap, i));
+		return (length_z(format, ap, format[i]));
+	return (length_none(format, ap, format[i]));
 }
 
 size_t print_arg(const char *format, va_list ap)
