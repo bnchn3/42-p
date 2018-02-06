@@ -615,7 +615,7 @@ int ft_printf(const char *format, ...)
 {
 	va_list ap;
 	char *result;
-	int	i;
+	size_t	i;
 	char *temp;
 
 	result = 0;
@@ -634,6 +634,9 @@ int ft_printf(const char *format, ...)
 		else
 			result = ft_strpchar(&result, format[i++]);
 	}
+	ft_putstr(result);
+	i = ft_strlen(result);
+	free(result);
 	va_end(ap);
-	return (ft_strlen(result));
+	return (i);
 }
