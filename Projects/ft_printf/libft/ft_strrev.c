@@ -8,11 +8,11 @@ char *ft_strrev(char *s)
 
   i = 0;
   j = ft_strlen(s) - 1;
-  while (i++ <= j--)
+  while (i <= j)
   {
     save = s[i];
-    s[i] = s[j];
-    s[j] = save;
+    s[i++] = s[j];
+    s[j--] = save;
   }
   return (s);
 }

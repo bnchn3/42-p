@@ -1,6 +1,6 @@
 #include <libft.h>
 
-static char hex(int n)
+static char *hex(int n)
 {
   char key[6];
   int i;
@@ -10,7 +10,7 @@ static char hex(int n)
   i = 0;
   c = 'a';
   result = ft_strnew(1);
-  while (i < 5)
+  while (i < 6)
     key[i++] = c++;
   n -= 10;
   result[0] = key[n];
@@ -23,6 +23,8 @@ char *ft_hex_convert(unsigned int n)
   char *digit;
 
   result = ft_strdup("");
+  if (n == 0)
+    ft_strpstr(&result, "0");
   while (n > 0)
   {
     if (n % 16 < 10)

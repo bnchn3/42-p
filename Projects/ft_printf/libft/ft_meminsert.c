@@ -3,6 +3,6 @@
 void *ft_meminsert(void *s, int c, int n)
 {
   ft_memmove(s + 1, s, n);
-  s[0] = c;
+  *(char *)s = c;
   return (s);
 }

@@ -61,22 +61,20 @@ char *apply_pound(char c, char *result)
 {
 	char *tmp1;
 	char *tmp2;
-	char *save;
 
 	if (c == 'a' || c == 'A' || c == 'e' || c == 'E' || c == 'f' || c == 'F' ||
 			c == 'g' || c == 'G')
 		return (force_dec(result));
-	save = result;
-	while(*save == '-' || *save == '+' || *save == ' ')
-		save++;
-	tmp1 = ft_strdup(save);
-	if ((c == 'o' || c == 'O') && save[0] != '0')
+	if (c == 'd' || c == 'i')
+		return (ft_strdup(result));
+	tmp1 = ft_strdup(result);
+	if ((c == 'o' || c == 'O') && result[0] != '0')
 		tmp2 = ft_strjoin("0", tmp1);
-	if (c == 'x' && save[0] != '0')
+	if (c == 'x' && result[0] != '0')
 		tmp2 = ft_strjoin("0x", tmp1);
-	if (c == 'X' && save[0] != '0')
+	if (c == 'X' && result[0] != '0')
 		tmp2 = ft_strjoin("0X", tmp1);
-	ft_strcpy(save, tmp2);
+	ft_strcpy(result, tmp2);
 	free(tmp1);
 	free(tmp2);
 	return (ft_strdup(result));
@@ -88,19 +86,19 @@ char *apply_flag(const char *format, char c, char *result)
 	int i;
 
 	i = 0;
-	temp = NULL:
+	temp = NULL;
 	while (!(check_spec(format[i])))
 		i++;
-	if (number_spec(format))
+	if (format[i] == 'd' || format[i] == 'i')
 	{
 		if (c == '+' && result[0] != '-')
 			temp = ft_strjoin("+", result);
 		if (c == ' ' && result[0] != '-' && (!(ft_strchr(format, '+')) ||
 				ft_strchr(format, '+') > &(format[i])))
 			temp = ft_strjoin(" ", result);
-		if (c == '#')
-			temp = apply_pound(format[i], result);
 	}
+	if (c == '#' && number_spec(format))
+		temp = apply_pound(format[i], result);
 	if (temp)
 	{
 		free(result);
@@ -122,6 +120,16 @@ char *add_lead(char *result, char *temp, int wid)
 			wid--;
 		}
 	}
+	else if (temp[0] == '0' && (result[0] == ' ' || result[0] == '+' ||
+					result[0] == '-'))
+	{
+		s = ft_strdup(result);
+		while (wid > 0)
+		{
+			s = ft_insert_char(s, '0', 1);
+			wid--;
+		}
+	}
 	else
 		s = ft_strjoin(temp, result);
 	return (s);
@@ -137,19 +145,19 @@ char *apply_width(const char *format, char *result, int wid)
 	if (wid <= (int)ft_strlen(result))
 		return (result);
 	temp = ft_strnew_char(wid - ft_strlen(result), ' ');
-	save = format;
-	while(*save != '%')
+	save = NULL;
+	while(*format != '%')
 	{
-		if (*save == '-')
+		if (*format == '-')
 			left = 1;
-		if (*save == '0' && (number_spec(format)))
+		if (*format == '0' && (number_spec(format)))
 			temp = ft_memset(temp, '0', ft_strlen(temp));
-		save--;
+		format--;
 	}
 	if (left == 1)
 		save = ft_strjoin(result, (temp = ft_memset(temp, ' ', ft_strlen(temp))));
 	else
-		save = add_lead(result, temp, wid);
+		save = add_lead(result, temp, wid - ft_strlen(result));
 	free(result);
 	free(temp);
 	return (save);
@@ -158,11 +166,18 @@ char *apply_width(const char *format, char *result, int wid)
 int find_zeroes(char *save)
 {
 	int i;
+	int count;
 
 	i = 0;
-	while (save[i] == '0')
+	count = 0;
+	while (save[i] == ' ')
 		i++;
-	return (i);
+	while (save[i] == '0')
+	{
+		count++;
+		i++;
+	}
+	return (count);
 }
 
 int find_digits(char *save)
@@ -172,7 +187,7 @@ int find_digits(char *save)
 
 	count = 0;
 	i = 0;
-	while (save[i] == '0')
+	while (save[i] == '0' || save[i] == ' ')
 		i++;
 	while (ft_isdigit(save[i]))
 	{
@@ -184,14 +199,11 @@ int find_digits(char *save)
 
 int find_flag(const char *wid, char c)
 {
-	char *temp;
-
-	temp = wid;
-	while (*temp != '%')
+	while (*wid != '%')
 	{
-		if (*temp == c)
+		if (*wid == c)
 			return (1);
-		temp--;
+		wid--;
 	}
 	return (0);
 }
@@ -202,7 +214,6 @@ void remove_zero(const char *wid, char *save, char *result)
 	char *temp;
 
 	left = 0;
-	temp = wid;
 	if (find_flag(wid, '-'))
 		left = 1;
 	ft_memmove(save, save + 1, ft_strlen(save));
@@ -216,13 +227,12 @@ void remove_zero(const char *wid, char *save, char *result)
 	}
 }
 
-char *add_zero(const char *wid, char *save, char *result)
+char *add_zero(const char *wid, char *save, char *result, int prec)
 {
 	int left;
 	char *temp;
 
 	left = 0;
-	temp = wid;
 	if (find_flag(wid, '-'))
 		left = 1;
 	while (find_digits(save) + find_zeroes(save) < prec)
@@ -234,7 +244,10 @@ char *add_zero(const char *wid, char *save, char *result)
 			if (left == 1 && *(temp - 1) == ' ')
 				ft_memmove(temp - 1, temp, 1);
 			else if (left != 1 && *result == ' ')
+			{
 				ft_memmove(result, result + 1, ft_strlen(result));
+				save--;
+			}
 		}
 	}
 	save = ft_strdup(result);
@@ -258,7 +271,7 @@ char *precision_int(char *result, const char *wid, int prec)
 		while (find_digits(save) + find_zeroes(save) > prec)
 			remove_zero(wid, save, result);
 	else
-			result = add_zero(wid, save, result);
+			result = add_zero(wid, save, result, prec);
 	return (result);
 }
 
@@ -280,7 +293,7 @@ char *precision_oct(char *result, const char *wid, int prec)
 		while (find_digits(save) + find_zeroes(save) > prec)
 			remove_zero(wid, save, result);
 	else
-		result = add_zero(wid, save, result);
+		result = add_zero(wid, save, result, prec);
 	return (result);
 }
 
@@ -302,7 +315,7 @@ char *precision_hex(char *result, const char *wid, int prec)
 		while (find_digits(save) + find_zeroes(save) > prec)
 			remove_zero(wid, save, result);
 	else
-		result = add_zero(wid, save, result);
+		result = add_zero(wid, save, result, prec);
 	return (result);
 }
 
@@ -317,39 +330,41 @@ char *minimum_digits(char c, char *result, const char *wid, int prec)
 	return (result);
 }
 
-char *max_char(char *result, const char *wid, int prec)
+char *max_char(char *result, const char *wid, int prec, char *temp)
 {
-	char *temp;
 	int left;
+	char *save;
 
-	temp = wid;
 	left = 0;
+	save = result;
 	if (find_flag(wid, '-'))
 		left = 1;
-	ft_memmove(&(result[prec]), &(result[ft_strlen(result)]), 1);
-	if (ft_atoi(wid))
+	while (ft_strncmp(temp, save, ft_strlen(temp)) != 0)
+		save++;
+	save[prec] = '\0';
+	if (ft_atoi(wid) && ft_strlen(result) != ft_atoi(wid))
 	{
 		if (left == 1)
-			while (ft_atoi(wid) - prec > 0)
-				result = ft_insert_char(result, ' ', prec++);
+			while (ft_strlen(result) != ft_atoi(wid))
+				result = ft_insert_char(result, ' ', prec);
 		else
-			while (ft_atoi(wid) - prec++ > 0)
+			while (ft_strlen(result) != ft_atoi(wid))
 				result = ft_insert_char(result, ' ', 0);
 	}
 	return (result);
 }
 
-char *apply_precision(const char *format, char *result, const char *wid,
+char *apply_precision(char *temp, char *result, const char *wid,
 											int prec)
 {
 	char c;
 
-	c = get_spec(format);
+	c = get_spec(wid);
 	if (c == 'd' || c == 'D' || c == 'i' || c == 'u' || c == 'U' || c == 'o' ||
 			c == 'O' || c == 'x' || c == 'X')
 		result = minimum_digits(c, result, wid, prec);
 	else if (c == 's')
-		result = max_char(result, wid, prec);
+		result = max_char(result, wid, prec, temp);
 	return (result);
 }
 
@@ -357,8 +372,10 @@ char *modify_string(const char *format, char *result)
 {
 	int i;
 	const char *wid;
+	char *temp;
 
 	i = 1;
+	temp = ft_strdup(result);
 	while (format[i] == '+' || format[i] == ' ' || format[i] == '#' ||
 				format[i] == '-' || format[i] == '0')
 	{
@@ -366,24 +383,25 @@ char *modify_string(const char *format, char *result)
 		i++;
 	}
 	wid = &(format[i]);
-	if ((ft_atoi(wid))
+	if ((ft_atoi(wid)))
 	{
 		result = apply_width(wid, result, ft_atoi(wid));
 		while(format[i] >= '0' && format[i] <= '9')
 			i++;
 	}
 	if (format[i] == '.')
-		result = apply_precision(format, result, wid, ft_atoi(&(format[i + 1])));
+		result = apply_precision(temp, result, wid, ft_atoi(&(format[i + 1])));
+	free(temp);
 	return (result);
 }
 
-char *pull_int(const char *format, va_list ap, int spec)
+char *pull_int(const char *format, va_list ap, char c)
 {
 	int arg;
 	char *result;
 
 	arg = va_arg(ap, int);
-	if (format[spec] == 'd' || format[spec] == 'i')
+	if (c == 'd' || c == 'i')
 		result = ft_itoa(arg);
 	else
 		result = ft_strdup(&arg);
@@ -404,7 +422,15 @@ char *pull_un_int(const char *format, va_list ap, char c)
 	if (c == 'x')
 		result = ft_hex_convert(arg);
 	if (c == 'X')
-		result = ft_toupper(ft_hex_convert(arg));
+	{
+		i = 0;
+		result = ft_hex_convert(arg);
+		while (result[i])
+		{
+			result[i] = (char)ft_toupper(result[i]);
+		  i++;
+		}
+	}
 	result = modify_string(format, result);
 	return (result);
 }
@@ -413,7 +439,7 @@ char *pull_string(const char *format, va_list ap)
 {
 	char *arg;
 
-	arg = va_arg(ap, char *);
+	arg = ft_strdup(va_arg(ap, char *));
 	arg = modify_string(format, arg);
 	return (arg);
 }
@@ -425,7 +451,7 @@ char *pull_voidp(const char *format, va_list ap)
 	char *temp;
 
 	arg = va_arg(ap, void *);
-	temp = ft_hex_convert(arg);
+	temp = ft_hex_convert((unsigned int)arg);
 	result = ft_strjoin("0x", temp);
 	free(temp);
 	result = modify_string(format, result);
