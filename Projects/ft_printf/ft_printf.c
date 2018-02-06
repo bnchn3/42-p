@@ -342,13 +342,13 @@ char *max_char(char *result, const char *wid, int prec, char *temp)
 	while (ft_strncmp(temp, save, ft_strlen(temp)) != 0)
 		save++;
 	save[prec] = '\0';
-	if (ft_atoi(wid) && ft_strlen(result) != ft_atoi(wid))
+	if (ft_atoi(wid) && ft_strlen(result) < ft_atoi(wid))
 	{
 		if (left == 1)
-			while (ft_strlen(result) != ft_atoi(wid))
-				result = ft_insert_char(result, ' ', prec);
+			while (ft_strlen(result) < ft_atoi(wid))
+				ft_strpstr(&result, " ");
 		else
-			while (ft_strlen(result) != ft_atoi(wid))
+			while (ft_strlen(result) < ft_atoi(wid))
 				result = ft_insert_char(result, ' ', 0);
 	}
 	return (result);
