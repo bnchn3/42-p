@@ -12,6 +12,44 @@
 
 #include "libftprintf.h"
 
+char	*pull_intmax(t_print *form, va_list ap)
+{
+	intmax_t	arg;
+	char	*result;
+
+	arg = va_arg(ap, intmax_t);
+	result = ft_max_itoa(arg);
+	result = modify_string(form, result);
+	return (result);
+}
+
+char	*pull_un_long_long(t_print *form, va_list ap, char c)
+{
+	uintmax_t	arg;
+	char			*result;
+	int i;
+
+	arg = va_arg(ap, uintmax_t);
+	if (c == 'u')
+		result = ft_unsigned_itoa(arg);
+	if (c == 'o')
+		result = ft_octal_convert(arg);
+	if (c == 'x')
+		result = ft_hex_convert(arg);
+	if (c == 'X')
+	{
+		i = 0;
+		result = ft_hex_convert(arg);
+		while (result[i])
+		{
+			result[i] = (char)ft_toupper(result[i]);
+			i++;
+		}
+	}
+	result = modify_string(form, result);
+	return (result);
+}
+
 char	*length_j(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i')

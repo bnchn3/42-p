@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 13:11:54 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/26 13:08:05 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/07 15:47:22 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdint.h>
 
 typedef struct		s_list
 {
@@ -102,9 +103,12 @@ void				*ft_btree_search_item(t_btree *root, void *data_ref,
 void				ft_strpstr(char **destination, char *source);
 void				ft_strpchar(char **destination, char c);
 int					ft_unsigned_itoa(unsigned int n);
-unsigned int					ft_power(unsigned int base, int power);
+unsigned int		ft_power(unsigned int base, int power);
 char				*ft_octal_convert(unsigned int n);
 char				*ft_strrev(char *s);
-char				*ft_hex_convert(unsigned int n); 
+char				*ft_hex_convert(unsigned int n);
+char				*ft_strnew_char(size_t n, char c);
+char				*ft_insert_char(char *s, char c, int index);
+void				*ft_meminsert(void *s, int c, int n);
 
 #endif

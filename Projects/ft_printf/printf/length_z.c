@@ -12,6 +12,32 @@
 
 #include "libftprintf.h"
 
+char	*pull_sizet(t_print *form, va_list ap, char c)
+{
+	size_t		arg;
+	char			*result;
+	int i;
+
+	arg = va_arg(ap, size_t);
+	if (c == 'u' || c == 'd' || c == 'i')
+		result = ft_unsigned_itoa(arg);
+	if (c == 'o')
+		result = ft_octal_convert(arg);
+	if (c == 'x')
+		result = ft_hex_convert(arg);
+	if (c == 'X')
+	{
+		i = 0;
+		result = ft_hex_convert(arg);
+		while (result[i])
+		{
+			result[i] = (char)ft_toupper(result[i]);
+			i++;
+		}
+	}
+	result = modify_string(form, result);
+	return (result);
+}
 char	*length_z(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i' || c == 'u' || c == 'o' || c == 'x' || c == 'X')

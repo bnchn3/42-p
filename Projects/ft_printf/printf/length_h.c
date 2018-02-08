@@ -17,7 +17,7 @@ char	*pull_short(t_print *form, va_list ap)
 	short	arg;
 	char	*result;
 
-	arg = va_arg(ap, short);
+	arg = va_arg(ap, int);
 	result = ft_itoa((int)arg);
 	result = modify_string(form, result);
 	return (result);
@@ -28,17 +28,17 @@ char	*pull_un_short(t_print *form, va_list ap, char c)
 	unsigned short	arg;
 	char			*result;
 
-	arg = va_arg(ap, unsigned short);
+	arg = va_arg(ap, unsigned int);
 	if (c == 'u')
-		result = ft_unsigned_itoa((unsigned int)arg);
+		result = ft_unsigned_itoa(arg);
 	if (c == 'o')
-		result = ft_octal_convert((unsigned int)arg);
+		result = ft_octal_convert(arg);
 	if (c == 'x')
-		result = ft_hex_convert((unsigned int)arg);
+		result = ft_hex_convert(arg);
 	if (c == 'X')
 	{
 		i = 0;
-		result = ft_hex_convert((unsigned int)arg);
+		result = ft_hex_convert(arg);
 		while (result[i])
 		{
 			result[i] = (char)ft_toupper(result[i]);

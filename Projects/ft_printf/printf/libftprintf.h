@@ -13,6 +13,8 @@
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
 # include <stdarg.h>
+# include <stddef.h>
+# include <wchar.h>
 # include "../libft/libft.h"
 
 typedef struct	s_print
