@@ -51,17 +51,18 @@ char	*check_length(const char *format, va_list ap, t_print *form)
 	return (length_none(form, ap, format[i]));
 }
 
-char	*print_arg(const char *format, va_list ap)
+char	*print_arg(const char *format, va_list ap, char *result)
 {
-	char	*result;
+	char	*new;
 	t_print	*form;
 
 	if (format[1] == '%')
 		return (ft_strdup("%"));
-	form = new_form();
-	form = get_form(format, form);
-	result = check_length(format, ap, form);
-	return (result);
+	form = new_form(result);
+	form = get_form(format, form, ap);
+	new = check_length(format, ap, form);
+	form_del(form);
+	return (new);
 }
 
 int		print_result(char *result)
@@ -81,14 +82,14 @@ int		ft_printf(const char *format, ...)
 	size_t			i;
 	char			*temp;
 
-	result = 0;
+	result = ft_strdup("");
 	i = 0;
 	va_start(ap, format);
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
-			temp = print_arg(&(format[i++]), ap);
+			temp = print_arg(&(format[i++]), ap, result);
 			ft_strpstr(&result, temp);
 			ft_strdel(&temp);
 			while (!(check_spec(format[i++])))

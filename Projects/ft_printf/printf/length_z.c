@@ -38,6 +38,16 @@ char	*pull_sizet(t_print *form, va_list ap, char c)
 	result = modify_string(form, result);
 	return (result);
 }
+
+char *pull_sizetp(t_print *form, va_list ap)
+{
+	size_t		*arg;
+
+	arg = va_arg(ap, size_t *);
+	*arg = ft_strlen(form->result);
+	return (ft_strdup(""));
+}
+
 char	*length_z(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i' || c == 'u' || c == 'o' || c == 'x' || c == 'X')

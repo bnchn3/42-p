@@ -62,7 +62,7 @@ char	*pull_string(t_print *form, va_list ap)
 	return (arg);
 }
 
-char	*pull_voidp(t_print form, va_list ap)
+char	*pull_voidp(t_print *form, va_list ap)
 {
 	void	*arg;
 	char	*result;
@@ -74,4 +74,13 @@ char	*pull_voidp(t_print form, va_list ap)
 	free(temp);
 	result = modify_string(form, result);
 	return (result);
+}
+
+char *pull_intp(t_print *form, va_list ap)
+{
+	int		*arg;
+
+	arg = va_arg(ap, int *);
+	*arg = ft_strlen(form->result);
+	return (ft_strdup(""));
 }

@@ -50,6 +50,15 @@ char	*pull_un_long_long(t_print *form, va_list ap, char c)
 	return (result);
 }
 
+char *pull_intmaxp(t_print *form, va_list ap)
+{
+	intmax_t		*arg;
+
+	arg = va_arg(ap, intmax_t *);
+	*arg = ft_strlen(form->result);
+	return (ft_strdup(""));
+}
+
 char	*length_j(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i')

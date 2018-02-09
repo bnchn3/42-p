@@ -50,6 +50,24 @@ char	*pull_un_long_long(t_print *form, va_list ap, char c)
 	return (result);
 }
 
+char *pull_longp(t_print *form, va_list ap)
+{
+	long		*arg;
+
+	arg = va_arg(ap, long *);
+	*arg = ft_strlen(form->result);
+	return (ft_strdup(""));
+}
+
+char *pull_long_longp(t_print *form, va_list ap)
+{
+	long long		*arg;
+
+	arg = va_arg(ap, long long *);
+	*arg = ft_strlen(form->result);
+	return (ft_strdup(""));
+}
+
 char	*length_ll(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i')

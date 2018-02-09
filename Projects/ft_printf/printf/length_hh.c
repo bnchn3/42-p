@@ -50,6 +50,15 @@ char	*pull_un_char(t_print *form, va_list ap, char c)
 	return (result);
 }
 
+char *pull_charp(t_print *form, va_list ap)
+{
+	signed char		*arg;
+
+	arg = va_arg(ap, signed char *);
+	*arg = ft_strlen(form->result);
+	return (ft_strdup(""));
+}
+
 char	*length_hh(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i')

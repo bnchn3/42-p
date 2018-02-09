@@ -18,9 +18,6 @@ char	*length_none(t_print *form, va_list ap, char c)
 		return (pull_int(form, ap, c));
 	if (c == 'u' || c == 'o' || c == 'x' || c == 'X')
 		return (pull_un_int(form, ap, c));
-	if (c == 'f' || c == 'F' || c == 'e' || c == 'E' || c == 'g' || c == 'G' ||
-			c == 'a' || c == 'A')
-		return (pull_double(form, ap, c));
 	if (c == 's')
 		return (pull_string(form, ap));
 	if (c == 'p')

@@ -49,6 +49,15 @@ char	*pull_un_short(t_print *form, va_list ap, char c)
 	return (result);
 }
 
+char *pull_shortp(t_print *form, va_list ap)
+{
+	short		*arg;
+
+	arg = va_arg(ap, short *);
+	*arg = ft_strlen(form->result);
+	return (ft_strdup(""));
+}
+
 char	*length_h(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i')

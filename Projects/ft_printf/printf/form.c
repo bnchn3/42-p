@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-t_print	*new_form(void)
+t_print	*new_form(char *result)
 {
 	t_print	*form;
 
@@ -21,10 +21,11 @@ t_print	*new_form(void)
 	form->width = 0;
 	form->precision = -1;
 	form->spec = 0;
+	form->result = result;
 	return (form);
 }
 
-t_print	*get_form(const char *format, t_print *form)
+t_print	*get_form(const char *format, t_print *form, va_list ap)
 {
 	int	i;
 
@@ -32,14 +33,36 @@ t_print	*get_form(const char *format, t_print *form)
 	while (format[i] == '+' || format[i] == '-' || format[i] == ' ' ||
 			format[i] == '0' || format[i] == '#')
 		ft_strpchar(&(form->flags), format[i++]);
-	if (ft_atoi(&(format[i])))
+	if (ft_atoi(&(format[i])) || format[i] == '*')
 	{
-		form->width = ft_atoi(&(format[i]));
-		while (ft_isdigit(format[i]))
+		if (format[i] == '*')
+			form->width = va_arg(ap, int);
+		else
+			form->width = ft_atoi(&(format[i]));
+		while (ft_isdigit(format[i]) || format[i] == '*')
 			i++;
 	}
 	if (format[i] == '.')
-		form->precision = ft_atoi(&(format[i + 1]));
+	{
+		if (format[i + 1] == '*')
+			form->precision = va_arg(ap, int);
+		else
+			form->precision = ft_atoi(&(format[i + 1]));
+	}
 	form->spec = get_spec(format);
 	return (form);
+}
+
+void form_del(t_print *form)
+{
+	if (form)
+	{
+		if (form->flags)
+		{
+			free(form->flags);
+			form->flags = NULL;
+		}
+		free(form);
+		form = NULL;
+	}
 }

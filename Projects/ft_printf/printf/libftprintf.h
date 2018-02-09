@@ -23,6 +23,7 @@ typedef struct	s_print
 	int			width;
 	int			precision;
 	char		spec;
+	char		*result;
 }				t_print;
 
 int				check_spec(char c);
@@ -47,7 +48,10 @@ char			*length_ll(t_print form, va_list ap, char c);
 char			*length_j(t_print form, va_list ap, char c);
 char			*length_z(t_print form, va_list ap, char c);
 char			*length_none(t_print form, va_list ap, char c);
-t_print			new_form(void);
-t_print			get_form(const char *format, t_print form);
+t_print			new_form(char *result);
+t_print			get_form(const char *format, t_print form, va_list ap);
+void form_del(t_print *form);
+char *pull_longp(t_print *form, va_list ap);
+char *pull_intp(t_print *form, va_list ap);
 
 #endif
