@@ -17,7 +17,7 @@ static size_t	ft_intlen(long long n)
 	size_t	len;
 
 	len = 0;
-	if (n == -9223372036854775808)
+	if (n == LLONG_MIN)
 	{
 		len += 20;
 		return (len);
@@ -43,7 +43,7 @@ char			*ft_max_itoa(long long n)
 	if (result)
 	{
 		i = ft_intlen(n) - 1;
-		if (n == -9223372036854775808)
+		if (n == LLONG_MIN)
 			result = ft_strcpy(result, "-9223372036854775808");
 		else if (n < 0)
 		{
@@ -52,7 +52,7 @@ char			*ft_max_itoa(long long n)
 		}
 		else if (n == 0)
 			result[0] = '0';
-		while (n != 0 && n != -9223372036854775808)
+		while (n != 0 && n != LLONG_MIN)
 		{
 			result[i--] = n % 10 + '0';
 			n /= 10;

@@ -51,7 +51,7 @@ char *pull_sizetp(t_print *form, va_list ap)
 char	*length_z(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i' || c == 'u' || c == 'o' || c == 'x' || c == 'X')
-		return (pull_sizet(form, ap));
+		return (pull_sizet(form, ap, c));
 	if (c == 'n')
 		return (pull_sizetp(form, ap));
 	return (length_none(form, ap, c));

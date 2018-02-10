@@ -75,7 +75,7 @@ char *pull_wchar(t_print *form, va_list ap)
 char	*length_l(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i' || c == 'D')
-		return (pull_long(form, ap, c));
+		return (pull_long(form, ap));
 	if (c == 'u' || c == 'U' || c == 'o' || c == 'O' || c == 'x' || c == 'X')
 		return (pull_un_long(form, ap, c));
 	if (c == 'c' || c == 'C')

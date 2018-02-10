@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdint.h>
+# include <limits.h>
 
 typedef struct		s_list
 {
@@ -102,13 +103,14 @@ void				*ft_btree_search_item(t_btree *root, void *data_ref,
 									int (*cmpf)(void *, void *));
 void				ft_strpstr(char **destination, char *source);
 void				ft_strpchar(char **destination, char c);
-int					ft_unsigned_itoa(unsigned int n);
+char				*ft_unsigned_itoa(uintmax_t n);
 unsigned int		ft_power(unsigned int base, int power);
-char				*ft_octal_convert(unsigned int n);
+char				*ft_octal_convert(uintmax_t n);
 char				*ft_strrev(char *s);
-char				*ft_hex_convert(unsigned int n);
+char				*ft_hex_convert(uintmax_t n);
 char				*ft_strnew_char(size_t n, char c);
 char				*ft_insert_char(char *s, char c, int index);
 void				*ft_meminsert(void *s, int c, int n);
+char 				*ft_max_itoa(long long n);
 
 #endif

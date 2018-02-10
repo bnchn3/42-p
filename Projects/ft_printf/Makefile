@@ -6,17 +6,17 @@
 #    By: bchan <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/09 13:34:04 by bchan             #+#    #+#              #
-#    Updated: 2018/02/09 13:44:49 by bchan            ###   ########.fr        #
+#    Updated: 2018/02/09 17:15:50 by bchan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-SRCS = printf/apply_flag.c printf/apply_width.c printf/form.c \
-	   printf/ft_printf.c printf/length_h.c printf/length_hh.c \
-	   printf/length_j.c printf/length_l.c printf/length_ll.c \
-	   printf/length_z.c printf/length.c printf/prec_aux.c printf/precision.c \
-	   printf/pull.c printf/spec.c
-OBJ = $(SRCS:.c=.o)
+DIR_S = printf
+SOURCE = apply_flag.c apply_width.c form.c ft_printf.c length_h.c length_hh.c \
+	   length_j.c length_l.c length_ll.c length_z.c length.c prec_aux.c \
+	   precision.c pull.c spec.c
+SRCS = $(addprefix $(DIR_S)/,$(SOURCE))
+OBJ = $(SOURCE:.c=.o)
 INC = printf/libftprintf.h
 LIBFT = libft/libft.a
 CC = gcc
@@ -41,4 +41,4 @@ fclean: clean
 	/bin/rm -f $(NAME)
 	make fclean -C ./libft/
 
-all: fclean all
+re: fclean all

@@ -49,13 +49,13 @@ char	*max_char(char *result, t_print *form, char *temp)
 	while (ft_strncmp(temp, save, ft_strlen(temp)) != 0)
 		save++;
 	save[form->precision] = '\0';
-	if (form->width && ft_strlen(result) < form->width)
+	if (form->width && ft_strlen(result) < (size_t)form->width)
 	{
 		if (ft_strchr(form->flags, '-'))
-			while (ft_strlen(result) < form->width)
+			while (ft_strlen(result) < (size_t)form->width)
 				ft_strpstr(&result, " ");
 		else
-			while (ft_strlen(result) < form->width)
+			while (ft_strlen(result) < (size_t)form->width)
 				result = ft_insert_char(result, ' ', 0);
 	}
 	return (result);

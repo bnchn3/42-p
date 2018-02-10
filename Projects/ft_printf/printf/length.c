@@ -23,7 +23,7 @@ char	*length_none(t_print *form, va_list ap, char c)
 	if (c == 'p')
 		return (pull_voidp(form, ap));
 	if (c == 'n')
-		return (pull_intp(form, ap, c));
+		return (pull_intp(form, ap));
 	if (c == 'D' || c == 'U' || c == 'O' || c == 'C' || c == 'S')
 		return (length_l(form, ap, c));
 	return (NULL);

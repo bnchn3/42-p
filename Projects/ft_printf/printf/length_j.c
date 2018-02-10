@@ -23,7 +23,7 @@ char	*pull_intmax(t_print *form, va_list ap)
 	return (result);
 }
 
-char	*pull_un_long_long(t_print *form, va_list ap, char c)
+char	*pull_uintmax(t_print *form, va_list ap, char c)
 {
 	uintmax_t	arg;
 	char			*result;

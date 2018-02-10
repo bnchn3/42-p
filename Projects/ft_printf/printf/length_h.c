@@ -27,6 +27,7 @@ char	*pull_un_short(t_print *form, va_list ap, char c)
 {
 	unsigned short	arg;
 	char			*result;
+	int i;
 
 	arg = va_arg(ap, unsigned int);
 	if (c == 'u')

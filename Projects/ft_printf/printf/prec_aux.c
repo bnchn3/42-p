@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprint.h"
+#include "libftprintf.h"
 
 int		find_zeroes(char *save)
 {
