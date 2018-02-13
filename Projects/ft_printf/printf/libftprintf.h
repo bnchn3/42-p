@@ -54,5 +54,7 @@ void form_del(t_print *form);
 char *pull_longp(t_print *form, va_list ap);
 char *pull_intp(t_print *form, va_list ap);
 char *find_save(char c, char *result, t_print *form);
+char	*wchar_dup(wchar_t chr);
+char	*wstr_dup(wchar_t *str);
 
 #endif

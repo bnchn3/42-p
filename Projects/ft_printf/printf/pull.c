@@ -21,7 +21,10 @@ char	*pull_int(t_print *form, va_list ap, char c)
 	if (c == 'd' || c == 'i')
 		result = ft_itoa(arg);
 	else
-		result = ft_strdup(&arg);
+	{
+		c = arg;
+		result = ft_strdup(&c);
+	}
 	result = modify_string(form, result);
 	return (result);
 }

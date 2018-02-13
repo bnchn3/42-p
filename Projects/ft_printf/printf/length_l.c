@@ -52,11 +52,11 @@ char	*pull_un_long(t_print *form, va_list ap, char c)
 
 char *pull_wint(t_print *form, va_list ap)
 {
-	wint_t arg;
+	wchar_t arg;
 	char *result;
 
-	arg = va_arg(ap, wint_t);
-	result = ft_strdup(&arg);
+	arg = (wchar_t)va_arg(ap, wint_t);
+	result = wchar_dup(arg);
 	result = modify_string(form, result);
 	return (result);
 }
@@ -67,7 +67,7 @@ char *pull_wchar(t_print *form, va_list ap)
 	char *result;
 
 	arg = va_arg(ap, wchar_t *);
-	result = ft_strdup(arg);
+	result = wstr_dup(arg);
 	result = modify_string(form, result);
 	return (result);
 }
