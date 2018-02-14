@@ -26,12 +26,18 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
 	ar rc $(NAME) $(OBJ)
+	ranlib $(NAME)
 
 $(OBJ): $(LIBFT)
 	$(CC) $(FLAGS) -c $(SRCS) -I $(INC)
 
 $(LIBFT):
 	make -C ./libft/
+	cp ./libft/libft.a ./$(NAME)
+
+test: $(NAME)
+	$(CC) $(FLAGS) -c main.c -I $(INC)
+	$(CC) -o $@ main.o -L. -lftprintf
 
 clean:
 	/bin/rm -f $(OBJ)
@@ -39,6 +45,7 @@ clean:
 
 fclean: clean
 	/bin/rm -f $(NAME)
+	/bin/rm test
 	make fclean -C ./libft/
 
 re: fclean all

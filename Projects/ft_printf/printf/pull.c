@@ -17,13 +17,17 @@ char	*pull_int(t_print *form, va_list ap, char c)
 	int		arg;
 	char	*result;
 
-	arg = va_arg(ap, int);
+
 	if (c == 'd' || c == 'i')
+	{
+		arg = va_arg(ap, int);
 		result = ft_itoa(arg);
+	}
 	else
 	{
-		c = arg;
-		result = ft_strdup(&c);
+		c = (char)va_arg(ap, int);
+		result = ft_strnew(1);
+		result[0] = c;
 	}
 	result = modify_string(form, result);
 	return (result);
@@ -59,8 +63,16 @@ char	*pull_un_int(t_print *form, va_list ap, char c)
 char	*pull_string(t_print *form, va_list ap)
 {
 	char	*arg;
+	char	*tmp;
 
-	arg = ft_strdup(va_arg(ap, char *));
+	tmp = va_arg(ap, char *);
+	if (tmp == NULL)
+	{
+		arg = ft_strdup("(null)");
+		form->null = 1;
+	}
+	else
+		arg = ft_strdup(tmp);
 	arg = modify_string(form, arg);
 	return (arg);
 }

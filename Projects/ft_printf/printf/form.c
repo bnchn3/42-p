@@ -22,6 +22,7 @@ t_print	*new_form(char *result)
 	form->precision = -1;
 	form->spec = 0;
 	form->result = result;
+	form->null = 0;
 	return (form);
 }
 
@@ -29,7 +30,7 @@ t_print	*get_form(const char *format, t_print *form, va_list ap)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (format[i] == '+' || format[i] == '-' || format[i] == ' ' ||
 			format[i] == '0' || format[i] == '#')
 		ft_strpchar(&(form->flags), format[i++]);

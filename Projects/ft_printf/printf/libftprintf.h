@@ -24,6 +24,7 @@ typedef struct	s_print
 	int			precision;
 	char		spec;
 	char		*result;
+	int 		null;
 }				t_print;
 
 int				check_spec(char c);
@@ -56,5 +57,6 @@ char *pull_intp(t_print *form, va_list ap);
 char *find_save(char c, char *result, t_print *form);
 char	*wchar_dup(wchar_t chr);
 char	*wstr_dup(wchar_t *str);
+int		ft_printf(const char *format, ...);
 
 #endif

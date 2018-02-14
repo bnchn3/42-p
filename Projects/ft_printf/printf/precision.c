@@ -20,9 +20,9 @@ char	*minimum_digits(char c, char *result, t_print *form)
 	if (ft_atoi(save) == 0 && form->precision == 0)
 	{
 		if (form->width)
-			return (ft_memset(result, ' ', ft_strlen(result)));
+			ft_memset(result, ' ', ft_strlen(result));
 		else
-			ft_strdel(&result);
+			ft_memset(result, '\0', ft_strlen(result));
 	}
 	else if (find_digits(save) > form->precision)
 		while (find_zeroes(save))
@@ -46,6 +46,11 @@ char	*max_char(char *result, t_print *form, char *temp)
 	char	*save;
 
 	save = result;
+	if (form->null == 1 && form->precision < 6)
+	{
+		ft_memset(result, '\0', ft_strlen(result));
+		return (result);
+	}
 	while (ft_strncmp(temp, save, ft_strlen(temp)) != 0)
 		save++;
 	save[form->precision] = '\0';

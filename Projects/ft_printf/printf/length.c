@@ -54,6 +54,15 @@ char	*wstr_dup(wchar_t *str)
 	return (result);
 }
 
+char *pull_mod(t_print *form)
+{
+	char *result;
+
+	result = ft_strdup("%");
+	result = modify_string(form, result);
+	return (result);
+}
+
 char	*length_none(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i' || c == 'c')
@@ -66,6 +75,8 @@ char	*length_none(t_print *form, va_list ap, char c)
 		return (pull_voidp(form, ap));
 	if (c == 'n')
 		return (pull_intp(form, ap));
+	if (c == '%')
+		return (pull_mod(form));
 	if (c == 'D' || c == 'U' || c == 'O' || c == 'C' || c == 'S')
 		return (length_l(form, ap, c));
 	return (NULL);

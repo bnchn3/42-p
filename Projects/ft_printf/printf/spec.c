@@ -17,7 +17,7 @@ int		check_spec(char c)
 	if (c == 'd' || c == 'i' || c == 'u' || c == 'o' || c == 'x' || c == 'X' ||
 		c == 's' || c == 'p' || c == 'c' || c == 'D' || c == 'U' || c == 'O' ||
 		c == 'S' || c == 'C' || c == 'e' || c == 'E' || c == 'f' || c == 'F' ||
-		c == 'g' || c == 'G' || c == 'a' || c == 'A' || c == 'n')
+		c == 'g' || c == 'G' || c == 'a' || c == 'A' || c == 'n' || c == '%')
 		return (1);
 	return (0);
 }

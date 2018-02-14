@@ -56,8 +56,6 @@ char	*print_arg(const char *format, va_list ap, char *result)
 	char	*new;
 	t_print	*form;
 
-	if (format[1] == '%')
-		return (ft_strdup("%"));
 	form = new_form(result);
 	form = get_form(format, form, ap);
 	new = check_length(format, ap, form);
@@ -89,12 +87,11 @@ int		ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			temp = print_arg(&(format[i++]), ap, result);
+			temp = print_arg(&(format[++i]), ap, result);
 			ft_strpstr(&result, temp);
 			ft_strdel(&temp);
 			while (!(check_spec(format[i++])))
-				if (format[i - 1] == '%')
-					break ;
+				;
 		}
 		else
 			ft_strpchar(&result, format[i++]);

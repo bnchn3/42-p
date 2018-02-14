@@ -34,6 +34,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	ar rc $(NAME) $(OBJ)
+	ranlib $(NAME)
 
 $(OBJ):
 	gcc -Wall -Wextra -Werror -c $(SRCS) -I.
