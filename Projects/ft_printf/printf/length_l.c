@@ -18,7 +18,7 @@ char	*pull_long(t_print *form, va_list ap)
 	char	*result;
 
 	arg = va_arg(ap, long);
-	result = ft_itoa(arg);
+	result = ft_max_itoa(arg);
 	result = modify_string(form, result);
 	return (result);
 }
