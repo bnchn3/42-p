@@ -27,7 +27,10 @@ char	*pull_int(t_print *form, va_list ap, char c)
 	{
 		c = (char)va_arg(ap, int);
 		result = ft_strnew(1);
-		result[0] = c;
+		if (c == 0)
+			result[0] = -129;
+		else
+			result[0] = c;
 	}
 	result = modify_string(form, result);
 	return (result);

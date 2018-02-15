@@ -66,9 +66,18 @@ char	*print_arg(const char *format, va_list ap, char *result)
 int		print_result(char *result)
 {
 	int	i;
+	int j;
 
-	ft_putstr(result);
-	i = ft_strlen(result);
+	i = 0;
+	j = 0;
+	while(result[j])
+	{
+		if (result[j++] == -129)
+			i++;
+		else
+			ft_putchar(result[j++]);
+	}
+	i += ft_strlen(result);
 	ft_strdel(&result);
 	return (i);
 }
