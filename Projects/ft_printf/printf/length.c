@@ -75,9 +75,9 @@ char	*length_none(t_print *form, va_list ap, char c)
 		return (pull_voidp(form, ap));
 	if (c == 'n')
 		return (pull_intp(form, ap));
-	if (c == '%')
-		return (pull_mod(form));
 	if (c == 'D' || c == 'U' || c == 'O' || c == 'C' || c == 'S')
 		return (length_l(form, ap, c));
+	if (c == '%')
+		return (pull_mod(form));
 	return (NULL);
 }

@@ -79,7 +79,7 @@ char	*add_zero(t_print *form, char *save, char *result)
 
 	while (find_digits(save) + find_zeroes(save) < form->precision)
 	{
-		ft_meminsert(save, '0', ft_strlen(save));
+		ft_meminsert(save, '0', ft_strlen(save) + 1);
 		if (form->width)
 		{
 			temp = &(save[ft_strlen(save)]);

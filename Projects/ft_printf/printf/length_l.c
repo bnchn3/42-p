@@ -30,9 +30,9 @@ char	*pull_un_long(t_print *form, va_list ap, char c)
 	int i;
 
 	arg = va_arg(ap, unsigned long);
-	if (c == 'u')
+	if (c == 'u' || c == 'U')
 		result = ft_unsigned_itoa(arg);
-	if (c == 'o')
+	if (c == 'o' || c == 'O')
 		result = ft_octal_convert(arg);
 	if (c == 'x')
 		result = ft_hex_convert(arg);

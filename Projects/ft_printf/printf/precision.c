@@ -17,7 +17,8 @@ char	*minimum_digits(char c, char *result, t_print *form)
 	char	*save;
 
 	save = find_save(c, result, form);
-	if (ft_atoi(save) == 0 && form->precision == 0)
+	if (ft_atoi(save) == 0 && form->precision == 0 && !((ft_strchr(form->flags,
+			'#') && (form->spec == 'o' || form->spec == 'O'))))
 	{
 		if (form->width)
 			ft_memset(result, ' ', ft_strlen(result));
@@ -71,6 +72,12 @@ char	*apply_precision(char *temp, char *result, t_print *form)
 	char	c;
 
 	c = form->spec;
+	if (ft_atoi(result) == 0 && form->precision == 0 && ft_strchr(form->flags,
+			'#') && (form->spec == 'o' || form->spec == 'O'))
+	{
+		ft_strdel(&result);
+		return (ft_strdup("0")); 
+	}
 	if (c == 'd' || c == 'D' || c == 'i' || c == 'u' || c == 'U' || c == 'o'
 		|| c == 'O' || c == 'x' || c == 'X')
 		result = minimum_digits(c, result, form);

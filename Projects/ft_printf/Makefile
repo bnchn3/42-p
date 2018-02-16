@@ -41,6 +41,7 @@ test: $(NAME)
 
 clean:
 	/bin/rm -f $(OBJ)
+	/bin/rm main.o
 	make clean -C ./libft/
 
 fclean: clean
