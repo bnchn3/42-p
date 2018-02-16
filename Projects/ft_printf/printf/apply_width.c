@@ -47,7 +47,10 @@ char	*apply_width(t_print *form, char *result)
 
 	if (form->width <= (int)ft_strlen(result))
 		return (result);
-	temp = ft_strnew_char(form->width - ft_strlen(result), ' ');
+	if (form->spec == 'c' && result[0] == 0)
+		temp = ft_strnew_char(form->width - 1, ' ');
+	else
+		temp = ft_strnew_char(form->width - ft_strlen(result), ' ');
 	save = NULL;
 	if (ft_strchr(form->flags, '0') && (number_spec(form->spec)))
 		temp = ft_memset(temp, '0', ft_strlen(temp));

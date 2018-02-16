@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-t_print	*new_form(char *result)
+t_print	*new_form(size_t printed)
 {
 	t_print	*form;
 
@@ -21,7 +21,7 @@ t_print	*new_form(char *result)
 	form->width = 0;
 	form->precision = -1;
 	form->spec = 0;
-	form->result = result;
+	form->printed = printed;
 	form->null = 0;
 	return (form);
 }

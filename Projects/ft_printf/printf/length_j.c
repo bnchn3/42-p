@@ -55,7 +55,7 @@ char *pull_intmaxp(t_print *form, va_list ap)
 	intmax_t		*arg;
 
 	arg = va_arg(ap, intmax_t *);
-	*arg = ft_strlen(form->result);
+	*arg = form->printed;
 	return (ft_strdup(""));
 }
 

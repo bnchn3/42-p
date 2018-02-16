@@ -55,7 +55,7 @@ char *pull_longp(t_print *form, va_list ap)
 	long		*arg;
 
 	arg = va_arg(ap, long *);
-	*arg = ft_strlen(form->result);
+	*arg = form->printed;
 	return (ft_strdup(""));
 }
 
@@ -64,7 +64,7 @@ char *pull_long_longp(t_print *form, va_list ap)
 	long long		*arg;
 
 	arg = va_arg(ap, long long *);
-	*arg = ft_strlen(form->result);
+	*arg = form->printed;
 	return (ft_strdup(""));
 }
 

@@ -55,7 +55,7 @@ char *pull_charp(t_print *form, va_list ap)
 	signed char		*arg;
 
 	arg = va_arg(ap, signed char *);
-	*arg = ft_strlen(form->result);
+	*arg = form->printed;
 	return (ft_strdup(""));
 }
 

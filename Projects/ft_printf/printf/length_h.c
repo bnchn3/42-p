@@ -55,7 +55,7 @@ char *pull_shortp(t_print *form, va_list ap)
 	short		*arg;
 
 	arg = va_arg(ap, short *);
-	*arg = ft_strlen(form->result);
+	*arg = form->printed;
 	return (ft_strdup(""));
 }
 

@@ -37,16 +37,14 @@ $(LIBFT):
 
 test: $(NAME)
 	$(CC) $(FLAGS) -c main.c -I $(INC)
-	$(CC) -o $@ main.o -L. -lftprintf
+	$(CC) -g -o $@ main.o -L. -lftprintf
 
 clean:
 	/bin/rm -f $(OBJ)
-	/bin/rm main.o
 	make clean -C ./libft/
 
 fclean: clean
 	/bin/rm -f $(NAME)
-	/bin/rm test
 	make fclean -C ./libft/
 
 re: fclean all

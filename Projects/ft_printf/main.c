@@ -13,8 +13,8 @@ int	main(void)
 	test = "{%#x}";
 	c = "test";
 	printf("PRINTF\n");
-	printf("%d\n", printf("%lu", 4294967295));
+	printf("%d\n", printf("@moulitest: %c", 0));
 	printf("FT_PRINTF\n");
-	printf("%d\n", ft_printf("%U", 4294967295));
+	printf("%d\n", ft_printf("@moulitest: %c", 0));
 	return (0);
 }

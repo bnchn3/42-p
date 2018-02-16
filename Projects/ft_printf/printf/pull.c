@@ -28,6 +28,8 @@ char	*pull_int(t_print *form, va_list ap, char c)
 		c = (char)va_arg(ap, int);
 		result = ft_strnew(1);
 		result[0] = c;
+		if (c == 0)
+			form->null = 1;
 	}
 	result = modify_string(form, result);
 	return (result);
@@ -96,6 +98,6 @@ char *pull_intp(t_print *form, va_list ap)
 	int		*arg;
 
 	arg = va_arg(ap, int *);
-	*arg = ft_strlen(form->result);
+	*arg = form->printed;
 	return (ft_strdup(""));
 }

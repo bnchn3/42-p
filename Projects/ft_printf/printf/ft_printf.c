@@ -51,56 +51,51 @@ char	*check_length(const char *format, va_list ap, t_print *form)
 	return (length_none(form, ap, format[i]));
 }
 
-char	*print_arg(const char *format, va_list ap, char *result)
+size_t	print_arg(const char *format, va_list ap, size_t printed)
 {
 	char	*new;
 	t_print	*form;
+	size_t result;
 
-	form = new_form(result);
+	form = new_form(printed);
 	form = get_form(format, form, ap);
 	new = check_length(format, ap, form);
+	result = 0;
+	ft_putstr(new);
+	if (form->spec == 'c' && form->null == 1)
+	{
+		ft_putchar(0);
+		result++;
+	}
+	result += ft_strlen(new);
+	ft_strdel(&new);
 	form_del(form);
-	return (new);
-}
-
-int		print_result(char *result)
-{
-	int	i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while(result[j])
-		ft_putchar(result[j++]);
-	i += ft_strlen(result);
-	ft_strdel(&result);
-	return (i);
+	return (result);
 }
 
 int		ft_printf(const char *format, ...)
 {
 	va_list			ap;
-	char			*result;
 	size_t			i;
-	char			*temp;
+	size_t			printed;
 
-	result = ft_strdup("");
 	i = 0;
+	printed = 0;
 	va_start(ap, format);
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
-			temp = print_arg(&(format[++i]), ap, result);
-			ft_strpstr(&result, temp);
-			ft_strdel(&temp);
+			printed += print_arg(&(format[++i]), ap, printed);
 			while (!(check_spec(format[i++])))
 				;
 		}
 		else
-			ft_strpchar(&result, format[i++]);
+		{
+			ft_putchar(format[i++]);
+			printed++;
+		}
 	}
-	i = print_result(result);
 	va_end(ap);
-	return (i);
+	return (printed);
 }
