@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:44:29 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:44:55 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:11:35 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*wstr_dup(wchar_t *str)
 	return (result);
 }
 
-char *pull_mod(t_print *form)
+char	*pull_mod(t_print *form)
 {
 	char *result;
 

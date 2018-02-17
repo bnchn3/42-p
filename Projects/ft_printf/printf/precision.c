@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:15:03 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:29:33 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:18:58 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ char	*minimum_digits(char c, char *result, t_print *form)
 	char	*save;
 
 	save = find_save(c, result, form);
-	if (ft_atoi(save) == 0 && form->precision == 0 && !((ft_strchr(form->flags,
-			'#') && (form->spec == 'o' || form->spec == 'O'))))
+	if (ft_atoi(save) == 0 && form->precision == 0)
 	{
 		if (form->width)
 			ft_memset(result, ' ', ft_strlen(result));
@@ -76,7 +75,7 @@ char	*apply_precision(char *temp, char *result, t_print *form)
 			'#') && (form->spec == 'o' || form->spec == 'O'))
 	{
 		ft_strdel(&result);
-		return (ft_strdup("0")); 
+		return (ft_strdup("0"));
 	}
 	if (c == 'd' || c == 'D' || c == 'i' || c == 'u' || c == 'U' || c == 'o'
 		|| c == 'O' || c == 'x' || c == 'X')

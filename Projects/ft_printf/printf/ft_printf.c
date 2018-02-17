@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 11:28:42 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:57:14 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:20:52 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ size_t	print_arg(const char *format, va_list ap, size_t printed)
 {
 	char	*new;
 	t_print	*form;
-	size_t result;
+	size_t	result;
 
 	form = new_form(printed);
 	form = get_form(format, form, ap);

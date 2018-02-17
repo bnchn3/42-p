@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:04:04 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:06:17 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:22:12 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*force_dec(char *result)
 	int	i;
 
 	i = 0;
-	while(result[i])
+	while (result[i])
 	{
 		if (result[i] == '.')
 			return (result);
@@ -51,7 +51,7 @@ char	*apply_pound(char c, char *result)
 	return (ft_strdup(result));
 }
 
-char *apply_flag(t_print *form, char *result)
+char	*apply_flag(t_print *form, char *result)
 {
 	char *temp;
 

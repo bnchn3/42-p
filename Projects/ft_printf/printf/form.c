@@ -6,13 +6,13 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:45:13 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:46:39 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:15:42 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-t_print	*new_form(size_t printed)
+t_print		*new_form(size_t printed)
 {
 	t_print	*form;
 
@@ -26,7 +26,7 @@ t_print	*new_form(size_t printed)
 	return (form);
 }
 
-t_print	*get_form(const char *format, t_print *form, va_list ap)
+t_print		*get_form(const char *format, t_print *form, va_list ap)
 {
 	int	i;
 
@@ -54,7 +54,7 @@ t_print	*get_form(const char *format, t_print *form, va_list ap)
 	return (form);
 }
 
-void form_del(t_print *form)
+void		form_del(t_print *form)
 {
 	if (form)
 	{

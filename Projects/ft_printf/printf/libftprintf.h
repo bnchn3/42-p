@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:00:36 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 13:05:18 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:21:17 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ typedef struct	s_print
 	int			width;
 	int			precision;
 	char		spec;
-	size_t	printed;
-	int 		null;
+	size_t		printed;
+	int			null;
 }				t_print;
 
 int				check_spec(char c);
@@ -51,12 +51,12 @@ char			*length_z(t_print *form, va_list ap, char c);
 char			*length_none(t_print *form, va_list ap, char c);
 t_print			*new_form(size_t printed);
 t_print			*get_form(const char *format, t_print *form, va_list ap);
-void form_del(t_print *form);
-char *pull_longp(t_print *form, va_list ap);
-char *pull_intp(t_print *form, va_list ap);
-char *find_save(char c, char *result, t_print *form);
-char	*wchar_dup(wchar_t chr);
-char	*wstr_dup(wchar_t *str);
-int		ft_printf(const char *format, ...);
+void			form_del(t_print *form);
+char			*pull_longp(t_print *form, va_list ap);
+char			*pull_intp(t_print *form, va_list ap);
+char			*find_save(char c, char *result, t_print *form);
+char			*wchar_dup(wchar_t chr);
+char			*wstr_dup(wchar_t *str);
+int				ft_printf(const char *format, ...);
 
 #endif

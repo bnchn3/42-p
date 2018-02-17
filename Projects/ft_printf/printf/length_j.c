@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:42:55 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:43:17 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:16:33 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*pull_intmax(t_print *form, va_list ap)
 {
 	intmax_t	arg;
-	char	*result;
+	char		*result;
 
 	arg = va_arg(ap, intmax_t);
 	result = ft_max_itoa(arg);
@@ -26,8 +26,8 @@ char	*pull_intmax(t_print *form, va_list ap)
 char	*pull_uintmax(t_print *form, va_list ap, char c)
 {
 	uintmax_t	arg;
-	char			*result;
-	int i;
+	char		*result;
+	int			i;
 
 	arg = va_arg(ap, uintmax_t);
 	if (c == 'u')
@@ -50,9 +50,9 @@ char	*pull_uintmax(t_print *form, va_list ap, char c)
 	return (result);
 }
 
-char *pull_intmaxp(t_print *form, va_list ap)
+char	*pull_intmaxp(t_print *form, va_list ap)
 {
-	intmax_t		*arg;
+	intmax_t	*arg;
 
 	arg = va_arg(ap, intmax_t *);
 	*arg = form->printed;

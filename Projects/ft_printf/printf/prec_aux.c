@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:10:57 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:13:00 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:11:08 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		find_digits(char *save)
 	return (count);
 }
 
-char *find_save(char c, char *result, t_print *form)
+char	*find_save(char c, char *result, t_print *form)
 {
 	char	*save;
 

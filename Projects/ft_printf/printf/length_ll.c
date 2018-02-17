@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:41:42 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:42:10 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:17:12 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*pull_long_long(t_print *form, va_list ap)
 {
 	long long	arg;
-	char	*result;
+	char		*result;
 
 	arg = va_arg(ap, long long);
 	result = ft_max_itoa(arg);
@@ -26,8 +26,8 @@ char	*pull_long_long(t_print *form, va_list ap)
 char	*pull_un_long_long(t_print *form, va_list ap, char c)
 {
 	unsigned long long	arg;
-	char			*result;
-	int i;
+	char				*result;
+	int					i;
 
 	arg = va_arg(ap, unsigned long long);
 	if (c == 'u')
@@ -50,7 +50,7 @@ char	*pull_un_long_long(t_print *form, va_list ap, char c)
 	return (result);
 }
 
-char *pull_longp(t_print *form, va_list ap)
+char	*pull_longp(t_print *form, va_list ap)
 {
 	long		*arg;
 
@@ -59,7 +59,7 @@ char *pull_longp(t_print *form, va_list ap)
 	return (ft_strdup(""));
 }
 
-char *pull_long_longp(t_print *form, va_list ap)
+char	*pull_long_longp(t_print *form, va_list ap)
 {
 	long long		*arg;
 

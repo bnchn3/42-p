@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:31:26 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:35:38 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:22:32 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*pull_int(t_print *form, va_list ap, char c)
 {
 	int		arg;
 	char	*result;
-
 
 	if (c == 'd' || c == 'i')
 	{
@@ -39,7 +38,7 @@ char	*pull_un_int(t_print *form, va_list ap, char c)
 {
 	unsigned int	arg;
 	char			*result;
-	int i;
+	int				i;
 
 	arg = va_arg(ap, unsigned int);
 	if (c == 'u')
@@ -93,7 +92,7 @@ char	*pull_voidp(t_print *form, va_list ap)
 	return (result);
 }
 
-char *pull_intp(t_print *form, va_list ap)
+char	*pull_intp(t_print *form, va_list ap)
 {
 	int		*arg;
 

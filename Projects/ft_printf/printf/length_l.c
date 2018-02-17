@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:40:41 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:41:10 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:14:12 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*pull_un_long(t_print *form, va_list ap, char c)
 {
 	unsigned long	arg;
 	char			*result;
-	int i;
+	int				i;
 
 	arg = va_arg(ap, unsigned long);
 	if (c == 'u' || c == 'U')
@@ -50,10 +50,10 @@ char	*pull_un_long(t_print *form, va_list ap, char c)
 	return (result);
 }
 
-char *pull_wint(t_print *form, va_list ap)
+char	*pull_wint(t_print *form, va_list ap)
 {
-	wchar_t arg;
-	char *result;
+	wchar_t	arg;
+	char	*result;
 
 	arg = (wchar_t)va_arg(ap, wint_t);
 	result = wchar_dup(arg);
@@ -61,10 +61,10 @@ char *pull_wint(t_print *form, va_list ap)
 	return (result);
 }
 
-char *pull_wchar(t_print *form, va_list ap)
+char	*pull_wchar(t_print *form, va_list ap)
 {
-	wchar_t *arg;
-	char *result;
+	wchar_t	*arg;
+	char	*result;
 
 	arg = va_arg(ap, wchar_t *);
 	result = wstr_dup(arg);

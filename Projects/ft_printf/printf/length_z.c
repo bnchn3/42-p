@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:43:36 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:43:57 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:19:44 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*pull_ssizet(t_print *form, va_list ap)
 {
-	ssize_t arg;
-	char *result;
+	ssize_t	arg;
+	char	*result;
 
 	arg = va_arg(ap, ssize_t);
 	result = ft_max_itoa(arg);
@@ -26,8 +26,8 @@ char	*pull_ssizet(t_print *form, va_list ap)
 char	*pull_sizet(t_print *form, va_list ap, char c)
 {
 	size_t		arg;
-	char			*result;
-	int i;
+	char		*result;
+	int			i;
 
 	arg = va_arg(ap, size_t);
 	if (c == 'u')
@@ -50,7 +50,7 @@ char	*pull_sizet(t_print *form, va_list ap, char c)
 	return (result);
 }
 
-char *pull_sizetp(t_print *form, va_list ap)
+char	*pull_sizetp(t_print *form, va_list ap)
 {
 	size_t		*arg;
 

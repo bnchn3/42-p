@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:37:34 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/07 12:38:44 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/16 16:15:12 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*pull_un_char(t_print *form, va_list ap, char c)
 {
 	unsigned char	arg;
 	char			*result;
-	int i;
+	int				i;
 
 	arg = va_arg(ap, unsigned int);
 	if (c == 'u')
@@ -50,7 +50,7 @@ char	*pull_un_char(t_print *form, va_list ap, char c)
 	return (result);
 }
 
-char *pull_charp(t_print *form, va_list ap)
+char	*pull_charp(t_print *form, va_list ap)
 {
 	signed char		*arg;
 
