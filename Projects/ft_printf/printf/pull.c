@@ -85,7 +85,7 @@ char	*pull_voidp(t_print *form, va_list ap)
 	char	*temp;
 
 	arg = va_arg(ap, void *);
-	temp = ft_hex_convert((unsigned int)arg);
+	temp = ft_hex_convert((uintmax_t)arg);
 	result = ft_strjoin("0x", temp);
 	free(temp);
 	result = modify_string(form, result);

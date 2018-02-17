@@ -53,12 +53,12 @@ char	*apply_width(t_print *form, char *result)
 		temp = ft_strnew_char(form->width - ft_strlen(result), ' ');
 	save = NULL;
 	if (ft_strchr(form->flags, '0') && (number_spec(form->spec)))
-		temp = ft_memset(temp, '0', ft_strlen(temp));
-	if (ft_strchr(form->flags, '-'))
 	{
-		temp = ft_memset(temp, ' ', ft_strlen(temp));
-		save = ft_strjoin(result, temp);
+		save = find_save(form->spec, result, form);
+		save = add_zero(form, save, result);
 	}
+	else if (ft_strchr(form->flags, '-'))
+		save = ft_strjoin(result, temp);
 	else
 		save = add_lead(result, temp, form->width - ft_strlen(result));
 	free(result);

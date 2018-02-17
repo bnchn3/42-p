@@ -6,7 +6,7 @@
 #    By: bchan <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/09 13:34:04 by bchan             #+#    #+#              #
-#    Updated: 2018/02/16 16:08:59 by bchan            ###   ########.fr        #
+#    Updated: 2018/02/16 16:29:32 by bchan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,12 @@ test: $(NAME)
 
 clean:
 	/bin/rm -f $(OBJ)
+	/bin/rm main.o
 	make clean -C ./libft/
 
 fclean: clean
 	/bin/rm -f $(NAME)
+	/bin/rm test
 	make fclean -C ./libft/
 
 re: fclean all
