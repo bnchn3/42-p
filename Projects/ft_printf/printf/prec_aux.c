@@ -93,6 +93,6 @@ char	*add_zero(t_print *form, char *save, char *result)
 		}
 	}
 	save = ft_strdup(result);
-	free(result);
+	ft_strdel(&result);
 	return (save);
 }
