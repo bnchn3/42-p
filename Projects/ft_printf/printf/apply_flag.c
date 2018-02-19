@@ -58,9 +58,9 @@ char	*apply_flag(t_print *form, char *result)
 	temp = NULL;
 	if (form->spec == 'd' || form->spec == 'i' || form->spec == 'D')
 	{
-		if (ft_strchr(form->flags, '+') && ft_atoi(result) >= 0)
+		if (ft_strchr(form->flags, '+') && result[0] != '-')
 			temp = ft_strjoin("+", result);
-		else if (ft_strchr(form->flags, ' ') && ft_atoi(result) >= 0)
+		else if (ft_strchr(form->flags, ' ') && result[0] != '-')
 			temp = ft_strjoin(" ", result);
 	}
 	if (ft_strchr(form->flags, '#') && number_spec(form->spec))
