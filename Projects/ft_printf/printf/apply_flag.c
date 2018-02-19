@@ -29,26 +29,26 @@ char	*force_dec(char *result)
 
 char	*apply_pound(char c, char *result)
 {
-	char	*tmp1;
-	char	*tmp2;
+	char	*tmp;
 
 	if (c == 'a' || c == 'A' || c == 'e' || c == 'E' || c == 'f' || c == 'F'
 		|| c == 'g' || c == 'G')
 		return (force_dec(result));
 	if (c == 'd' || c == 'i' || c == 'D')
 		return (result);
-	tmp1 = ft_strdup(result);
-	tmp2 = result;
+	tmp = NULL;
 	if ((c == 'o' || c == 'O') && result[0] != '0')
-		tmp2 = ft_strjoin("0", tmp1);
+		tmp = ft_strjoin("0", result);
 	if (c == 'x' && result[0] != '0')
-		tmp2 = ft_strjoin("0x", tmp1);
+		tmp = ft_strjoin("0x", result);
 	if (c == 'X' && result[0] != '0')
-		tmp2 = ft_strjoin("0X", tmp1);
-	ft_strcpy(result, tmp2);
-	ft_strdel(&tmp1);
-	ft_strdel(&tmp2);
-	return (ft_strdup(result));
+		tmp = ft_strjoin("0X", result);
+	if (tmp)
+	{
+		ft_strdel(&result);
+		return (ft_strdup(tmp));
+	}
+	return (result);
 }
 
 char	*apply_flag(t_print *form, char *result)

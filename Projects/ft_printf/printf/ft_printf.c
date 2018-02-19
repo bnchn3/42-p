@@ -23,7 +23,7 @@ char	*modify_string(t_print *form, char *result)
 		result = apply_precision(temp, result, form);
 	if (ft_strchr(form->flags, ' ') && (form->spec == 'd' || form->spec == 'i'
 		|| form->spec == 'D') && !(ft_strchr(form->flags, '+')) && result[0]
-		!= ' ')
+		!= ' ' && result[0] != '-')
 		result = ft_insert_char(result, ' ', 0);
 	ft_strdel(&temp);
 	return (result);
