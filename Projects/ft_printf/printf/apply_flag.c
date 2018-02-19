@@ -35,7 +35,7 @@ char	*apply_pound(char c, char *result)
 	if (c == 'a' || c == 'A' || c == 'e' || c == 'E' || c == 'f' || c == 'F'
 		|| c == 'g' || c == 'G')
 		return (force_dec(result));
-	if (c == 'd' || c == 'i')
+	if (c == 'd' || c == 'i' || c == 'D')
 		return (result);
 	tmp1 = ft_strdup(result);
 	tmp2 = result;
@@ -56,7 +56,7 @@ char	*apply_flag(t_print *form, char *result)
 	char *temp;
 
 	temp = NULL;
-	if (form->spec == 'd' || form->spec == 'i')
+	if (form->spec == 'd' || form->spec == 'i' || form->spec == 'D')
 	{
 		if (ft_strchr(form->flags, '+') && ft_atoi(result) >= 0)
 			temp = ft_strjoin("+", result);

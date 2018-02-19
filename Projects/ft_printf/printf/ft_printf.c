@@ -21,6 +21,10 @@ char	*modify_string(t_print *form, char *result)
 	result = apply_width(form, result);
 	if (form->precision >= 0)
 		result = apply_precision(temp, result, form);
+	if (ft_strchr(form->flags, ' ') && (form->spec == 'd' || form->spec == 'i' ||
+			form->spec == 'D') && !(ft_strchr(form->flags, '+')) && ft_atoi(result)
+			>= 0 && result[0] != ' ')
+			result = ft_insert_char(result, ' ', 0);
 	free(temp);
 	return (result);
 }
