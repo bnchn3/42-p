@@ -13,8 +13,8 @@ int	main(void)
 	test = ft_strdup("Hello");
 	c = "test";
 	printf("PRINTF\n");
-	printf("%d\n", printf("% 4.5i", 42));
+	printf("%d\n", printf("%#o", 0));
 	printf("FT_PRINTF\n");
-	printf("%d\n", ft_printf("% 4.5i", 42));
+	printf("%d\n", ft_printf("%#o", 0));
 	return (0);
 }
