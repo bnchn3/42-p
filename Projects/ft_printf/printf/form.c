@@ -60,7 +60,7 @@ void		form_del(t_print *form)
 	{
 		if (form->flags)
 		{
-			free(form->flags);
+			ft_strdel(&(form->flags));
 			form->flags = NULL;
 		}
 		free(form);

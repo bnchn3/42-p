@@ -25,7 +25,7 @@ char	*modify_string(t_print *form, char *result)
 		|| form->spec == 'D') && !(ft_strchr(form->flags, '+')) &&
 		ft_atoi(result) >= 0 && result[0] != ' ')
 		result = ft_insert_char(result, ' ', 0);
-	free(temp);
+	ft_strdel(&temp);
 	return (result);
 }
 

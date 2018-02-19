@@ -61,7 +61,7 @@ char	*apply_width(t_print *form, char *result)
 		save = ft_strjoin(result, temp);
 	else
 		save = add_lead(result, temp, form->width - ft_strlen(result));
-	free(result);
-	free(temp);
+	ft_strdel(&result);
+	ft_strdel(&temp);
 	return (save);
 }
