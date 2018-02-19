@@ -44,7 +44,7 @@ char		*ft_hex_convert(uintmax_t n)
 		else
 			digit = hex(n % 16);
 		ft_strpstr(&result, digit);
-		ft_strdel(&digit);
+		free(digit);
 		n /= 16;
 	}
 	result = ft_strrev(result);

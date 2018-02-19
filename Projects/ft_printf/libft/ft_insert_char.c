@@ -27,7 +27,7 @@ char	*ft_insert_char(char *s, char c, int index)
 			temp[j++] = c;
 		temp[j++] = s[i++];
 	}
-	ft_strdel(&s);
+	free(s);
 	s = temp;
 	return (s);
 }

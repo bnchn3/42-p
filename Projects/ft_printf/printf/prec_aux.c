@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:10:57 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/16 16:11:08 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/19 12:38:27 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ char	*add_zero(t_print *form, char *save, char *result)
 		}
 	}
 	save = ft_strdup(result);
-	ft_strdel(&result);
+	free(result);
 	return (save);
 }

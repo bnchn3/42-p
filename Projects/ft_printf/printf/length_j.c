@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:42:55 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/16 16:16:33 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/19 12:57:56 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*pull_uintmax(t_print *form, va_list ap, char c)
 
 char	*pull_intmaxp(t_print *form, va_list ap)
 {
-	intmax_t	*arg;
+	intmax_t		*arg;
 
 	arg = va_arg(ap, intmax_t *);
 	*arg = form->printed;

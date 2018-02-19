@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:43:36 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/16 16:19:44 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/19 12:57:31 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*pull_ssizet(t_print *form, va_list ap)
 {
-	ssize_t	arg;
+	ssize_t arg;
 	char	*result;
 
 	arg = va_arg(ap, ssize_t);
