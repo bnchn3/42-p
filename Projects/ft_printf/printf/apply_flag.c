@@ -39,7 +39,7 @@ char	*apply_pound(char c, char *result)
 		return (result);
 	tmp1 = ft_strdup(result);
 	tmp2 = result;
-	if ((c == 'o' || c == 'O') && ft_atoi(result) != 0)
+	if ((c == 'o' || c == 'O') && result[0] != '0')
 		tmp2 = ft_strjoin("0", tmp1);
 	if (c == 'x' && result[0] != '0')
 		tmp2 = ft_strjoin("0x", tmp1);
