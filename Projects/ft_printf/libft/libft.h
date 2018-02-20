@@ -112,5 +112,6 @@ char				*ft_strnew_char(size_t n, char c);
 char				*ft_insert_char(char *s, char c, int index);
 void				*ft_meminsert(void *s, int c, int n);
 char				*ft_max_itoa(long long n);
+char				*ft_dtoa(long double n);
 
 #endif

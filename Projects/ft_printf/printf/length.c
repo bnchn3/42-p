@@ -63,6 +63,22 @@ char	*pull_mod(t_print *form)
 	return (result);
 }
 
+char	*pull_double(t_print *form, va_list ap)
+{
+	double	arg;
+	char		*result;
+	int			i;
+
+	i = -1;
+	arg = va_arg(ap, double);
+	result = ft_dtoa(arg);
+	if (form->spec == 'F')
+		while (result[++i])
+			ft_toupper(result[i]);
+	result = modify_string(form, result);
+	return (result);
+}
+
 char	*length_none(t_print *form, va_list ap, char c)
 {
 	if (c == 'd' || c == 'i' || c == 'c')
@@ -79,5 +95,7 @@ char	*length_none(t_print *form, va_list ap, char c)
 		return (length_l(form, ap, c));
 	if (c == '%')
 		return (pull_mod(form));
+	if (c == 'f' || c == 'F')
+		return (pull_double(form, ap));
 	return (NULL);
 }

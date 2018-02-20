@@ -22,8 +22,8 @@ char	*modify_string(t_print *form, char *result)
 	if (form->precision >= 0)
 		result = apply_precision(temp, result, form);
 	if (ft_strchr(form->flags, ' ') && (form->spec == 'd' || form->spec == 'i'
-		|| form->spec == 'D') && !(ft_strchr(form->flags, '+')) && result[0]
-		!= ' ' && result[0] != '-')
+		|| form->spec == 'D' || form->spec == 'f' || form->spec == 'F') &&
+		!(ft_strchr(form->flags, '+')) && result[0] != ' ' && result[0] != '-')
 		result = ft_insert_char(result, ' ', 0);
 	free(temp);
 	return (result);

@@ -90,15 +90,13 @@ char  *ft_dtoa(long double n)
   char  *temp;
   long double save;
 
-  result = ft_strdup("");
+  result = ft_max_itoa((long long)n);
   save = round_num(n);
-  result = get_number(save, result);
   if (n - save != 0)
   {
     ft_strpchar(&result, '.');
     save = get_decimal(n - save);
-    temp = ft_strdup("");
-    temp = get_number(save, temp);
+    temp = ft_max_itoa((long long)save);
     ft_strpstr(&result, temp);
     ft_strdel(&temp);
   }

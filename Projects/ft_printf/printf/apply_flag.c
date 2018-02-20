@@ -56,7 +56,8 @@ char	*apply_flag(t_print *form, char *result)
 	char *temp;
 
 	temp = NULL;
-	if (form->spec == 'd' || form->spec == 'i' || form->spec == 'D')
+	if (form->spec == 'd' || form->spec == 'i' || form->spec == 'D' ||
+			form->spec == 'f' || form->spec == 'F')
 	{
 		if (ft_strchr(form->flags, '+') && result[0] != '-')
 			temp = ft_strjoin("+", result);
