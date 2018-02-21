@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:13:15 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/21 13:50:09 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/21 15:18:29 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	add_exp(char *result, int count)
 		temp = ft_itoa(count * -1);
 		ft_strpstr(&result, temp);
 	}
-	ft_strdel(temp);
+	ft_strdel(&temp);
 }
 
 char	*sci_convert(char *result)

@@ -13,8 +13,8 @@ int	main(void)
 	test = ft_strdup("Hello");
 	c = "test";
 	printf("PRINTF\n");
-	printf("%d\n", printf("%+ld", 2147483648));
+	printf("%d\n", printf("%p", test));
 	printf("FT_PRINTF\n");
-	printf("%d\n", ft_printf("%+D", 2147483648));
+	printf("%d\n", ft_printf("%p", test));
 	return (0);
 }
