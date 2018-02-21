@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   modify_double.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/21 13:13:15 by bchan             #+#    #+#             */
+/*   Updated: 2018/02/21 13:13:39 by bchan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libftprintf.h"
 
-void truncate(char *result, int n)
+void	truncate(char *result, int n)
 {
 	int	i;
 
@@ -12,7 +24,7 @@ void truncate(char *result, int n)
 	result[i] = '\0';
 }
 
-void swap(char *result, int i, int j)
+void	swap(char *result, int i, int j)
 {
 	char c;
 
@@ -21,7 +33,7 @@ void swap(char *result, int i, int j)
 	result[j] = c;
 }
 
-void add_exp(char *result, int count)
+void	add_exp(char *result, int count)
 {
 	char *temp;
 

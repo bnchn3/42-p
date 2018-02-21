@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:44:29 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/19 12:40:19 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/21 13:12:40 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*pull_mod(t_print *form)
 char	*pull_double(t_print *form, va_list ap)
 {
 	double	arg;
-	char		*result;
+	char	*result;
 
 	arg = va_arg(ap, double);
 	result = ft_dtoa(arg);

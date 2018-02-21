@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:00:36 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/19 13:00:32 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/21 13:16:26 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char			*pull_intp(t_print *form, va_list ap);
 char			*find_save(char c, char *result, t_print *form);
 char			*wchar_dup(wchar_t chr);
 char			*wstr_dup(wchar_t *str);
+char			*modify_double(t_print *form, char *result);
 int				ft_printf(const char *format, ...);
 
 #endif
