@@ -90,7 +90,7 @@ char	*modify_double(t_print *form, char *result)
 	if (form->spec == 'f' || form->spec == 'F')
 		truncate(result, 6);
 	else if (form->spec == 'e' || form->spec == 'E')
-		result = sci_convert(result, n);
+		result = sci_convert(result);
 	if (form->spec == 'F' || form->spec == 'E')
 	{
 		i = 0;

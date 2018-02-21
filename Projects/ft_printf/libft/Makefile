@@ -6,7 +6,7 @@
 #    By: bchan <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/30 13:04:44 by bchan             #+#    #+#              #
-#    Updated: 2018/02/09 13:47:10 by bchan            ###   ########.fr        #
+#    Updated: 2018/02/21 13:21:37 by bchan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 	   ft_btree_create_node.c ft_btree_insert_data.c ft_btree_search_item.c \
 	   ft_strpchar.c ft_strpstr.c ft_hex_convert.c ft_insert_char.c \
 	   ft_max_itoa.c ft_meminsert.c ft_octal_convert.c ft_power.c \
-	   ft_strnew_char.c ft_strrev.c ft_unsigned_itoa.c
+	   ft_strnew_char.c ft_strrev.c ft_unsigned_itoa.c ft_dtoa.c
 OBJ = $(SRCS:.c=.o)
 
 all: $(NAME)
