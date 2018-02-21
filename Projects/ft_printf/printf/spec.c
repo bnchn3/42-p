@@ -38,3 +38,25 @@ int		number_spec(char c)
 		return (0);
 	return (1);
 }
+
+void truncate(char *result, int n)
+{
+	int	i;
+
+	i = 0;
+	while (result[i] && result[i] != '.')
+		i++;
+	while (n-- > 0)
+		i++;
+	result[i] = '\0';
+}
+
+char	*modify_double(t_print *form, char *result)
+{
+	if (form->spec == 'f' || form->spec == 'F')
+		truncate(result, 6);
+	else if (form->spec == 'e' || form->spec == 'E')
+	{
+		result = sci_convert(result);
+	}
+}

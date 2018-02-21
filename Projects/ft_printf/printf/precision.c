@@ -66,20 +66,6 @@ char	*max_char(char *result, t_print *form, char *temp)
 	return (result);
 }
 
-char	*minimum_decimal(char c, char *result, t_print *form)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (result[i] && result[i] != '.')
-		i++;
-	if (result[i] != '.')
-		result[i] == '.';
-	
-}
-
 char	*apply_precision(char *temp, char *result, t_print *form)
 {
 	char	c;
@@ -94,8 +80,6 @@ char	*apply_precision(char *temp, char *result, t_print *form)
 	if (c == 'd' || c == 'D' || c == 'i' || c == 'u' || c == 'U' || c == 'o'
 		|| c == 'O' || c == 'x' || c == 'X')
 		result = minimum_digits(c, result, form);
-	else if (c == 'f' || c == 'F')
-		result = minimum_decimal(c, result, form);
 	else if (c == 's')
 		result = max_char(result, form, temp);
 	return (result);

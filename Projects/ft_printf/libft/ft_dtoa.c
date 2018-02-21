@@ -54,7 +54,7 @@ static long double  get_decimal(long double n)
   count = 0;
   if (n < 0)
     n *= -1;
-  while (n - round_num(n) != 0 && count < 19)
+  while (count < 19)
   {
     n *= 10;
     count++;
@@ -89,16 +89,23 @@ char  *ft_dtoa(long double n)
   char  *result;
   char  *temp;
   long double save;
+  int i;
 
   result = ft_max_itoa((long long)n);
   save = round_num(n);
+  ft_strpchar(&result, '.');
   if (n - save != 0)
   {
-    ft_strpchar(&result, '.');
     save = get_decimal(n - save);
     temp = ft_max_itoa((long long)save);
     ft_strpstr(&result, temp);
     ft_strdel(&temp);
+  }
+  else
+  {
+    i = 0;
+    while (i++ < 19)
+      ft_strpchar(&result, '0');
   }
   return (result);
 }
