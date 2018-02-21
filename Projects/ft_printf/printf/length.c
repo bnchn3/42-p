@@ -91,7 +91,5 @@ char	*length_none(t_print *form, va_list ap, char c)
 		return (length_l(form, ap, c));
 	if (c == '%')
 		return (pull_mod(form));
-	if (c == 'f' || c == 'F' || c == 'e' || c == 'E')
-		return (pull_double(form, ap));
 	return (NULL);
 }
