@@ -33,7 +33,7 @@ static long double	round_num(long double n)
 	return (n - save);
 }
 
-static long double	mod_double(long double n, long double i)
+/*static long double	mod_double(long double n, long double i)
 {
 	if (n < 0)
 	{
@@ -50,7 +50,7 @@ static long double	mod_double(long double n, long double i)
 			n -= i;
 	}
 	return (n);
-}
+}*/
 
 static long double	get_decimal(long double n)
 {
@@ -67,7 +67,7 @@ static long double	get_decimal(long double n)
 	return (round_num(n));
 }
 
-static char			*get_number(long double save, char *result)
+/*static char			*get_number(long double save, char *result)
 {
 	int isneg;
 
@@ -87,7 +87,7 @@ static char			*get_number(long double save, char *result)
 		ft_strpchar(&result, '-');
 	result = ft_strrev(result);
 	return (result);
-}
+}*/
 
 char				*ft_dtoa(long double n, int i)
 {

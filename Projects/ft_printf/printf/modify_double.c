@@ -74,7 +74,7 @@ char	*sci_convert(char *result)
 	while (ft_atoi(result) < 1 && ft_atoi(result) > -1 && result[i])
 	{
 		swap(result, i, i + 1);
-		ft_memmove(&result[i - 1], result[i], ft_strlen(&result[i]) + 1);
+		ft_memmove(&result[i - 1], &result[i], ft_strlen(&result[i]) + 1);
 		count--;
 	}
 	truncate_dec(result, 6);
