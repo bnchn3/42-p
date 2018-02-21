@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 13:34:09 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/21 13:15:18 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/21 13:49:04 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 static long double	round_num(long double n)
 {
-	long double save;
-  int i;
+	long double	save;
+	int			i;
 
 	save = n;
-  i = 0;
+	i = 0;
 	if (n < 1)
 		return (0);
-  while (ft_power(10, i) <= n)
-    i++;
-  i--;
-  while (i >= 0)
-  {
-    while (save - ft_power(10, i) >= 0)
-      save -= ft_power(10, i);
-    i--;
-  }
+	while (ft_power(10, i) <= n)
+		i++;
+	i--;
+	while (i >= 0)
+	{
+		while (save - ft_power(10, i) >= 0)
+			save -= ft_power(10, i);
+		i--;
+	}
 	return (n - save);
 }
 
@@ -95,13 +95,13 @@ char				*ft_dtoa(long double n, int i)
 	char		*temp;
 	long double	save;
 
-  result = ft_strdup("");
-  if (n < -1 && n < 0)
-    ft_strpchar(&result, '-');
+	result = ft_strdup("");
+	if (n < -1 && n < 0)
+		ft_strpchar(&result, '-');
 	temp = ft_max_itoa((long long)n);
-  ft_strpstr(&result, temp);
-  if (n < 0)
-    n *= -1;
+	ft_strpstr(&result, temp);
+	if (n < 0)
+		n *= -1;
 	save = round_num(n);
 	ft_strpchar(&result, '.');
 	if (n - save != 0)
@@ -113,6 +113,6 @@ char				*ft_dtoa(long double n, int i)
 	else
 		while (i++ < 19)
 			ft_strpchar(&result, '0');
-  ft_strdel(&temp);
+	ft_strdel(&temp);
 	return (result);
 }
