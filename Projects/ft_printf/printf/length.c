@@ -69,7 +69,7 @@ char	*pull_double(t_print *form, va_list ap)
 	char	*result;
 
 	arg = va_arg(ap, double);
-	result = ft_dtoa(arg);
+	result = ft_dtoa(arg, 0);
 	result = modify_double(form, result);
 	result = modify_string(form, result);
 	return (result);
