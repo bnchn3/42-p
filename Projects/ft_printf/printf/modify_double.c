@@ -19,7 +19,7 @@ void	truncate_dec(char *result, int n)
 	i = 0;
 	while (result[i] && result[i] != '.')
 		i++;
-	while (n-- > 0)
+	while (n-- >= 0)
 		i++;
 	result[i] = '\0';
 }
@@ -33,7 +33,7 @@ void	swap(char *result, int i, int j)
 	result[j] = c;
 }
 
-void	add_exp(char *result, int count)
+char	*add_exp(char *result, int count)
 {
 	char *temp;
 
@@ -54,6 +54,7 @@ void	add_exp(char *result, int count)
 		ft_strpstr(&result, temp);
 	}
 	ft_strdel(&temp);
+	return (result);
 }
 
 char	*sci_convert(char *result)
@@ -79,7 +80,7 @@ char	*sci_convert(char *result)
 	}
 	truncate_dec(result, 6);
 	ft_strpchar(&result, 'e');
-	add_exp(result, count);
+	result = add_exp(result, count);
 	return (result);
 }
 
