@@ -40,7 +40,7 @@ static long double	get_decimal(long double n, char **result)
 	count = 0;
 	if (n < 0)
 		n *= -1;
-	while (count < 19)
+	while (count < 18)
 	{
 		n *= 10;
 		if (n > -1 && n < 1)

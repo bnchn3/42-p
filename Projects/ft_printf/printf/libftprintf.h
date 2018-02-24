@@ -58,6 +58,9 @@ char			*find_save(char c, char *result, t_print *form);
 char			*wchar_dup(wchar_t chr);
 char			*wstr_dup(wchar_t *str);
 char			*modify_double(t_print *form, char *result);
+int				number_spec2(char c);
+char			*sci_convert(char *result, int n);
+char			*find_shortest(t_print *form, char *result);
 int				ft_printf(const char *format, ...);
 
 #endif

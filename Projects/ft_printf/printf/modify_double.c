@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:13:15 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/21 15:18:29 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/23 18:25:23 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*add_exp(char *result, int count)
 	return (result);
 }
 
-char	*sci_convert(char *result)
+char	*sci_convert(char *result, int n)
 {
 	int i;
 	int count;
@@ -66,7 +66,7 @@ char	*sci_convert(char *result)
 	count = 0;
 	while (result[i] && result[i] != '.')
 		i++;
-	while (ft_atoi(result) > 10 || ft_atoi(result) < -10)
+	while (ft_atoi(result) >= 10 || ft_atoi(result) <= -10)
 	{
 		swap(result, i, i - 1);
 		count++;
@@ -78,7 +78,7 @@ char	*sci_convert(char *result)
 		ft_memmove(&result[i - 1], &result[i], ft_strlen(&result[i]) + 1);
 		count--;
 	}
-	truncate_dec(result, 6);
+	truncate_dec(result, n);
 	ft_strpchar(&result, 'e');
 	result = add_exp(result, count);
 	return (result);
@@ -86,17 +86,26 @@ char	*sci_convert(char *result)
 
 char	*modify_double(t_print *form, char *result)
 {
-	int i;
+	int		i;
+	char	*temp;
 
+	if (form->precision == -1)
+		i = 6;
+	else
+		i = form->precision;
 	if (form->spec == 'f' || form->spec == 'F')
-		truncate_dec(result, 6);
+		truncate_dec(result, i);
 	else if (form->spec == 'e' || form->spec == 'E')
-		result = sci_convert(result);
-	if (form->spec == 'F' || form->spec == 'E')
+		result = sci_convert(result, i);
+	else if (form->spec == 'g' || form->spec == 'G')
+		result = find_shortest(form, result);
+	if (form->spec == 'F' || form->spec == 'E' || form->spec == 'G')
+		ft_capitalize(result);
+	if (!(ft_strchr(form->flags, '#')) && form->precision == 0 && form->spec
+			!= 'g' && form->spec != 'G')
 	{
-		i = 0;
-		while (result[i])
-			ft_toupper(result[i++]);
+		temp = ft_strchr(result, '.');
+		ft_memmove(temp, temp + 1, ft_strlen(temp));
 	}
 	return (result);
 }
