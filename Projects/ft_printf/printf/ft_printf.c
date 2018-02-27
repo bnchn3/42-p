@@ -22,7 +22,8 @@ char	*modify_string(t_print *form, char *result)
 			form->spec == 'E' || form->spec == 'g' || form->spec == 'G')
 		result = modify_double(form, result);
 	result = apply_width(form, result);
-	result = apply_precision(temp, result, form);
+	if (form->precision >= 0)
+		result = apply_precision(temp, result, form);
 	if (ft_strchr(form->flags, ' ') && (number_spec2(form->spec)) &&
 		!(ft_strchr(form->flags, '+')) && result[0] != ' ' && result[0] != '-')
 		result = ft_insert_char(result, ' ', 0);

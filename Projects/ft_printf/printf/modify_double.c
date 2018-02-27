@@ -21,6 +21,7 @@ void	truncate_dec(char *result, int n)
 		i++;
 	while (n-- >= 0)
 		i++;
+	round_up(result, i);
 	result[i] = '\0';
 }
 
@@ -66,6 +67,8 @@ char	*sci_convert(char *result, int n)
 	count = 0;
 	while (result[i] && result[i] != '.')
 		i++;
+	if (ft_atoi(result) == 0 && ft_atoi(&result[i + 1]) == 0)
+		return (print_zero(result, n));
 	while (ft_atoi(result) >= 10 || ft_atoi(result) <= -10)
 	{
 		swap(result, i, i - 1);
@@ -99,6 +102,8 @@ char	*modify_double(t_print *form, char *result)
 		result = sci_convert(result, i);
 	else if (form->spec == 'g' || form->spec == 'G')
 		result = find_shortest(form, result);
+	else if (form->spec == 'a' || form->spec == 'A')
+		result = hex_float_convert(form, result);
 	if (form->spec == 'F' || form->spec == 'E' || form->spec == 'G')
 		ft_capitalize(result);
 	if (!(ft_strchr(form->flags, '#')) && form->precision == 0 && form->spec

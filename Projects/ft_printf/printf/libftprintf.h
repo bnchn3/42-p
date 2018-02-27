@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:00:36 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/21 13:16:26 by bchan            ###   ########.fr       */
+/*   Updated: 2018/02/26 13:04:24 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ char			*modify_double(t_print *form, char *result);
 int				number_spec2(char c);
 char			*sci_convert(char *result, int n);
 char			*find_shortest(t_print *form, char *result);
+char			*print_zero(char *result, int n);
+void			truncate_dec(char *result, int n);
+void			round_up(char *result, int i);
+char			*pull_ldouble(t_print *form, va_list ap, int c);
 int				ft_printf(const char *format, ...);
 
 #endif
