@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-unsigned int	ft_power(unsigned int base, int power)
+long double	ft_power(long double base, int power)
 {
-	unsigned int	result;
+	long double	result;
 
 	result = base;
 	if (power == 0)

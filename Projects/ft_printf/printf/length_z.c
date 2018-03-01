@@ -12,6 +12,17 @@
 
 #include "libftprintf.h"
 
+char	*pull_ldouble(t_print *form, va_list ap, char c)
+{
+	long double	arg;
+	char	*result;
+
+	arg = va_arg(ap, long double);
+	result = ft_dtoa(arg, 0);
+	result = modify_string(form, result);
+	return (result);
+}
+
 char	*pull_ssizet(t_print *form, va_list ap)
 {
 	ssize_t arg;

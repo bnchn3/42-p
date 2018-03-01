@@ -21,13 +21,13 @@ static long double	round_num(long double n)
 	i = 0;
 	if (n < 1)
 		return (0);
-	while (ft_power(10, i) <= n)
+	while (ft_power(10L, i) <= n)
 		i++;
 	i--;
 	while (i >= 0)
 	{
-		while (save - ft_power(10, i) >= 0)
-			save -= ft_power(10, i);
+		while (save - ft_power(10L, i) >= 0)
+			save -= ft_power(10L, i);
 		i--;
 	}
 	return (n - save);
@@ -50,6 +50,31 @@ static long double	get_decimal(long double n, char **result)
 	return (n);
 }
 
+static char				*get_number(long double n, char *temp)
+{
+	int count;
+	int i;
+	long double	save;
+
+	i = 0;
+	save = n;
+	if (n < 1)
+		return (ft_strcpy(temp, "0"));
+	while (ft_power(10L, i) <= n)
+		i++;
+	while (--i >= 0)
+	{
+		count = 0;
+		while (save - ft_power(10L, i) >= 0)
+		{
+			save -= ft_power(10L, i);
+			count++;
+		}
+		ft_strpchar(&temp, count + '0');
+	}
+	return (temp);
+}
+
 char				*ft_dtoa(long double n, int i)
 {
 	char		*result;
@@ -59,7 +84,7 @@ char				*ft_dtoa(long double n, int i)
 	result = ft_strdup("");
 	if (n > -1 && n < 0)
 		ft_strpchar(&result, '-');
-	temp = ft_max_itoa((long long)n);
+	temp = get_number(n, ft_strdup(""));
 	ft_strpstr(&result, temp);
 	if (n < 0)
 		n *= -1;
@@ -68,7 +93,7 @@ char				*ft_dtoa(long double n, int i)
 	if (n - save != 0)
 	{
 		save = get_decimal(n - save, &result);
-		temp = ft_max_itoa((long long)save);
+		temp = get_number(save, ft_strdup(""));
 		ft_strpstr(&result, temp);
 	}
 	else

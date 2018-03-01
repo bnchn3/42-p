@@ -104,7 +104,7 @@ void				*ft_btree_search_item(t_btree *root, void *data_ref,
 void				ft_strpstr(char **destination, char *source);
 void				ft_strpchar(char **destination, char c);
 char				*ft_unsigned_itoa(uintmax_t n);
-unsigned int		ft_power(unsigned int base, int power);
+long double		ft_power(long double base, int power);
 char				*ft_octal_convert(uintmax_t n);
 char				*ft_strrev(char *s);
 char				*ft_hex_convert(uintmax_t n);

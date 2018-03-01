@@ -54,6 +54,8 @@ char	*check_length(const char *format, va_list ap, t_print *form)
 		return (length_j(form, ap, format[i]));
 	if (format[i - 1] == 'z')
 		return (length_z(form, ap, format[i]));
+	if (format[i - 1] == 'L')
+		return (pull_ldouble(form, ap, format[i]));
 	return (length_none(form, ap, format[i]));
 }
 
