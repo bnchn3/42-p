@@ -17,10 +17,10 @@ char	*modify_string(t_print *form, char *result)
 	char	*temp;
 
 	temp = ft_strdup(result);
-	result = apply_flag(form, result);
 	if (form->spec == 'f' || form->spec == 'F' || form->spec == 'e' ||
 			form->spec == 'E' || form->spec == 'g' || form->spec == 'G')
 		result = modify_double(form, result);
+	result = apply_flag(form, result);
 	result = apply_width(form, result);
 	if (form->precision >= 0)
 		result = apply_precision(temp, result, form);

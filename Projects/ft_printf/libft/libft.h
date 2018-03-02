@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 13:11:54 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/23 18:26:18 by bchan            ###   ########.fr       */
+/*   Updated: 2018/03/02 11:47:43 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void				*ft_btree_search_item(t_btree *root, void *data_ref,
 void				ft_strpstr(char **destination, char *source);
 void				ft_strpchar(char **destination, char c);
 char				*ft_unsigned_itoa(uintmax_t n);
-long double		ft_power(long double base, int power);
+long double			ft_power(long double base, int power);
 char				*ft_octal_convert(uintmax_t n);
 char				*ft_strrev(char *s);
 char				*ft_hex_convert(uintmax_t n);
@@ -114,5 +114,6 @@ void				*ft_meminsert(void *s, int c, int n);
 char				*ft_max_itoa(long long n);
 char				*ft_dtoa(long double n, int i);
 void				ft_capitalize(char *result);
+void				ft_swap(char *tmp1, char *tmp2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 13:34:09 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/21 13:49:04 by bchan            ###   ########.fr       */
+/*   Updated: 2018/03/02 11:47:28 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,18 @@ static long double	get_decimal(long double n, char **result)
 	return (n);
 }
 
-static char				*get_number(long double n, char *temp)
+static char			*get_number(long double n, char *temp)
 {
-	int count;
-	int i;
+	int			count;
+	int			i;
 	long double	save;
 
 	i = 0;
-	save = n;
-	if (n < 1)
+	if (n < 1 && n > -1)
 		return (ft_strcpy(temp, "0"));
+	if (n < 0)
+		n *= -1.0L;
+	save = n;
 	while (ft_power(10L, i) <= n)
 		i++;
 	while (--i >= 0)
@@ -82,7 +84,7 @@ char				*ft_dtoa(long double n, int i)
 	long double	save;
 
 	result = ft_strdup("");
-	if (n > -1 && n < 0)
+	if (n < 0)
 		ft_strpchar(&result, '-');
 	temp = get_number(n, ft_strdup(""));
 	ft_strpstr(&result, temp);

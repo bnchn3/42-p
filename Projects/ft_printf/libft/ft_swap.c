@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hex_float.c                                        :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/02 11:48:18 by bchan             #+#    #+#             */
-/*   Updated: 2018/03/02 11:48:26 by bchan            ###   ########.fr       */
+/*   Created: 2018/03/02 12:37:22 by bchan             #+#    #+#             */
+/*   Updated: 2018/03/02 12:37:23 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*binary_convert(char *result)
-{
-	char *save;
+#include <libft.h>
 
-	save = ft_strchr(result, '.');
-	
-}
-
-char	*hex_float_convert(t_print *form, char *result)
+void	ft_swap(char *tmp1, char *tmp2)
 {
-	result = binary_convert(result);
+	char c;
+
+	c = *tmp1;
+	*tmp1 = *tmp2;
+	*tmp2 = c;
 }

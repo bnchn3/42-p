@@ -25,15 +25,6 @@ void	truncate_dec(char *result, int n)
 	result[i] = '\0';
 }
 
-void	swap(char *result, int i, int j)
-{
-	char c;
-
-	c = result[i];
-	result[i] = result[j];
-	result[j] = c;
-}
-
 char	*add_exp(char *result, int count)
 {
 	char *temp;
@@ -58,33 +49,45 @@ char	*add_exp(char *result, int count)
 	return (result);
 }
 
-char	*sci_convert(char *result, int n)
+int		is_zero(char *result)
 {
 	int i;
-	int count;
 
 	i = 0;
-	count = 0;
-	while (result[i] && result[i] != '.')
+	while (result[i])
+	{
+		if (result[i] != '.' && result[i] != '0')
+			return (0);
 		i++;
-	if (ft_atoi(result) == 0 && ft_atoi(&result[i + 1]) == 0)
-		return (print_zero(result, n));
-	while (ft_atoi(result) >= 10 || ft_atoi(result) <= -10)
-	{
-		swap(result, i, i - 1);
-		count++;
-		i--;
 	}
-	while (ft_atoi(result) < 1 && ft_atoi(result) > -1 && result[i])
+	return (1);
+}
+
+char	*sci_convert(char *str, int n)
+{
+	char	*temp;
+	int		count;
+
+	temp = ft_strchr(str, '.');
+	count = 0;
+	if (is_zero(str))
+		return (print_zero(str, n));
+	while (temp - str >= 3 || (*str != '-' && temp - str >= 2))
 	{
-		swap(result, i, i + 1);
-		ft_memmove(&result[i - 1], &result[i], ft_strlen(&result[i]) + 1);
+		ft_swap(temp, temp - 1);
+		count++;
+		temp--;
+	}
+	while ((*str == '0' || (*str == '-' && *(str + 1) == '0')) && *temp)
+	{
+		ft_swap(temp, temp + 1);
+		ft_memmove(temp - 1, temp, ft_strlen(temp) + 1);
 		count--;
 	}
-	truncate_dec(result, n);
-	ft_strpchar(&result, 'e');
-	result = add_exp(result, count);
-	return (result);
+	truncate_dec(str, n);
+	ft_strpchar(&str, 'e');
+	str = add_exp(str, count);
+	return (str);
 }
 
 char	*modify_double(t_print *form, char *result)
@@ -102,8 +105,6 @@ char	*modify_double(t_print *form, char *result)
 		result = sci_convert(result, i);
 	else if (form->spec == 'g' || form->spec == 'G')
 		result = find_shortest(form, result);
-	else if (form->spec == 'a' || form->spec == 'A')
-		result = hex_float_convert(form, result);
 	if (form->spec == 'F' || form->spec == 'E' || form->spec == 'G')
 		ft_capitalize(result);
 	if (!(ft_strchr(form->flags, '#')) && form->precision == 0 && form->spec
