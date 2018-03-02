@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 12:00:36 by bchan             #+#    #+#             */
-/*   Updated: 2018/02/26 13:04:24 by bchan            ###   ########.fr       */
+/*   Updated: 2018/03/02 14:58:08 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void			truncate_dec(char *result, int n);
 void			round_up(char *result, int i);
 char			*pull_ldouble(t_print *form, va_list ap, int c);
 int				ft_printf(const char *format, ...);
+char			*hex_float_convert(t_print *form, char *result, int i);
 
 #endif

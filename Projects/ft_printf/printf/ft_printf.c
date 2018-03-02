@@ -18,7 +18,8 @@ char	*modify_string(t_print *form, char *result)
 
 	temp = ft_strdup(result);
 	if (form->spec == 'f' || form->spec == 'F' || form->spec == 'e' ||
-			form->spec == 'E' || form->spec == 'g' || form->spec == 'G')
+			form->spec == 'E' || form->spec == 'g' || form->spec == 'G' ||
+			form->spec == 'a' || form->spec == 'A')
 		result = modify_double(form, result);
 	result = apply_flag(form, result);
 	result = apply_width(form, result);

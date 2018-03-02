@@ -105,7 +105,10 @@ char	*modify_double(t_print *form, char *result)
 		result = sci_convert(result, i);
 	else if (form->spec == 'g' || form->spec == 'G')
 		result = find_shortest(form, result);
-	if (form->spec == 'F' || form->spec == 'E' || form->spec == 'G')
+	else if (form->spec == 'a' || form->spec == 'A')
+		result = hex_float_convert(form, result, i);
+	if (form->spec == 'F' || form->spec == 'E' || form->spec == 'G' ||
+			form->spec == 'A')
 		ft_capitalize(result);
 	if (!(ft_strchr(form->flags, '#')) && form->precision == 0 && form->spec
 			!= 'g' && form->spec != 'G')

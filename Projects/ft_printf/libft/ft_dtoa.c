@@ -50,7 +50,7 @@ static long double	get_decimal(long double n, char **result)
 	return (n);
 }
 
-static char			*get_number(long double n, char *temp)
+static char			*get_number(long double n, char *temp, long double base)
 {
 	int			count;
 	int			i;
@@ -62,14 +62,14 @@ static char			*get_number(long double n, char *temp)
 	if (n < 0)
 		n *= -1.0L;
 	save = n;
-	while (ft_power(10L, i) <= n)
+	while (ft_power(base, i) <= n)
 		i++;
 	while (--i >= 0)
 	{
 		count = 0;
-		while (save - ft_power(10L, i) >= 0)
+		while (save - ft_power(base, i) >= 0)
 		{
-			save -= ft_power(10L, i);
+			save -= ft_power(base, i);
 			count++;
 		}
 		ft_strpchar(&temp, count + '0');
@@ -77,7 +77,7 @@ static char			*get_number(long double n, char *temp)
 	return (temp);
 }
 
-char				*ft_dtoa(long double n, int i)
+char				*ft_dtoa(long double n, int i, long double base)
 {
 	char		*result;
 	char		*temp;
@@ -86,7 +86,7 @@ char				*ft_dtoa(long double n, int i)
 	result = ft_strdup("");
 	if (n < 0)
 		ft_strpchar(&result, '-');
-	temp = get_number(n, ft_strdup(""));
+	temp = get_number(n, ft_strdup(""), base);
 	ft_strpstr(&result, temp);
 	if (n < 0)
 		n *= -1;
@@ -95,7 +95,7 @@ char				*ft_dtoa(long double n, int i)
 	if (n - save != 0)
 	{
 		save = get_decimal(n - save, &result);
-		temp = get_number(save, ft_strdup(""));
+		temp = get_number(save, ft_strdup(""), base);
 		ft_strpstr(&result, temp);
 	}
 	else

@@ -17,10 +17,14 @@ char	*pull_ldouble(t_print *form, va_list ap, int c)
 	long double	arg;
 	char		*result;
 
-	if (c == 'f' || c == 'F' || c == 'e' || c == 'E' || c == 'g' || c == 'G')
+	if (c == 'f' || c == 'F' || c == 'e' || c == 'E' || c == 'g' || c == 'G' ||
+			c == 'a' || c == 'A')
 	{
 		arg = va_arg(ap, long double);
-		result = ft_dtoa(arg, 0);
+		if (c == 'a' || c == 'A')
+			result = ft_dtoa(arg, 0, 2L);
+		else
+			result = ft_dtoa(arg, 0, 10L);
 		result = modify_string(form, result);
 		return (result);
 	}
