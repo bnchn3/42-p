@@ -17,6 +17,7 @@ char	*hex_prep(char *result)
 	char	*temp;
 	int		i;
 
+	i = 0;
 	temp = &result[ft_strlen(result) - 4];
 	while ((temp - &result[i]) % 4 != 0)
 	{
