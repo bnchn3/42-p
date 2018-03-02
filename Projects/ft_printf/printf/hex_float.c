@@ -64,6 +64,7 @@ char	*bin_to_hex(char *result)
 	char	*save;
 	int		i;
 
+	i = 0;
 	result = hex_prep(result);
 	temp = &result[ft_strlen(result) - 4];
 	save = ft_strdup("");
