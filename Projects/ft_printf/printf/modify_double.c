@@ -106,7 +106,7 @@ char	*modify_double(t_print *form, char *result)
 	else if (form->spec == 'g' || form->spec == 'G')
 		result = find_shortest(form, result);
 	else if (form->spec == 'a' || form->spec == 'A')
-		result = hex_float_convert(form, result, i);
+		result = hex_float_convert(result, i);
 	if (form->spec == 'F' || form->spec == 'E' || form->spec == 'G' ||
 			form->spec == 'A')
 		ft_capitalize(result);

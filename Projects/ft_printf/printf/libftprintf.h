@@ -66,6 +66,6 @@ void			truncate_dec(char *result, int n);
 void			round_up(char *result, int i);
 char			*pull_ldouble(t_print *form, va_list ap, int c);
 int				ft_printf(const char *format, ...);
-char			*hex_float_convert(t_print *form, char *result, int i);
+char			*hex_float_convert(char *result, int i);
 
 #endif

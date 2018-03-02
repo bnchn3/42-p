@@ -77,7 +77,7 @@ char	*bin_to_hex(char *result)
 	return (save);
 }
 
-char	*hex_float_convert(t_print *form, char *result, int i)
+char	*hex_float_convert(char *result, int i)
 {
 	char	*temp;
 	char	*save;
