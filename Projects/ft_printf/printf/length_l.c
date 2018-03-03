@@ -56,6 +56,8 @@ char	*pull_wint(t_print *form, va_list ap)
 	char	*result;
 
 	arg = (wchar_t)va_arg(ap, wint_t);
+	if (arg == 0)
+		form->null = 1;
 	result = wchar_dup(arg);
 	result = modify_string(form, result);
 	return (result);

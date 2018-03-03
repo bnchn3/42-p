@@ -71,7 +71,7 @@ size_t	print_arg(const char *format, va_list ap, size_t printed)
 	new = check_length(format, ap, form);
 	result = 0;
 	ft_putstr(new);
-	if (form->spec == 'c' && form->null == 1)
+	if ((form->spec == 'c' || form->spec == 'C') && form->null == 1)
 	{
 		ft_putchar(0);
 		result++;

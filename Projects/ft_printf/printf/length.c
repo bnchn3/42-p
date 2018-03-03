@@ -43,12 +43,15 @@ char	*wchar_dup(wchar_t chr)
 
 char	*wstr_dup(wchar_t *str)
 {
-	char *result;
+	char	*result;
+	char	*temp;
 
 	result = ft_strdup("");
 	while (*str)
 	{
-		ft_strpstr(&result, wchar_dup(*str));
+		temp = wchar_dup(*str);
+		ft_strpstr(&result, temp);
+		ft_strdel(&temp);
 		str++;
 	}
 	return (result);

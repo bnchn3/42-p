@@ -24,10 +24,7 @@ char	*apply_pound(char c, char *result)
 	if (c == 'X' && result[0] != '0')
 		tmp = ft_strjoin("0X", result);
 	if (tmp)
-	{
-		ft_strdel(&result);
-		return (ft_strdup(tmp));
-	}
+		return (tmp);
 	return (result);
 }
 

@@ -38,7 +38,8 @@ int		find_digits(char *save)
 	i = 0;
 	while (save[i] == '0' || save[i] == ' ')
 		i++;
-	while (ft_isdigit(save[i]))
+	while (ft_isdigit(save[i]) || (save[i] >= 'a' && save[i] <= 'f') ||
+				(save[i] >= 'A' && save[i] <= 'F'))
 	{
 		count++;
 		i++;
