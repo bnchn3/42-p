@@ -1,0 +1,5 @@
+nslookup
+set querytype=soa
+slash16.org
+
+This gives us the authoritative name-servers, which are owned by aws (Amazon Web Services).

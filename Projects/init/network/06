@@ -1,0 +1,1 @@
+/etc/resolve.conf, which is a symbolic link to /var/run/resolve.conf
