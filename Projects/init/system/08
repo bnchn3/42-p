@@ -1,1 +1,1 @@
-RSA keys are stored in /root/.ssh/id_rsa
+RSA keys are stored in /root/.ssh/authorized_keys
