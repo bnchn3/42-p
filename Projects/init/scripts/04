@@ -1,0 +1,10 @@
+#!/bin/bash
+
+OLD='cat /root/crontabsum/'
+NEW='md5sum /etc/crontab'
+
+if [ "$OLD" != "$NEW" ]
+then
+	md5sum /etc/crontab > /root/crontabsum
+	mail -s "Crontab has been modified" root@localhost.com < /etc/crontab
+fi
