@@ -19,4 +19,11 @@
 # include "../minilibx/mlx.h"
 # include "../get_next_line/get_next_line.h"
 
+typedef struct		s_vec
+{
+	int	x;
+	int	y;
+	int	z;
+}					t_vec;
+
 #endif
