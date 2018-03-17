@@ -21,9 +21,9 @@
 
 typedef struct		s_vec
 {
-	int	x;
-	int	y;
-	int	z;
+	double	x;
+	double	y;
+	double	z;
 }					t_vec;
 
 #endif
