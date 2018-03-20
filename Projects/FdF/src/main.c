@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-int		*int_convert(char **temp)
+/*int		*int_convert(char **temp)
 {
 	int	i;
 	int	*result;
@@ -76,15 +76,15 @@ int		**get_matrix(int argc, char **argv)
 	return (matrix);
 }
 
-/*void	draw(void *mlx_ptr, void *win_ptr, int **matrix)
+void	draw(void *mlx_ptr, void *win_ptr, int **matrix)
 {
 
 }*/
 
-int		escape_key(int key, void *param)
+int		escape_key(int key, void **param)
 {
-	if (key == 0xff1b)
-		return (1);
+	if (key == 53)
+		mlx_destroy_window((void *)param[0], (void *)param[1]);
 	return (0);
 }
 
@@ -93,13 +93,16 @@ int		main(int argc, char **argv)
 	int		**matrix;
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	**ptrs;
 
 	//matrix = get_matrix(argc, argv);
 	mlx_ptr = mlx_init();
 	win_ptr = mlx_new_window(mlx_ptr, 800, 600, "FdF");
+	ptrs = (void **)malloc(sizeof(void *) * 2);
+	ptrs[0] = mlx_ptr;
+	ptrs[1] = win_ptr;
 	//draw(mlx_ptr, win_ptr, matrix);
-	if (mlx_key_hook(win_ptr, escape_key, (void *)0))
-		mlx_destroy_window(mlx_ptr, win_ptr);
+	mlx_key_hook(win_ptr, escape_key, ptrs);
 	mlx_loop(mlx_ptr);
 	return (0);
 }
