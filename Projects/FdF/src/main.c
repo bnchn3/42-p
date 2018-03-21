@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-/*int		*int_convert(char **temp)
+int		*int_convert(char **temp)
 {
 	int	i;
 	int	*result;
@@ -24,7 +24,7 @@
 	i = 0;
 	while (temp[i])
 		result[i] = ft_atoi(temp[i++]);
-	result[i] == -1;
+	result[i] = -1;
 	return (result);
 }
 
@@ -76,10 +76,30 @@ int		**get_matrix(int argc, char **argv)
 	return (matrix);
 }
 
+int		*find_origin(int **matrix)
+{
+	int	*coor;
+	int	i;
+	int	j;
+
+	coor = (int *)malloc(sizeof(int) * 2);
+	i = 0;
+	j = 0;
+	while (matrix[i])
+	{
+		while (matrix[i][j] >= 0)
+			j++;
+		i++;
+	}
+	coor[0] = 800 / 
+}
+
 void	draw(void *mlx_ptr, void *win_ptr, int **matrix)
 {
+	int *coor;
 
-}*/
+	coor = find_origin(matrix);
+}
 
 int		escape_key(int key, void **param)
 {
@@ -95,13 +115,13 @@ int		main(int argc, char **argv)
 	void	*win_ptr;
 	void	**ptrs;
 
-	//matrix = get_matrix(argc, argv);
+	matrix = get_matrix(argc, argv);
 	mlx_ptr = mlx_init();
 	win_ptr = mlx_new_window(mlx_ptr, 800, 600, "FdF");
 	ptrs = (void **)malloc(sizeof(void *) * 2);
 	ptrs[0] = mlx_ptr;
 	ptrs[1] = win_ptr;
-	//draw(mlx_ptr, win_ptr, matrix);
+	draw(mlx_ptr, win_ptr, matrix);
 	mlx_key_hook(win_ptr, escape_key, ptrs);
 	mlx_loop(mlx_ptr);
 	return (0);
