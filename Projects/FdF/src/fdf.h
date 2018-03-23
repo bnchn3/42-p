@@ -26,4 +26,25 @@ typedef struct		s_vec
 	double	z;
 }					t_vec;
 
+typedef struct		s_ptr
+{
+	void *mlx;
+	void *win;
+	void *img;
+}					t_ptr;
+
+typedef struct		s_coor
+{
+	int x;
+	int y;
+	int interval;
+}					t_coor;
+
+typedef struct		s_map
+{
+	int	**mat;
+	int	x;
+	int	y;
+}					t_map;
+
 #endif
