@@ -42,7 +42,7 @@ t_map	*matrix_alloc(int fd)
 	t_map	*map;
 	int		i;
 
-	i = 1;
+	i = 0;
 	map = (t_map *)malloc(sizeof(t_map));
 	while ((ret = read(fd, buf, 1)))
 	{
@@ -86,19 +86,19 @@ t_coor	*find_origin(t_map *map)
 	if (map->y <= 10 && map->x <= 14)
 	{
 		coor->interval = 50;
-		coor->x = 400 - map->x / coor->interval;
-		coor->y = 300 - map->y / coor->interval;
+		coor->x = 400 - map->x / 2 * coor->interval;
+		coor->y = 300 - map->y / 2 * coor->interval;
 	}
 	else if (map->x > map->y && map->x > 14)
 	{
 		coor->interval = 700 / map->x;
 		coor->x = 50;
-		coor->y = 300 - map->y / coor->interval;
+		coor->y = 300 - map->y / 2 * coor->interval;
 	}
 	else
 	{
 		coor->interval = 500 / map->y;
-		coor->x = 400 - map->x / coor->interval;
+		coor->x = 400 - map->x / 2 * coor->interval;
 		coor->y = 50;
 	}
 	return (coor);
@@ -111,7 +111,7 @@ void	draw_right(t_ptr *ptrs, t_coor *coor, t_map *map)
 	i = coor->x + 1;
 	while (i != coor->x + coor->interval)
 	{
-		mlx_pixel_put(ptrs->mlx, ptrs->win, i, coor->y, 0xFFFFFF);
+		mlx_pixel_put(ptrs->mlx, ptrs->win, i, coor->y, 0x00FFFFFF);
 		i++;
 	}
 }
@@ -123,7 +123,7 @@ void	draw_down(t_ptr *ptrs, t_coor *coor, t_map *map)
 	i = coor->y + 1;
 	while (i != coor->y + coor->interval)
 	{
-		mlx_pixel_put(ptrs->mlx, ptrs->win, coor->x, i, 0xFFFFFF);
+		mlx_pixel_put(ptrs->mlx, ptrs->win, coor->x, i, 0x00FFFFFF);
 		i++;
 	}
 }
@@ -142,16 +142,17 @@ void	draw(t_ptr *ptrs, t_map *map)
 	{
 		j = 0;
 		coor->x = save;
-		coor->y = coor->interval * i;
 		while (j < map->x && map->mat[i][j] >= 0)
 		{
-			coor->x += coor->interval * j;
-			mlx_pixel_put(ptrs->mlx, ptrs->win, coor->x, coor->y, 0xFFFFFF);
-			if (++j != map->x && map->mat[i][j] >= 0)
+			mlx_pixel_put(ptrs->mlx, ptrs->win, coor->x, coor->y, 0x00FFFFFF);
+			if (++j < map->x && map->mat[i][j] >= 0)
 				draw_right(ptrs, coor, map);
-			if (++i != map->y)
+			if (i + 1 < map->y)
 				draw_down(ptrs, coor, map);
+			coor->x += coor->interval;
 		}
+		i++;
+		coor->y += coor->interval;
 	}
 	free(coor);
 }
