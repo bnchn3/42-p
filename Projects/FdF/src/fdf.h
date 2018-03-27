@@ -45,6 +45,7 @@ typedef struct		s_map
 	int	**mat;
 	int	x;
 	int	y;
+	int interval;
 }					t_map;
 
 #endif

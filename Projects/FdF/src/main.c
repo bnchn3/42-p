@@ -52,6 +52,7 @@ t_map	*matrix_alloc(int fd)
 	map->mat = (int **)malloc(sizeof(int *) * i);
 	map->y = i;
 	map->x = 0;
+	map->interval = 50;
 	close(fd);
 	return (map);
 }
@@ -74,11 +75,23 @@ t_map	*get_matrix(int argc, char **argv)
 		temp = ft_strsplit(line, ' ');
 		map->mat[i++] = int_convert(temp, map);
 	}
+	if (map->x > map->y && map->x > 14)
+		map->interval = 700 / map->x;
+	else if (map->y > map->x && map->y > 10)
+		map->interval = 500 / map->y;
 	ft_strdel(&line);
 	return (map);
 }
 
-t_coor	*find_origin(t_map *map)
+t_vec	*z_convert(int i, int j, t_map *map)
+{
+	t_vec *vec;
+
+	vec = new_vec(map->y - (i + 1), map[i][j], j - map->x + 1);
+	return (vec);
+}
+
+/*t_coor	*find_origin(t_map *map)
 {
 	t_coor	*coor;
 
@@ -155,7 +168,7 @@ void	draw(t_ptr *ptrs, t_map *map)
 		coor->y += coor->interval;
 	}
 	free(coor);
-}
+}*/
 
 int		escape_key(int key, t_ptr *param)
 {
@@ -187,7 +200,7 @@ int		main(int argc, char **argv)
 	ptrs = (t_ptr *)malloc(sizeof(t_ptr));
 	ptrs->mlx = mlx_init();
 	ptrs->win = mlx_new_window(ptrs->mlx, 800, 600, "FdF");
-	draw(ptrs, map);
+	//draw(ptrs, map);
 	mlx_key_hook(ptrs->win, escape_key, ptrs);
 	mlx_loop(ptrs->mlx);
 	free(ptrs);
