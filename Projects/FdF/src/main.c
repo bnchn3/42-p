@@ -30,7 +30,6 @@ int		*int_convert(char **temp, t_map *map)
 		ft_strdel(&temp[i]);
 		i++;
 	}
-	result[i] = -1;
 	free(temp);
 	return (result);
 }
@@ -83,12 +82,38 @@ t_map	*get_matrix(int argc, char **argv)
 	return (map);
 }
 
-t_vec	*z_convert(int i, int j, t_map *map)
+t_list	**z_convert(t_map *map)
 {
-	t_vec *vec;
+	t_list	**grid;
+	t_vec		*vec;
+	int			i;
+	int			j;
 
-	vec = new_vec(map->y - (i + 1), map[i][j], j - map->x + 1);
-	return (vec);
+	*grid = ft_lstnew(NULL, 0);
+	i = 0;
+	while (i < map->y)
+	{
+		j = 0;
+		while (j < map->x)
+		{
+			vec = new_vec(j - (map->x / 2.0 - 0.5), map[i][j], -1 * map->y + i);
+			ft_lstadd(grid, ft_lstnew(vec, 0));
+			j++;
+		}
+		i++;
+	}
+	return (grid);
+}
+
+t_list	**rotate_grid(t_list **grid, float hyp)
+{
+	float i;
+
+	i = (*grid)->content->y;
+	//angle = arctan(y/z);
+	//hyp = y / sin(angle);
+	//y' = hyp * sin(angle +- pi / 4);
+	//z' = hyp * cos(angle +- pi / 4);
 }
 
 /*t_coor	*find_origin(t_map *map)
