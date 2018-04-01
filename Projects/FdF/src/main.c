@@ -105,15 +105,62 @@ t_list	**z_convert(t_map *map)
 	return (grid);
 }
 
-t_list	**rotate_grid(t_list **grid, float hyp)
+void	rotate_grid(t_list *grid, double mid)
 {
-	float i;
+	double	angle;
+	double	hyp;
+	t_vec		*vec;
 
-	i = (*grid)->content->y;
-	//angle = arctan(y/z);
-	//hyp = y / sin(angle);
-	//y' = hyp * sin(angle +- pi / 4);
-	//z' = hyp * cos(angle +- pi / 4);
+	vec = grid->content;
+	angle = atan2(vec->y / vec->z - mid);
+	hyp = vec->y / sin(angle);
+	if (vec->z < mid)
+	{
+		vec->y = hyp * sin(angle - M_PI / 6);
+		vec->z = hyp * cos(angle - M_PI / 6);
+	}
+	else if (vec->z > mid)
+	{
+		vec->y = hyp * sin(angle + M_PI / 6);
+		vec->z = hyp * cos(angle + M_PI / 6);
+	}
+}
+
+t_list	**project(t_list **grid)
+{
+	t_list	*temp;
+	t_list	**proj;
+	t_coor	*coor;
+
+	*proj = ft_lstnew(NULL, 0);
+	temp = *grid;
+	while (temp)
+	{
+		coor = (t_coor *)malloc(sizeof(t_coor));
+		coor->x = temp->content->x / (temp->content->z * -1);
+		coor->y = temp->content->y / (temp->content->z * -1);
+		ft_lstadd(proj, ft_lstnew(coor, 0));
+		temp = temp->next;
+	}
+	return (proj);
+}
+
+void	find_vertices(t_ptr *ptrs, t_map *map)
+{
+	t_list	**grid;
+	t_list	*temp;
+	t_list	**proj;
+
+	grid = z_convert(map);
+	temp = *grid;
+	while (temp)
+	{
+		rotate_grid(temp, (map->y + 1) / 2 * -1)
+		temp = temp->next;
+	}
+	proj = project(grid);
+	remap(proj);
+	draw(ptrs, proj);
 }
 
 /*t_coor	*find_origin(t_map *map)
@@ -225,7 +272,7 @@ int		main(int argc, char **argv)
 	ptrs = (t_ptr *)malloc(sizeof(t_ptr));
 	ptrs->mlx = mlx_init();
 	ptrs->win = mlx_new_window(ptrs->mlx, 800, 600, "FdF");
-	//draw(ptrs, map);
+	find_vertices(ptrs, map);
 	mlx_key_hook(ptrs->win, escape_key, ptrs);
 	mlx_loop(ptrs->mlx);
 	free(ptrs);

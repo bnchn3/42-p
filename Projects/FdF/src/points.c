@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-t_vec	*new_vec(double x, double y, double z)
+t_vec		*new_vec(double x, double y, double z)
 {
 	t_vec *vec;
 
@@ -23,7 +23,7 @@ t_vec	*new_vec(double x, double y, double z)
 	return (vec);
 }
 
-t_vec	*translate(t_vec *point, double x, double y, double z)
+t_vec		*translate(t_vec *point, double x, double y, double z)
 {
 	t_vec	*new;
 
@@ -34,7 +34,7 @@ t_vec	*translate(t_vec *point, double x, double y, double z)
 	return (new);
 }
 
-t_vec	*scale(t_vec *point, double scale)
+t_vec		*scale(t_vec *point, double scale)
 {
 	t_vec	*new;
 

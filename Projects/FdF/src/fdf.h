@@ -35,9 +35,8 @@ typedef struct		s_ptr
 
 typedef struct		s_coor
 {
-	int x;
-	int y;
-	int interval;
+	double x;
+	double y;
 }					t_coor;
 
 typedef struct		s_map
