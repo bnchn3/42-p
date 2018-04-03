@@ -20,7 +20,7 @@ int		*int_convert(char **temp, t_map *map)
 	i = 0;
 	while (temp[i])
 		i++;
-	result = (int *)malloc(sizeof(int) * (i + 1));
+	result = (int *)malloc(sizeof(int) * i);
 	if (i > map->x)
 		map->x = i;
 	i = 0;
@@ -30,7 +30,7 @@ int		*int_convert(char **temp, t_map *map)
 		ft_strdel(&temp[i]);
 		i++;
 	}
-	free(temp);
+	ft_memdel((void **)&temp);
 	return (result);
 }
 
@@ -72,12 +72,13 @@ t_map	*get_matrix(int argc, char **argv)
 	{
 		argc = get_next_line(fd, &line);
 		temp = ft_strsplit(line, ' ');
-		map->mat[i++] = int_convert(temp, map);
+		if (argc)
+			map->mat[i++] = int_convert(temp, map);
 	}
-	if (map->x > map->y && map->x > 14)
-		map->interval = 700 / map->x;
-	else if (map->y > map->x && map->y > 10)
-		map->interval = 500 / map->y;
+	if (map->x > map->y && map->x > 5)
+		map->interval = 55 - map->x;
+	else if (map->y > map->x && map->y > 5)
+		map->interval = 55 - map->y;
 	ft_strdel(&line);
 	return (map);
 }
@@ -89,6 +90,7 @@ t_list	**z_convert(t_map *map)
 	int			i;
 	int			j;
 
+	grid = (t_list **)malloc(sizeof(t_list *));
 	*grid = ft_lstnew(NULL, 0);
 	i = 0;
 	while (i < map->y)
@@ -96,8 +98,9 @@ t_list	**z_convert(t_map *map)
 		j = 0;
 		while (j < map->x)
 		{
-			vec = new_vec(j - (map->x / 2.0 - 0.5), map[i][j], -1 * map->y + i);
-			ft_lstadd(grid, ft_lstnew(vec, 0));
+			vec = new_vec(j - (map->x / 2.0 - 0.5), map->mat[i][j], -1 * map->y + i -
+			(51 - map->interval));
+			ft_lstadd(grid, ft_lstnew(vec, sizeof(t_vec)));
 			j++;
 		}
 		i++;
@@ -112,40 +115,97 @@ void	rotate_grid(t_list *grid, double mid)
 	t_vec		*vec;
 
 	vec = grid->content;
-	angle = atan2(vec->y / vec->z - mid);
-	hyp = vec->y / sin(angle);
+	angle = atan2(vec->y, vec->z - mid);
+	if (angle && angle != M_PI)
+	    hyp = vec->y / sin(angle);
+	else
+	    hyp = fabs(vec->z - mid);
 	if (vec->z < mid)
 	{
-		vec->y = hyp * sin(angle - M_PI / 6);
-		vec->z = hyp * cos(angle - M_PI / 6);
+		vec->y = hyp * sin(angle + M_PI / 3);
+		vec->z = hyp * cos(angle + M_PI / 3) + mid;
 	}
 	else if (vec->z > mid)
 	{
-		vec->y = hyp * sin(angle + M_PI / 6);
-		vec->z = hyp * cos(angle + M_PI / 6);
+		vec->y = hyp * sin(angle + M_PI / 3);
+		vec->z = hyp * cos(angle + M_PI / 3) + mid;
 	}
 }
 
 t_list	**project(t_list **grid)
 {
 	t_list	*temp;
+	t_vec		*vec;
 	t_list	**proj;
 	t_coor	*coor;
 
+	proj = (t_list **)malloc(sizeof(t_list *));
 	*proj = ft_lstnew(NULL, 0);
 	temp = *grid;
-	while (temp)
+	while (temp->next)
 	{
 		coor = (t_coor *)malloc(sizeof(t_coor));
-		coor->x = temp->content->x / (temp->content->z * -1);
-		coor->y = temp->content->y / (temp->content->z * -1);
-		ft_lstadd(proj, ft_lstnew(coor, 0));
+		vec = temp->content;
+		coor->x = vec->x / (vec->z * -1);
+		coor->y = vec->y / (vec->z * -1);
+		ft_lstadd(proj, ft_lstnew(coor, sizeof(t_coor)));
 		temp = temp->next;
 	}
 	return (proj);
 }
 
-void	find_vertices(t_ptr *ptrs, t_map *map)
+void	remap(t_list **proj)
+{
+	t_list	*temp;
+	t_coor	*coor;
+
+	temp = *proj;
+	while (temp->next)
+	{
+		coor = temp->content;
+		coor->x = (1 + coor->x) / 2 * 800;
+		coor->y = (1 + coor->y) / 2 * 600;
+		temp = temp->next;
+	}
+}
+
+void	draw(void *mlx, void *win, t_list **proj)
+{
+	t_list	*temp;
+	t_coor	*coor;
+
+	temp = *proj;
+	while (temp->next)
+	{
+		coor = temp->content;
+		mlx_pixel_put(mlx, win, coor->x, coor->y, 0x00FFFFFF);
+		temp = temp->next;
+	}
+}
+
+void	struct_del(t_list **grid, t_list **proj)
+{
+	t_list	*temp;
+
+	while (*grid)
+	{
+		temp = (*grid)->next;
+		if ((*grid)->content)
+			ft_memdel(&((*grid)->content));
+		ft_memdel((void **)grid);
+		*grid = temp;
+	}
+	while (*proj)
+	{
+		temp = (*proj)->next;
+		if ((*proj)->content)
+			ft_memdel(&((*proj)->content));
+		ft_memdel((void **)proj);
+		*proj = temp;
+	}
+}
+
+void	find_vertices(void *mlx, void *win, t_map *map)
 {
 	t_list	**grid;
 	t_list	*temp;
@@ -153,14 +213,15 @@ void	find_vertices(t_ptr *ptrs, t_map *map)
 
 	grid = z_convert(map);
 	temp = *grid;
-	while (temp)
+	while (temp->next)
 	{
-		rotate_grid(temp, (map->y + 1) / 2 * -1)
+		rotate_grid(temp, (map->y + 1) / 2.0 * -1);
 		temp = temp->next;
 	}
 	proj = project(grid);
 	remap(proj);
-	draw(ptrs, proj);
+	draw(mlx, win, proj);
+	struct_del(grid, proj);
 }
 
 /*t_coor	*find_origin(t_map *map)
@@ -242,40 +303,48 @@ void	draw(t_ptr *ptrs, t_map *map)
 	free(coor);
 }*/
 
-int		escape_key(int key, t_ptr *param)
-{
-	if (key == 53)
-		mlx_destroy_window(param->mlx, param->win);
-	return (0);
-}
-
 void	map_del(t_map *map)
 {
 	int i;
 
 	i = 0;
-	while (i < map->y)
+	if (map)
 	{
-		free(map->mat[i]);
-		i++;
+		if (map->mat)
+		{
+			while (i < map->y)
+			{
+				if (map->mat[i])
+					ft_memdel((void **)&(map->mat[i]));
+				i++;
+			}
+			ft_memdel((void **)&(map->mat));
+		}
+		ft_memdel((void **)&map);
 	}
-	free(map->mat);
-	free(map);
+}
+
+int		escape_key(int key, t_map *map)
+{
+	if (key == 53)
+	{
+		map_del(map);
+		exit(EXIT_SUCCESS);
+	}
+	return (0);
 }
 
 int		main(int argc, char **argv)
 {
 	t_map	*map;
-	t_ptr	*ptrs;
+	void	*mlx;
+	void	*win;
 
 	map = get_matrix(argc, argv);
-	ptrs = (t_ptr *)malloc(sizeof(t_ptr));
-	ptrs->mlx = mlx_init();
-	ptrs->win = mlx_new_window(ptrs->mlx, 800, 600, "FdF");
-	find_vertices(ptrs, map);
-	mlx_key_hook(ptrs->win, escape_key, ptrs);
-	mlx_loop(ptrs->mlx);
-	free(ptrs);
-	map_del(map);
+	mlx = mlx_init();
+	win = mlx_new_window(mlx, 800, 600, "FdF");
+	find_vertices(mlx, win, map);
+	mlx_key_hook(win, escape_key, map);
+	mlx_loop(mlx);
 	return (0);
 }

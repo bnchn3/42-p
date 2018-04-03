@@ -47,4 +47,6 @@ typedef struct		s_map
 	int interval;
 }					t_map;
 
+t_vec		*new_vec(double x, double y, double z);
+
 #endif
