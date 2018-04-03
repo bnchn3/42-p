@@ -34,6 +34,18 @@ int		*int_convert(char **temp, t_map *map)
 	return (result);
 }
 
+char		**get_x(char **temp, t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (temp[i])
+		i++;
+	if (i > map->x)
+		map->x = i;
+	return (temp);
+}
+
 t_map	*matrix_alloc(int fd)
 {
 	char	buf[1];
@@ -48,7 +60,7 @@ t_map	*matrix_alloc(int fd)
 		if (buf[0] == '\n')
 			i++;
 	}
-	map->mat = (int **)malloc(sizeof(int *) * i);
+	map->mat = (char ***)malloc(sizeof(char **) * i);
 	map->y = i;
 	map->x = 0;
 	map->interval = 50;
@@ -73,7 +85,7 @@ t_map	*get_matrix(int argc, char **argv)
 		argc = get_next_line(fd, &line);
 		temp = ft_strsplit(line, ' ');
 		if (argc)
-			map->mat[i++] = int_convert(temp, map);
+			map->mat[i++] = get_x(temp, map);
 	}
 	if (map->x > map->y && map->x > 5)
 		map->interval = 55 - map->x;
@@ -98,8 +110,8 @@ t_list	**z_convert(t_map *map)
 		j = 0;
 		while (j < map->x)
 		{
-			vec = new_vec(j - (map->x / 2.0 - 0.5), map->mat[i][j], -1 * map->y + i -
-			(51 - map->interval));
+			vec = new_vec(j - (map->x / 2.0 - 0.5), ft_atoi(map->mat[i][j]), -1 *
+			map->y + i - (51 - map->interval));
 			ft_lstadd(grid, ft_lstnew(vec, sizeof(t_vec)));
 			j++;
 		}
@@ -169,17 +181,30 @@ void	remap(t_list **proj)
 	}
 }
 
-void	draw(void *mlx, void *win, t_list **proj)
+void	draw(void *mlx, void *win, t_list **proj, t_map *map)
 {
 	t_list	*temp;
 	t_coor	*coor;
+	int			i;
+	int			j;
 
 	temp = *proj;
-	while (temp->next)
+	i = map->y;
+	while (i >= 0)
 	{
-		coor = temp->content;
-		mlx_pixel_put(mlx, win, coor->x, coor->y, 0x00FFFFFF);
-		temp = temp->next;
+		j = 0;
+		while (map[i][j + 1] != NULL)
+			j++;
+		while (j >= 0)
+		{
+			coor = temp->content;
+			mlx_pixel_put(mlx, win, coor->x, coor->y, 0x00FFFFFF);
+			draw_up(temp, map, i, j);
+			draw_left(temp, map, i, j);
+			temp = temp->next;
+			j--;
+		}
+		i--;
 	}
 }
 
@@ -220,7 +245,7 @@ void	find_vertices(void *mlx, void *win, t_map *map)
 	}
 	proj = project(grid);
 	remap(proj);
-	draw(mlx, win, proj);
+	draw(mlx, win, proj, map);
 	struct_del(grid, proj);
 }
 
@@ -306,6 +331,7 @@ void	draw(t_ptr *ptrs, t_map *map)
 void	map_del(t_map *map)
 {
 	int i;
+	int	j;
 
 	i = 0;
 	if (map)
@@ -314,8 +340,13 @@ void	map_del(t_map *map)
 		{
 			while (i < map->y)
 			{
+				j = 0;
 				if (map->mat[i])
+				{
+					while (map->mat[i][j])
+						ft_strdel(&(map->mat[i][j++]));
 					ft_memdel((void **)&(map->mat[i]));
+				}
 				i++;
 			}
 			ft_memdel((void **)&(map->mat));

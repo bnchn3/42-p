@@ -41,10 +41,10 @@ typedef struct		s_coor
 
 typedef struct		s_map
 {
-	int	**mat;
-	int	x;
-	int	y;
-	int interval;
+	char	***mat;
+	int		x;
+	int		y;
+	int 	interval;
 }					t_map;
 
 t_vec		*new_vec(double x, double y, double z);
