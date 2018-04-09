@@ -6,13 +6,13 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 11:44:06 by bchan             #+#    #+#             */
-/*   Updated: 2018/03/14 11:44:07 by bchan            ###   ########.fr       */
+/*   Updated: 2018/04/09 15:09:41 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_vec		*new_vec(double x, double y, double z)
+t_vec	*new_vec(double x, double y, double z)
 {
 	t_vec *vec;
 
@@ -23,24 +23,24 @@ t_vec		*new_vec(double x, double y, double z)
 	return (vec);
 }
 
-t_vec		*translate(t_vec *point, double x, double y, double z)
+void	find_vertices(void *mlx, void *win, t_map *map)
 {
-	t_vec	*new;
+	t_list	**grid;
+	t_list	*temp;
+	t_list	**proj;
 
-	new = new_vec(point->x, point->y, point->z);
-	new->x += x;
-	new->y += y;
-	new->z += z;
-	return (new);
-}
-
-t_vec		*scale(t_vec *point, double scale)
-{
-	t_vec	*new;
-
-	new = new_vec(point->x, point->y, point->z);
-	new->x *= scale;
-	new->y *= scale;
-	new->z *= scale;
-	return (new);
+	map->mlx = mlx;
+	map->win = win;
+	grid = z_convert(map);
+	temp = *grid;
+	while (temp->next)
+	{
+		rotate_grid(temp, (map->y + 1) / 2.0 * -1);
+		temp = temp->next;
+	}
+	proj = project(grid);
+	fov(proj);
+	remap(proj);
+	draw(proj, map);
+	struct_del(grid, proj);
 }

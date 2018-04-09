@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 12:47:57 by bchan             #+#    #+#             */
-/*   Updated: 2018/03/12 12:57:02 by bchan            ###   ########.fr       */
+/*   Updated: 2018/04/09 15:04:31 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ typedef struct		s_vec
 
 typedef struct		s_ptr
 {
-	void *mlx;
-	void *win;
-	void *img;
+	void	*mlx;
+	void	*win;
+	void	*img;
 }					t_ptr;
 
 typedef struct		s_coor
 {
-	double x;
-	double y;
+	double	x;
+	double	y;
 }					t_coor;
 
 typedef struct		s_map
@@ -44,11 +44,20 @@ typedef struct		s_map
 	char	***mat;
 	int		x;
 	int		y;
-	int 	interval;
-	void 	*mlx;
-	void 	*win;
+	void	*mlx;
+	void	*win;
 }					t_map;
 
-t_vec		*new_vec(double x, double y, double z);
+t_vec				*new_vec(double x, double y, double z);
+t_list				**z_convert(t_map *map);
+void				rotate_grid(t_list *grid, double mid);
+t_list				**project(t_list **grid);
+void				fov(t_list **proj);
+void				remap(t_list **proj);
+void				draw(t_list **proj, t_map *map);
+t_map				*get_matrix(int argc, char **argv);
+void				struct_del(t_list **grid, t_list **proj);
+void				map_del(t_map *map);
+void				find_vertices(void *mlx, void *win, t_map *map);
 
 #endif
