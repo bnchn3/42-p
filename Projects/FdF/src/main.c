@@ -110,8 +110,7 @@ t_list	**z_convert(t_map *map)
 		j = 0;
 		while (j < map->x)
 		{
-			vec = new_vec(j - (map->x / 2.0 - 0.5), ft_atoi(map->mat[i][j]), -1 *
-			map->y + i - (51 - map->interval));
+			vec = new_vec(j, ft_atoi(map->mat[i][j]), -1 * map->y + i);
 			ft_lstadd(grid, ft_lstnew(vec, sizeof(t_vec)));
 			j++;
 		}
@@ -172,13 +171,27 @@ void	remap(t_list **proj)
 {
 	t_list	*temp;
 	t_coor	*coor;
+	double	x;
+	double	y;
 
+	temp = *proj;
+	x = 0.0;
+	y = 0.0;
+	while (temp->next)
+	{
+		coor = temp->content;
+		if (coor->x > x)
+			x = coor->x;
+		if (coor->y > y)
+			y = coor->y;
+		temp = temp->next;
+	}
 	temp = *proj;
 	while (temp->next)
 	{
 		coor = temp->content;
-		coor->x = (1 + coor->x) / 2 * 800;
-		coor->y = (1 + coor->y) / 2 * 600;
+		coor->x = coor->x / x * 700 + 50;
+		coor->y = coor->y / y * 500 + 50;
 		temp = temp->next;
 	}
 }
