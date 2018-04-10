@@ -19,6 +19,18 @@ int		escape_key(int key, t_map *map)
 		map_del(map);
 		exit(EXIT_SUCCESS);
 	}
+	if (key == 126)
+		map->up++;
+	if (key == 123)
+		map->left++;
+	if (key == 125)
+		map->up--;
+	if (key == 124)
+		map->left--;
+	if (key == 69)
+		map->zoom++;
+	if (key == 78)
+		map->zoom--;
 	return (0);
 }
 

@@ -41,6 +41,9 @@ t_map	*matrix_alloc(int fd)
 	map->mat = (char ***)malloc(sizeof(char **) * i);
 	map->y = i;
 	map->x = 0;
+	map->up = 0;
+	map->left = 0;
+	map->zoom = 0;
 	close(fd);
 	return (map);
 }

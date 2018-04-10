@@ -46,6 +46,9 @@ typedef struct		s_map
 	int		y;
 	void	*mlx;
 	void	*win;
+	int		up;
+	int		left;
+	int		zoom;
 }					t_map;
 
 t_vec				*new_vec(double x, double y, double z);
