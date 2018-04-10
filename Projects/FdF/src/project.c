@@ -27,8 +27,8 @@ t_list	**z_convert(t_map *map)
 		j = 0;
 		while (j < map->x)
 		{
-			vec = new_vec(j - (map->x / 2.0), ft_atoi(map->mat[i][j]) / 10.0,
-				i - (double)map->y);
+			vec = new_vec(j - (map->x / 2.0) - map->left, ft_atoi(map->mat[i][j])
+				/ 10.0 + map->up / 10.0, i - (double)map->y);
 			ft_lstadd(grid, ft_lstnew(vec, sizeof(t_vec)));
 			j++;
 		}
@@ -92,8 +92,8 @@ void	fov(t_list **proj)
 	while (temp->next)
 	{
 		coor = temp->content;
-		coor->x *= 1 / max;
-		coor->y *= 1 / max;
+		coor->x *= 1 / (max - map->zoom);
+		coor->y *= 1 / (max - map->zoom;
 		temp = temp->next;
 	}
 }

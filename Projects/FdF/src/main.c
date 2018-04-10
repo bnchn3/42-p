@@ -12,28 +12,6 @@
 
 #include "fdf.h"
 
-int		escape_key(int key, t_map *map)
-{
-	if (key == 53)
-	{
-		map_del(map);
-		exit(EXIT_SUCCESS);
-	}
-	if (key == 126)
-		map->up++;
-	if (key == 123)
-		map->left++;
-	if (key == 125)
-		map->up--;
-	if (key == 124)
-		map->left--;
-	if (key == 69)
-		map->zoom++;
-	if (key == 78)
-		map->zoom--;
-	return (0);
-}
-
 int		main(int argc, char **argv)
 {
 	t_map	*map;
@@ -51,6 +29,8 @@ int		main(int argc, char **argv)
 			win = mlx_new_window(mlx, 800, 800, "FdF");
 			find_vertices(mlx, win, map);
 			mlx_key_hook(win, escape_key, map);
+			mlx_key_hook(win, move_key, map);
+			mlx_key_hook(win, color_key, map);
 			mlx_loop(mlx);
 		}
 	}

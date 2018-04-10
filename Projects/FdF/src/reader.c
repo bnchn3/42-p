@@ -44,6 +44,7 @@ t_map	*matrix_alloc(int fd)
 	map->up = 0;
 	map->left = 0;
 	map->zoom = 0;
+	map->color = 0x00FFFFFF;
 	close(fd);
 	return (map);
 }

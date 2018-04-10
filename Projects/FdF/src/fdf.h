@@ -49,6 +49,7 @@ typedef struct		s_map
 	int		up;
 	int		left;
 	int		zoom;
+	int		color;
 }					t_map;
 
 t_vec				*new_vec(double x, double y, double z);
@@ -62,5 +63,8 @@ t_map				*get_matrix(int argc, char **argv);
 void				struct_del(t_list **grid, t_list **proj);
 void				map_del(t_map *map);
 void				find_vertices(void *mlx, void *win, t_map *map);
+int					escape_key(int key, t_map *map);
+int					move_key(int key, t_map *map);
+int					color_key(int key, t_map *map);
 
 #endif

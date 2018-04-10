@@ -19,7 +19,7 @@ void	draw_vert(t_coor *start, t_coor *end, t_map *map)
 	y = start->y;
 	while (y != (int)end->y)
 	{
-		mlx_pixel_put(map->mlx, map->win, start->x, y, 0x00FFFFFF);
+		mlx_pixel_put(map->mlx, map->win, start->x, y, map->color);
 		if (y > end->y)
 			y--;
 		else if (y < end->y)
@@ -38,7 +38,7 @@ void	bresenham(t_coor *start, t_coor *end, int x, t_map *map)
 		y = start->y;
 		while (x != (int)end->x)
 		{
-			mlx_pixel_put(map->mlx, map->win, x, y, 0x00FFFFFF);
+			mlx_pixel_put(map->mlx, map->win, x, y, map->color);
 			error += fabs((end->y - start->y) / (end->x - start->x));
 			while (error >= 0.5)
 			{
@@ -109,7 +109,7 @@ void	draw(t_list **proj, t_map *map)
 		while (j >= 0)
 		{
 			coor = temp->content;
-			mlx_pixel_put(map->mlx, map->win, coor->x, coor->y, 0x00FFFFFF);
+			mlx_pixel_put(map->mlx, map->win, coor->x, coor->y, map->color);
 			draw_up(temp, map, i, j);
 			draw_left(temp, map, j);
 			temp = temp->next;
