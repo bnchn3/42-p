@@ -56,7 +56,7 @@ t_vec				*new_vec(double x, double y, double z);
 t_list				**z_convert(t_map *map);
 void				rotate_grid(t_list *grid, double mid);
 t_list				**project(t_list **grid);
-void				fov(t_list **proj);
+void				fov(t_list **proj, t_map *map);
 void				remap(t_list **proj);
 void				draw(t_list **proj, t_map *map);
 t_map				*get_matrix(int argc, char **argv);

@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = fdf
-SRC = project.c draw.c reader.c structs.c points.c main.c
+SRC = project.c draw.c reader.c structs.c points.c main.c keycodes.c
 LINE = get_next_line.c
 SOURCES = $(addprefix src/, $(SRC)) $(addprefix get_next_line/, $(LINE))
 OBJ = $(SRC:.c=.o) $(LINE:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 14:57:09 by bchan             #+#    #+#             */
-/*   Updated: 2018/04/09 15:07:52 by bchan            ###   ########.fr       */
+/*   Updated: 2018/04/11 11:28:23 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,13 @@ t_list	**z_convert(t_map *map)
 		j = 0;
 		while (j < map->x)
 		{
-			vec = new_vec(j - (map->x / 2.0) - map->left, ft_atoi(map->mat[i][j])
-				/ 10.0 + map->up / 10.0, i - (double)map->y);
-			ft_lstadd(grid, ft_lstnew(vec, sizeof(t_vec)));
+			if (map->mat[i][j])
+			{
+				vec = new_vec(j - (map->x / 2.0) - map->left,
+					ft_atoi(map->mat[i][j]) / 10.0 + map->up / 10.0,
+					i - (double)map->y);
+				ft_lstadd(grid, ft_lstnew(vec, sizeof(t_vec)));
+			}
 			j++;
 		}
 		i++;
@@ -71,7 +75,7 @@ t_list	**project(t_list **grid)
 	return (proj);
 }
 
-void	fov(t_list **proj)
+void	fov(t_list **proj, t_map *map)
 {
 	t_list	*temp;
 	t_coor	*coor;
@@ -93,7 +97,7 @@ void	fov(t_list **proj)
 	{
 		coor = temp->content;
 		coor->x *= 1 / (max - map->zoom);
-		coor->y *= 1 / (max - map->zoom;
+		coor->y *= 1 / (max - map->zoom);
 		temp = temp->next;
 	}
 }

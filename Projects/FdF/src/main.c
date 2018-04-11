@@ -29,8 +29,6 @@ int		main(int argc, char **argv)
 			win = mlx_new_window(mlx, 800, 800, "FdF");
 			find_vertices(mlx, win, map);
 			mlx_key_hook(win, escape_key, map);
-			mlx_key_hook(win, move_key, map);
-			mlx_key_hook(win, color_key, map);
 			mlx_loop(mlx);
 		}
 	}

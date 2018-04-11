@@ -39,7 +39,7 @@ void	find_vertices(void *mlx, void *win, t_map *map)
 		temp = temp->next;
 	}
 	proj = project(grid);
-	fov(proj);
+	fov(proj, map);
 	remap(proj);
 	draw(proj, map);
 	struct_del(grid, proj);
