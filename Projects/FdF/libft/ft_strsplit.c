@@ -25,17 +25,15 @@ static int		ft_wordlength(char const *s, char c, int i)
 	return (len);
 }
 
-static int		ft_wordcount(char const *s, char c)
+static int		ft_wordcount(char const *s, char c, int i)
 {
-	int		i;
 	int		wordcount;
 	int		sym;
 
-	i = -1;
 	wordcount = 0;
 	if (!s)
 		return (-2);
-	while (s[++i])
+	while (s[i])
 	{
 		while (s[i] != c && s[i])
 		{
@@ -50,6 +48,8 @@ static int		ft_wordcount(char const *s, char c)
 				sym = 0;
 			}
 		}
+		if (s[i])
+			i++;
 	}
 	return (wordcount);
 }
@@ -61,7 +61,7 @@ char			**ft_strsplit(char const *s, char c)
 	int		j;
 	int		k;
 
-	if (!(result = (char **)malloc(sizeof(char *) * (ft_wordcount(s, c) + 1))))
+	if (!(result = (char **)malloc(sizeof(char *) * (ft_wordcount(s, c, 0) + 1))))
 		return (NULL);
 	i = 0;
 	j = 0;

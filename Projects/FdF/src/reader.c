@@ -24,17 +24,20 @@ char	**get_x(char **temp, t_map *map)
 	return (temp);
 }
 
-t_map	*matrix_alloc(int fd)
+t_map	*matrix_alloc(int fd, int i)
 {
 	char	buf[1];
 	int		ret;
 	t_map	*map;
-	int		i;
 
-	i = 0;
 	map = (t_map *)malloc(sizeof(t_map));
 	while ((ret = read(fd, buf, 1)))
 	{
+		if (ret < 0)
+		{
+			perror("read");
+			return (NULL);
+		}
 		if (buf[0] == '\n')
 			i++;
 	}
@@ -49,13 +52,12 @@ t_map	*matrix_alloc(int fd)
 	return (map);
 }
 
-t_map	*get_matrix(int argc, char **argv)
+t_map	*get_matrix(int argc, char **argv, t_map *map)
 {
 	int		i;
 	int		fd;
 	char	*line;
 	char	**temp;
-	t_map	*map;
 
 	i = 0;
 	fd = open(argv[1], O_RDONLY);
@@ -64,15 +66,17 @@ t_map	*get_matrix(int argc, char **argv)
 		perror("open");
 		return (NULL);
 	}
-	map = matrix_alloc(fd);
+	map = matrix_alloc(fd, 0);
 	fd = open(argv[1], O_RDONLY);
-	while (argc)
+	while (argc && argc != -1 && map)
 	{
 		argc = get_next_line(fd, &line);
-		temp = ft_strsplit(line, ' ');
-		if (argc)
+		if (argc && argc != -1)
+		{
+			temp = ft_strsplit(line, ' ');
 			map->mat[i++] = get_x(temp, map);
+		}
+		ft_strdel(&line);
 	}
-	ft_strdel(&line);
 	return (map);
 }

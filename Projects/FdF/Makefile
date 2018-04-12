@@ -20,16 +20,22 @@ LIBFT = libft/libft.a
 MLX = minilibx/libmlx.a
 LIBS = -L libft -lft -L minilibx -lmlx
 CC = gcc
-FLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
+LDFLAGS = -Wall -Werror -Wextra
 FRAME = -framework OpenGL -framework AppKit
+
+ifdef DEBUG
+	CFLAGS += -g -fsanitize=address
+	LDFLAGS += -g -fsanitize=address
+endif
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ) -I $(INC) $(LIBS) $(FRAME)
+	$(CC) $(LDFLAGS) -o $(NAME) $(OBJ) -I $(INC) $(LIBS) $(FRAME)
 
 $(OBJ):
-	$(CC) $(FLAGS) -c $(SOURCES) -I $(INC)
+	$(CC) $(CFLAGS) -c $(SOURCES) -I $(INC)
 
 $(LIBFT):
 	make -C ./libft/

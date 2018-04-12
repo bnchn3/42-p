@@ -24,6 +24,7 @@ void	struct_del(t_list **grid, t_list **proj)
 		ft_memdel((void **)grid);
 		*grid = temp;
 	}
+	ft_memdel((void **)&(grid));
 	while (*proj)
 	{
 		temp = (*proj)->next;
@@ -32,6 +33,7 @@ void	struct_del(t_list **grid, t_list **proj)
 		ft_memdel((void **)proj);
 		*proj = temp;
 	}
+	ft_memdel((void **)&(proj));
 }
 
 void	map_del(t_map *map)

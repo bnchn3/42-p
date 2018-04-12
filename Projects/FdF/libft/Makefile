@@ -30,6 +30,11 @@ SRCS = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 	   ft_strnew_char.c ft_strrev.c ft_unsigned_itoa.c ft_dtoa.c ft_swap.c\
 		 ft_capitalize.c
 OBJ = $(SRCS:.c=.o)
+CFLAGS = -Wall -Werror -Wextra
+
+ifdef DEBUG
+	CFLAGS += -g -fsanitize=address
+endif
 
 all: $(NAME)
 
@@ -38,7 +43,7 @@ $(NAME): $(OBJ)
 	ranlib $(NAME)
 
 $(OBJ):
-	gcc -Wall -Wextra -Werror -c $(SRCS) -I.
+	gcc $(CFLAGS) -c $(SRCS) -I.
 
 clean:
 	/bin/rm -f $(OBJ)

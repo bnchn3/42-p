@@ -22,7 +22,8 @@ int		main(int argc, char **argv)
 		ft_putendl("Error: Too many arguments");
 	else
 	{
-		map = get_matrix(argc, argv);
+		map = NULL;
+		map = get_matrix(argc, argv, map);
 		if (map)
 		{
 			mlx = mlx_init();

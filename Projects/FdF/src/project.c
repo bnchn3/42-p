@@ -24,8 +24,8 @@ t_list	**z_convert(t_map *map)
 	i = 0;
 	while (i < map->y)
 	{
-		j = 0;
-		while (j < map->x)
+		j = -1;
+		while (++j < map->x)
 		{
 			if (map->mat[i][j])
 			{
@@ -33,8 +33,8 @@ t_list	**z_convert(t_map *map)
 					ft_atoi(map->mat[i][j]) / 10.0 + map->up / 10.0,
 					i - (double)map->y);
 				ft_lstadd(grid, ft_lstnew(vec, sizeof(t_vec)));
+				ft_memdel((void **)&vec);
 			}
-			j++;
 		}
 		i++;
 	}
@@ -70,6 +70,7 @@ t_list	**project(t_list **grid)
 		coor->x = vec->x / (vec->z * -1);
 		coor->y = vec->y / (vec->z);
 		ft_lstadd(proj, ft_lstnew(coor, sizeof(t_coor)));
+		ft_memdel((void **)&coor);
 		temp = temp->next;
 	}
 	return (proj);

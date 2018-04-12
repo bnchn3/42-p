@@ -59,7 +59,7 @@ t_list				**project(t_list **grid);
 void				fov(t_list **proj, t_map *map);
 void				remap(t_list **proj);
 void				draw(t_list **proj, t_map *map);
-t_map				*get_matrix(int argc, char **argv);
+t_map				*get_matrix(int argc, char **argv, t_map *map);
 void				struct_del(t_list **grid, t_list **proj);
 void				map_del(t_map *map);
 void				find_vertices(void *mlx, void *win, t_map *map);
