@@ -22,4 +22,11 @@
 # include <time.h>
 # include <stdio.h>
 
+typedef struct	s_ls
+{
+	char	*flags;
+	t_list	**args;
+	int		num;
+}				t_ls;
+
 #endif

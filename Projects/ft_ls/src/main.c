@@ -12,25 +12,44 @@
 
 #include "ft_ls.h"
 
-char	*find_path(char *str)
+t_ls	*parse_flags(int argc, char **argv)
 {
-	
+	int i;
+	t_ls	*ls;
+
+	i = 1;
+	ls = (t_ls *)malloc(sizeof(t_ls));
+	ls->flags = ft_strnew(0);
+	ls->args = (t_list **)malloc(sizeof(t_list *));
+	*(ls->args) = ft_lstnew(NULL, 0);
+	ls->num = 0;
+	while (i < argc)
+	{
+		if (argv[i][0] == '-')
+			ft_strpchar(&(ls->flags), argv[i][1]);
+		else
+			break ;
+		i++;
+	}
+	while (i < argc)
+	{
+		ft_lstadd(ls->args, ft_lstnew(argv[i], ft_strlen(argv[i])));
+		ls->num++;
+		i++;
+	}
+	return (ls);
 }
 
 int	is_file(char *str)
 {
-	stat	*buf;
-	char	*path;
+	struct stat	*buf;
 	int		result;
 
-	path = find_path(str);
-	buf = (stat *)malloc(sizeof(stat));
-	if (stat(path, buf))
+	buf = (struct stat *)malloc(sizeof(stat));
+	if (stat(str, buf) == 0)
 	{
 		if (buf->st_mode == S_IFDIR)
 			result = 0;
-		else if (buf->st_mode == S_IFLNK)
-			result = is_file_link(str);
 		else
 			result = 1;
 	}
@@ -39,20 +58,19 @@ int	is_file(char *str)
 		perror("stat");
 		exit(EXIT_FAILURE);
 	}
-	ft_memdel(&buf);
-	ft_strdel(&path);
+	ft_memdel((void **)&buf);
 	return (result);
 }
 
 int	main(int argc, char **argv)
 {
-	int i;
+	t_ls	*ls;
 
-	i = 1;
 	if (argc == 1)
 		listdir(".");
 	else
 	{
+		ls = parse_flags(argc, argv);
 		while (i < argc)
 		{
 			if (is_file(argv[i]))
@@ -62,5 +80,6 @@ int	main(int argc, char **argv)
 			i++;
 		}
 	}
+	ft_putchar('\n');
 	return (0);
 }
