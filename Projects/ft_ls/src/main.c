@@ -20,20 +20,19 @@ t_ls	*parse_flags(int argc, char **argv)
 	i = 1;
 	ls = (t_ls *)malloc(sizeof(t_ls));
 	ls->flags = ft_strnew(0);
-	ls->args = (t_list **)malloc(sizeof(t_list *));
-	*(ls->args) = ft_lstnew(NULL, 0);
 	ls->num = 0;
 	while (i < argc)
 	{
 		if (argv[i][0] == '-')
-			ft_strpchar(&(ls->flags), argv[i][1]);
+			ft_strpstr(&(ls->flags), &(argv[i][1]));
 		else
 			break ;
 		i++;
 	}
+	ls->args = (char **)malloc(sizeof(char *) * (argc - i));
 	while (i < argc)
 	{
-		ft_lstadd(ls->args, ft_lstnew(argv[i], ft_strlen(argv[i])));
+		ls->args[ls->num] = ft_strdup(argv[i]);
 		ls->num++;
 		i++;
 	}
@@ -66,20 +65,6 @@ int	main(int argc, char **argv)
 {
 	t_ls	*ls;
 
-	if (argc == 1)
-		listdir(".");
-	else
-	{
-		ls = parse_flags(argc, argv);
-		while (i < argc)
-		{
-			if (is_file(argv[i]))
-				ft_putstr(argv[i]);
-			else
-				listdir(argv[i]);
-			i++;
-		}
-	}
-	ft_putchar('\n');
+	ls = parse_flags(argc, argv);
 	return (0);
 }
