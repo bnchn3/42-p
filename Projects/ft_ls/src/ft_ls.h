@@ -25,8 +25,10 @@
 typedef struct	s_ls
 {
 	char	*flags;
-	char	**args;
-	int		num;
+	char	**dirs;
+	char	**files;
+	int		num_dir;
+	int		num_files;
 }				t_ls;
 
 #endif
