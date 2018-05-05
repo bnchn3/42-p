@@ -199,7 +199,12 @@ void	print_files_long(t_ls *ls)
 		if (lstat(ls->num_files[i], buf) == 0)
 		{
 			ft_putstr(get_mode(buf));
-
+			ft_putstr(get_links(buf));
+			ft_putstr(get_uid(buf));
+			ft_putstr(get_gid(buf));
+			ft_putstr(get_size(buf));
+			ft_putstr(get_time_long(buf));
+			ft_putendl(ls->num_files[i]);
 		}
 		else
 		{
