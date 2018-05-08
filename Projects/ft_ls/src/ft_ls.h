@@ -21,6 +21,7 @@
 # include <sys/xattr.h>
 # include <time.h>
 # include <stdio.h>
+# include <sys/acl.h>
 
 typedef struct	s_ls
 {
@@ -29,6 +30,10 @@ typedef struct	s_ls
 	char	**files;
 	int		num_dir;
 	int		num_files;
+	int		link_pad;
+	int		user_pad;
+	int		group_pad;
+	int		size_pad;
 }				t_ls;
 
 #endif
