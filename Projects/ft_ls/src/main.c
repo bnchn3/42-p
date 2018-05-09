@@ -27,47 +27,6 @@ size_t	ft_intlen(uintmax_t n)
 	return (len);
 }
 
-void	del_passwd(struct **passwd)
-{
-	if (passwd)
-	{
-		if (*passwd)
-		{
-			ft_strdel(&(*(passwd)->pw_name));
-			ft_strdel(&(*(passwd)->pw_passwd));
-			ft_strdel(&(*(passwd)->pw_class));
-			ft_strdel(&(*(passwd)->pw_gecos));
-			ft_strdel(&(*(passwd)->pw_dir));
-			ft_strdel(&(*(passwd)->pw_shell));
-			free(*passwd);
-		}
-		*passwd = NULL;
-	}
-}
-
-void	del_group(struct **group)
-{
-	int i;
-
-	i = 0;
-	if (group)
-	{
-		if (*group)
-		{
-			ft_strdel(&(*(group)->gr_name));
-			ft_strdel(&(*(group)->gr_passwd));
-			while (*(group)->gr_mem[i])
-			{
-				ft_strdel(&(*(group)->gr_name));
-				i++;
-			}
-			ft_memdel((void **)&(*(group)->gr_mem));
-			free(*group);
-		}
-		*group = NULL;
-	}
-}
-
 t_ls	*parse_flags(int argc, char **argv, t_ls *ls)
 {
 	int i;
@@ -76,7 +35,7 @@ t_ls	*parse_flags(int argc, char **argv, t_ls *ls)
 	i = 0;
 	ls = (t_ls *)malloc(sizeof(t_ls));
 	ls->flags = ft_strnew(0);
-	while (argv[++i][0] == '-')
+	while (argv[++i] && argv[i][0] == '-')
 	{
 		j = 1;
 		while (argv[i][j])
@@ -96,6 +55,29 @@ t_ls	*parse_flags(int argc, char **argv, t_ls *ls)
 	return (ls);
 }
 
+void	ls_del(t_ls *ls)
+{
+	int	i;
+
+	i = 0;
+	if (ls->flags)
+		ft_strdel(&(ls->flags));
+	if (ls->dirs)
+	{
+		while (i < ls->num_dir)
+			ft_strdel(&(ls->dirs[i++]));
+		ft_memdel((void **)&(ls->dirs));
+	}
+	if (ls->files)
+	{
+		i = 0;
+		while (i < ls->num_files)
+			ft_strdel(&(ls->files[i++]));
+		ft_memdel((void **)&(ls->files));
+	}
+	ft_memdel((void **)&(ls));
+}
+
 int	is_file(char *str)
 {
 	struct stat	*buf;
@@ -111,8 +93,8 @@ int	is_file(char *str)
 	}
 	else
 	{
-		perror("stat");
-		exit(EXIT_FAILURE);
+		perror(str);
+		result = 0;
 	}
 	ft_memdel((void **)&buf);
 	return (result);
@@ -126,8 +108,12 @@ void	parse_args(int argc, char **argv, t_ls *ls)
 	ls->num_dir = 0;
 	ls->num_files = 0;
 	while (i < argc)
+	{
 		if (argv[i][0] == '-')
 			i++;
+		else
+			break ;
+	}
 	ls->dirs = (char **)malloc(sizeof(char *) * (argc - i + 1));
 	ls->files = (char **)malloc(sizeof(char *) * (argc - i + 1));
 	while (i < argc)
@@ -142,21 +128,22 @@ void	parse_args(int argc, char **argv, t_ls *ls)
 	ls->dirs[ls->num_dir] = NULL;
 }
 
-void	swap_str(char *s1, char *s2);
+void	swap_str(char **str, int i, int j)
 {
 	char *temp;
 
-	temp = ft_strdup(s1);
-	ft_strdel(&s1);
-	s1 = ft_strdup(s2);
-	ft_strdel(&s2);
-	s2 = ft_strdup(temp);
+	temp = ft_strdup(str[i]);
+	ft_strdel(&str[i]);
+	str[i] = ft_strdup(str[j]);
+	ft_strdel(&str[j]);
+	str[j] = ft_strdup(temp);
+	ft_strdel(&temp);
 }
 
 void 	alpha_sort(char **str)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (str[i])
@@ -166,8 +153,8 @@ void 	alpha_sort(char **str)
 		{
 			if (ft_strcmp(str[i], str[j]) > 0)
 			{
-				swap_str(str[i], str[j]);
-				i = 0;
+				swap_str(str, i, j);
+				i = -1;
 				break ;
 			}
 			j++;
@@ -186,7 +173,7 @@ void	reverse(char **str)
 		i++;
 	j = 0;
 	while (j < i)
-		swap_str(str[j++], str[i--]);
+		swap_str(str, i--, j++);
 }
 
 time_t	get_time(char *str)
@@ -196,7 +183,7 @@ time_t	get_time(char *str)
 
 	buf = (struct stat *)malloc(sizeof(struct stat));
 	if (lstat(str, buf) == 0)
-		t = buf->st_mtimespec->tv_sec;
+		t = buf->st_mtimespec.tv_sec;
 	else
 	{
 		perror("stat");
@@ -223,8 +210,8 @@ void	sort_time(char **str)
 			time2 = get_time(str[j]);
 			if (time1 < time2 || (time1 == time2 && ft_strcmp(str[i], str[j]) > 0))
 			{
-				swap_str(str[i], str[j]);
-				i = 0;
+				swap_str(str, i, j);
+				i = -1;
 				break ;
 			}
 		}
@@ -250,10 +237,10 @@ void	get_name(char *path, struct stat *buf, t_ls *ls)
 	ssize_t	len;
 
 	ft_putstr(path);
-	if (buf->st_mode & S_IFLNK)
+	if (S_ISLNK(buf->st_mode))
 	{
 		ft_putstr(" -> ");
-		len = readlink(path, buf2, sizeof(buf2) - 1));
+		len = readlink(path, buf2, sizeof(buf2) - 1);
 		if (len != -1)
 		{
 			buf2[len] = '\0';
@@ -268,38 +255,40 @@ void	get_name(char *path, struct stat *buf, t_ls *ls)
 	ft_putchar('\n');
 }
 
-void 	get_year(time_t *t, char *temp, struct timeval *tp, int i)
+void 	get_year(time_t *t, char *temp, time_t *t2, int i)
 {
-	if (*t - tp->tv_sec > 15778800 || tp->tv_sec - *t > 15778800)
+	if (*t - *t2 > 15778800 || *t2 - *t > 15778800)
 	{
 		i = 20;
 		while (i < 25)
 			ft_putchar(temp[i++]);
 	}
 	else
-		while (i < 18)
+	{
+		while (i < 16)
 			ft_putchar(temp[i++]);
+		ft_putchar(' ');
+	}
 	ft_memdel((void **)&t);
-	ft_memdel((void **)&tp);
-	ft_strdel(&temp);
+	ft_memdel((void **)&t2);
 }
 
 void	get_time_long(char *path, struct stat *buf, t_ls *ls)
 {
 	time_t *t;
 	char	*temp;
-	struct timeval *tp;
+	time_t *t2;
 	int		i;
 
 	t = (time_t *)malloc(sizeof(time_t));
-	tp = (struct timeval *)malloc(sizeof(struct timeval));
-	*t = buf->st_mtimespec->tv_sec;
-	temp = ctime(time(t));
-	i = 5;
-	while (i < 12)
+	t2 = (time_t *)malloc(sizeof(time_t));
+	*t = buf->st_mtimespec.tv_sec;
+	temp = ctime(t);
+	i = 4;
+	while (i < 11)
 		ft_putchar(temp[i++]);
-	gettimeofday(tp, NULL);
-	get_year(t, temp, tp, i);
+	*t2 = time(t2);
+	get_year(t, temp, t2, i);
 	get_name(path, buf, ls);
 }
 
@@ -321,20 +310,19 @@ void 	get_size(char *path, struct stat *buf, t_ls *ls)
 void	get_group(char *path, struct stat *buf, t_ls *ls)
 {
 	int		pad;
-	struct	*group;
+	struct group	*g;
 
-	group = getgrgid(buf->st_gid);
-	if (group)
+	g = getgrgid(buf->st_gid);
+	if (g)
 	{
-		pad = ls->group_pad - ft_strlen(group->gr_name);
+		pad = ls->group_pad - ft_strlen(g->gr_name);
 		while (pad)
 		{
 			ft_putchar(' ');
 			pad--;
 		}
-		ft_putstr(group->gr_name);
+		ft_putstr(g->gr_name);
 		ft_putstr("  ");
-		del_group(group);
 	}
 	else
 	{
@@ -347,20 +335,19 @@ void	get_group(char *path, struct stat *buf, t_ls *ls)
 void	get_user(char *path, struct stat *buf, t_ls *ls)
 {
 	int 	pad;
-	struct	*passwd;
+	struct passwd	*p;
 
-	passwd = getpwuid(buf->st_uid)
-	if (passwd)
+	p = getpwuid(buf->st_uid);
+	if (p)
 	{
-		pad = ls->user_pad - ft_strlen(passwd->pw_name);
+		pad = ls->user_pad - ft_strlen(p->pw_name);
 		while (pad)
 		{
 			ft_putchar(' ');
 			pad--;
 		}
-		ft_putstr(passwd->pw_name);
+		ft_putstr(p->pw_name);
 		ft_putstr("  ");
-		del_passwd(passwd);
 	}
 	else
 	{
@@ -374,13 +361,13 @@ void	get_links(char *path, struct stat *buf, t_ls *ls)
 {
 	int pad;
 
-	pad = ls->link_pad - ft_intlen(st_nlink);
+	pad = ls->link_pad - ft_intlen(buf->st_nlink);
 	while (pad)
 	{
 		ft_putchar(' ');
 		pad--;
 	}
-	ft_putnbr(st_nlink);
+	ft_putnbr(buf->st_nlink);
 	ft_putchar(' ');
 	get_user(path, buf, ls);
 }
@@ -468,20 +455,20 @@ void	get_user_per(char *path, struct stat *buf, t_ls *ls)
 
 void 	get_mode(char *path, struct stat *buf, t_ls *ls)
 {
-	if (buf->st_mode & S_IFBLK)
+	if (S_ISBLK(buf->st_mode))
 		ft_putchar('b');
-	else if (buf->st_mode & S_IFCHR)
+	else if (S_ISCHR(buf->st_mode))
 		ft_putchar('c');
-	else if (buf->st_mode & S_IFDIR)
+	else if (S_ISDIR(buf->st_mode))
 		ft_putchar('d');
-	else if (buf->st_mode & S_IFLNK)
-		ft_putchar('l');
-	else if (buf->st_mode & S_IFSOCK)
-		ft_putchar('s');
-	else if (buf->st_mode & S_IFIFO)
-		ft_putchar('p');
-	else if (buf->st_mode & S_IFREG)
+	else if (S_ISREG(buf->st_mode))
 		ft_putchar('-');
+	else if (S_ISSOCK(buf->st_mode))
+		ft_putchar('s');
+	else if (S_ISFIFO(buf->st_mode))
+		ft_putchar('p');
+	else if (S_ISLNK(buf->st_mode))
+		ft_putchar('l');
 	get_user_per(path, buf, ls);
 }
 
@@ -495,14 +482,13 @@ void	reset_pads(t_ls *ls)
 
 void	get_user_pad(t_ls *ls, struct stat *buf)
 {
-	struct *passwd;
+	struct passwd *p;
 
-	passwd = getpwuid(buf->st_uid);
-	if (passwd)
+	p = getpwuid(buf->st_uid);
+	if (p)
 	{
-		if (ft_strlen(passwd->pw_name) > ls->user_pad)
-			ls->user_pad = ft_strlen(passwd->pw_name);
-		del_passwd(&passwd);
+		if (ft_strlen(p->pw_name) > ls->user_pad)
+			ls->user_pad = ft_strlen(p->pw_name);
 	}
 	else
 	{
@@ -513,14 +499,13 @@ void	get_user_pad(t_ls *ls, struct stat *buf)
 
 void	get_group_pad(t_ls *ls, struct stat *buf)
 {
-	struct *group;
+	struct group *g;
 
-	group = getgrgid(buf->st_gid);
-	if (group)
+	g = getgrgid(buf->st_gid);
+	if (g)
 	{
-		if (ft_strlen(group->gr_name) > ls->group_pad)
-			ls->group_pad = ft_strlen(group->gr_name);
-		del_group(&group);
+		if (ft_strlen(g->gr_name) > ls->group_pad)
+			ls->group_pad = ft_strlen(g->gr_name);
 	}
 	else
 	{
@@ -541,10 +526,10 @@ void	get_pads(t_ls *ls, int count, char **str)
 	{
 		if (lstat(str[i++], buf) == 0)
 		{
-			if (ft_intlen(st_nlink) > ls->link_pad)
-				ls->link_pad = ft_intlen(st_nlink);
-			if (ft_intlen(st_size) > ls->size_pad)
-				ls->size_pad = ft_intlen(st_size);
+			if (ft_intlen(buf->st_nlink) > ls->link_pad)
+				ls->link_pad = ft_intlen(buf->st_nlink);
+			if (ft_intlen(buf->st_size) > ls->size_pad)
+				ls->size_pad = ft_intlen(buf->st_size);
 			get_user_pad(ls, buf);
 			get_group_pad(ls, buf);
 		}
@@ -574,6 +559,7 @@ void	print_files_long(t_ls *ls)
 			perror("stat");
 			exit(EXIT_FAILURE);
 		}
+		i++;
 	}
 	ft_memdel((void **)&buf);
 }
@@ -583,7 +569,7 @@ void	print_files(t_ls *ls)
 	int	i;
 
 	alpha_sort(ls->files);
-	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't')
+	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
 		sort_files(ls);
 	if (ft_strchr(ls->flags, 'l'))
 		print_files_long(ls);
@@ -591,7 +577,7 @@ void	print_files(t_ls *ls)
 	{
 		i = 0;
 		while (i < ls->num_files)
-			ft_putendl(ls->files[i]);
+			ft_putendl(ls->files[i++]);
 		i++;
 	}
 	if (ls->num_dir > 0)
@@ -606,5 +592,6 @@ int	main(int argc, char **argv)
 	parse_args(argc, argv, ls);
 	if (ls->num_files > 0)
 		print_files(ls);
+	ls_del(ls);
 	return (0);
 }

@@ -22,6 +22,7 @@
 # include <time.h>
 # include <stdio.h>
 # include <sys/acl.h>
+# include <grp.h>
 
 typedef struct	s_ls
 {
