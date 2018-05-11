@@ -218,17 +218,17 @@ void	sort_time(char **str)
 	}
 }
 
-void	sort_files(t_ls *ls)
+void	sort_files(char **contents, t_ls *ls)
 {
 	if (ft_strchr(ls->flags, 'r') && ft_strchr(ls->flags, 't'))
 	{
-		sort_time(ls->files);
-		reverse(ls->files);
+		sort_time(contents);
+		reverse(contents);
 	}
 	else if (ft_strchr(ls->flags, 'r'))
-		reverse(ls->files);
+		reverse(contents);
 	else if (ft_strchr(ls->flags, 't'))
-		sort_time(ls->files);
+		sort_time(contents);
 }
 
 void	get_name(char *path, struct stat *buf, t_ls *ls)
@@ -570,7 +570,7 @@ void	print_files(t_ls *ls)
 
 	alpha_sort(ls->files);
 	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
-		sort_files(ls);
+		sort_files(ls->files, ls);
 	if (ft_strchr(ls->flags, 'l'))
 		print_files_long(ls);
 	else
@@ -584,14 +584,60 @@ void	print_files(t_ls *ls)
 		ft_putchar('\n');
 }
 
+char	**read_dir(char *path, t_ls *ls)
+{
+	int		count;
+	char	**contents;
+	DIR		*dir;
+	struct dirent	*entry;
+
+	count = 0;
+	dir = opendir(path);
+	while (readdir(dir))
+		count++;
+	closedir(dir);
+	contents = (char **)malloc(sizeof(char *) * (count + 1));
+	count = 0;
+	dir = opendir(path);
+	while ((entry = readdir(dir)))
+	{
+		if (ft_strchr(ls->flags, 'a') || entry->d_name[0] != '.')
+			contents[count++] = ft_strdup(entry->d_name);
+	}
+	contents[count] = NULL;
+	closedir(dir);
+	return (contents);
+}
+
+void	list_dir(char *path, t_ls *ls)
+{
+	char **contents;
+
+	contents = read_dir(path, ls);
+	alpha_sort(contents);
+	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
+		sort_files(contents, ls);
+	if (ft_strchr(ls->flags, 'l'))
+
+}
+
 int	main(int argc, char **argv)
 {
 	t_ls	*ls;
+	int		i;
 
 	ls = parse_flags(argc, argv, ls);
 	parse_args(argc, argv, ls);
 	if (ls->num_files > 0)
 		print_files(ls);
+	if (ls->num_dir == 0 && ls->num_files == 0)
+		list_dir(".", ls);
+	else
+	{
+		i = 0;
+		while (i < ls->num_dir)
+			list_dir(ls->dirs[i++], ls);
+	}
 	ls_del(ls);
 	return (0);
 }
