@@ -289,7 +289,6 @@ void	get_time_long(char *path, struct stat *buf, t_ls *ls)
 		ft_putchar(temp[i++]);
 	*t2 = time(t2);
 	get_year(t, temp, t2, i);
-	get_name(path, buf, ls);
 }
 
 void 	get_size(char *path, struct stat *buf, t_ls *ls)
@@ -514,17 +513,17 @@ void	get_group_pad(t_ls *ls, struct stat *buf)
 	}
 }
 
-void	get_pads(t_ls *ls, int count, char **str)
+void	get_pads(t_ls *ls, char **str, char *path, struct stat *buf)
 {
-	struct stat *buf;
 	int		i;
+	char	*temp;
 
 	reset_pads(ls);
 	i = 0;
-	buf = (struct stat *)malloc(sizeof(struct stat));
-	while (i < count)
+	while (str[i])
 	{
-		if (lstat(str[i++], buf) == 0)
+		temp = ft_strjoin(path, str[i++]);
+		if (lstat(temp, buf) == 0)
 		{
 			if (ft_intlen(buf->st_nlink) > ls->link_pad)
 				ls->link_pad = ft_intlen(buf->st_nlink);
@@ -534,12 +533,9 @@ void	get_pads(t_ls *ls, int count, char **str)
 			get_group_pad(ls, buf);
 		}
 		else
-		{
-			perror("lstat");
-			exit(EXIT_FAILURE);
-		}
+			perror(temp);
+		ft_strdel(&temp);
 	}
-	ft_memdel((void **)&buf);
 }
 
 void	print_files_long(t_ls *ls)
@@ -548,12 +544,15 @@ void	print_files_long(t_ls *ls)
 	int		i;
 
 	i = 0;
-	get_pads(ls, ls->num_files, ls->files);
 	buf = (struct stat *)malloc(sizeof(struct stat));
+	get_pads(ls, ls->files, "", buf);
 	while(i < ls->num_files)
 	{
 		if (lstat(ls->files[i], buf) == 0)
+		{
 			get_mode(ls->files[i], buf, ls);
+			get_name(ls->files[i], buf, ls);
+		}
 		else
 		{
 			perror("stat");
@@ -578,7 +577,6 @@ void	print_files(t_ls *ls)
 		i = 0;
 		while (i < ls->num_files)
 			ft_putendl(ls->files[i++]);
-		i++;
 	}
 	if (ls->num_dir > 0)
 		ft_putchar('\n');
@@ -609,16 +607,122 @@ char	**read_dir(char *path, t_ls *ls)
 	return (contents);
 }
 
+char	**copy_2d(char **contents, char **sub)
+{
+	int i;
+
+	i = 0;
+	while (contents[i])
+		i++;
+	sub = (char **)malloc(sizeof(char *) * (i + 1));
+	sub[i] = NULL;
+	return (sub);
+}
+
+void	print_dir_long(char **contents, char *path, char **sub, t_ls *ls)
+{
+	int		i;
+	int		j;
+	struct stat	*buf;
+	char	*temp;
+
+	i = 0;
+	j = 0;
+	buf = (struct stat *)malloc(sizeof(struct stat));
+	get_pads(ls, contents, path, buf);
+	while (contents[i])
+	{
+		temp = ft_strjoin(path, contents[i]);
+		if (lstat(temp, buf) == 0)
+		{
+			if (S_ISDIR(buf->st_mode))
+				sub[j++] = ft_strdup(temp);
+			get_mode(temp, buf, ls);
+			get_name(contents[i], buf, ls);
+		}
+		else
+			perror(temp);
+		ft_strdel(&temp);
+	}
+	ft_memdel((void **)&buf);
+}
+
+void	print_dir(char **contents, char *path, char **sub)
+{
+	int		i;
+	int		j;
+	struct stat	*buf;
+	char	*temp;
+
+	i = 0;
+	j = 0;
+	buf = (struct stat *)malloc(sizeof(struct stat));
+	while (contents[i])
+	{
+		temp = ft_strjoin(path, contents[i]);
+		if (lstat(temp, buf) == 0)
+			if (S_ISDIR(buf->st_mode))
+				sub[j++] = ft_strdup(temp);
+		else
+			perror(temp);
+		ft_putendl(contents[i++]);
+		ft_strdel(&temp);
+	}
+	ft_memdel((void **)&buf);
+}
+
+void	print_rec(char *path, t_ls *ls, char **sub)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	while (sub[i])
+	{
+		temp = ft_strjoin(path, sub[i])
+		list_dir(temp, ls);
+		i++;
+		ft_strdel(&temp);
+	}
+}
+
+void	char_del(char **str)
+{
+	int	i;
+
+	i = 0;
+	if (str)
+	{
+		while (str[i])
+			ft_strdel(&str[i++]);
+		ft_memdel((void **)&str);
+	}
+}
+
 void	list_dir(char *path, t_ls *ls)
 {
-	char **contents;
+	char	**contents;
+	char	**sub;
 
 	contents = read_dir(path, ls);
+	sub = copy_2d(contents, sub);
+	if (ls->first++ > 0)
+	{
+		ft_putchar(path);
+		ft_putendl(":");
+	}
+	ft_strpchar(&path, '/');
 	alpha_sort(contents);
 	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
 		sort_files(contents, ls);
 	if (ft_strchr(ls->flags, 'l'))
-
+		print_dir_long(contents, path, sub, ls);
+	else
+		print_dir(contents, path, sub);
+	char_del(contents);
+	if (ft_strchr(ls->flags, 'R'))
+		print_rec(path, ls, sub);
+	char_del(sub);
 }
 
 int	main(int argc, char **argv)
@@ -635,6 +739,9 @@ int	main(int argc, char **argv)
 	else
 	{
 		i = 0;
+		ls->first = 0;
+		if (ls->num_dir + ls->num_files > 1)
+			ls->first = 1;
 		while (i < ls->num_dir)
 			list_dir(ls->dirs[i++], ls);
 	}

@@ -35,6 +35,7 @@ typedef struct	s_ls
 	int		user_pad;
 	int		group_pad;
 	int		size_pad;
+	int		first;
 }				t_ls;
 
 #endif
