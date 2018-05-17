@@ -38,16 +38,11 @@ void	get_name(char *path, struct stat *buf)
 	if (S_ISLNK(buf->st_mode))
 	{
 		ft_putstr(" -> ");
-		len = readlink(path, buf2, sizeof(buf2) - 1);
+		len = readlink(path, buf2, PATH_MAX);
 		if (len != -1)
 		{
 			buf2[len] = '\0';
 			ft_putstr(buf2);
-		}
-		else
-		{
-			perror("readlink");
-			exit(EXIT_FAILURE);
 		}
 	}
 	ft_putchar('\n');
@@ -57,16 +52,16 @@ void	get_year(time_t *t, char *temp, time_t *t2, int i)
 {
 	if (*t - *t2 > 15778800 || *t2 - *t > 15778800)
 	{
-		i = 20;
-		while (i < 25)
+		i = 19;
+		while (i < 24)
 			ft_putchar(temp[i++]);
 	}
 	else
 	{
 		while (i < 16)
 			ft_putchar(temp[i++]);
-		ft_putchar(' ');
 	}
+	ft_putchar(' ');
 	ft_memdel((void **)&t);
 	ft_memdel((void **)&t2);
 }

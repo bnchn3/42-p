@@ -35,13 +35,13 @@ void	get_group(struct stat *buf, t_ls *ls)
 	g = getgrgid(buf->st_gid);
 	if (g)
 	{
+		ft_putstr(g->gr_name);
 		pad = ls->group_pad - ft_strlen(g->gr_name);
 		while (pad)
 		{
 			ft_putchar(' ');
 			pad--;
 		}
-		ft_putstr(g->gr_name);
 		ft_putstr("  ");
 	}
 	else
@@ -60,13 +60,13 @@ void	get_user(struct stat *buf, t_ls *ls)
 	p = getpwuid(buf->st_uid);
 	if (p)
 	{
+		ft_putstr(p->pw_name);
 		pad = ls->user_pad - ft_strlen(p->pw_name);
 		while (pad)
 		{
 			ft_putchar(' ');
 			pad--;
 		}
-		ft_putstr(p->pw_name);
 		ft_putstr("  ");
 	}
 	else
