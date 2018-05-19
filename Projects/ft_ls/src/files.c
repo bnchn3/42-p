@@ -18,7 +18,7 @@ int		is_file(char *str)
 	int			result;
 
 	buf = (struct stat *)malloc(sizeof(struct stat));
-	if (stat(str, buf) == 0)
+	if (lstat(str, buf) == 0)
 	{
 		if (buf->st_mode & S_IFDIR)
 			result = 0;
@@ -28,7 +28,7 @@ int		is_file(char *str)
 	else
 	{
 		perror(str);
-		result = 0;
+		exit(EXIT_FAILURE);
 	}
 	ft_memdel((void **)&buf);
 	return (result);
@@ -47,7 +47,7 @@ void	print_files_long(t_ls *ls)
 		if (lstat(ls->files[i], buf) == 0)
 		{
 			get_mode(ls->files[i], buf, ls);
-			get_name(ls->files[i], buf);
+			get_name(ls->files[i], ls->files[i], buf, ls);
 		}
 		else
 		{
@@ -66,7 +66,7 @@ void	print_files(t_ls *ls)
 	alpha_sort(ls->files);
 	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
 		sort_files(ls->files, ls);
-	if (ft_strchr(ls->flags, 'l'))
+	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1'))
 		print_files_long(ls);
 	else
 	{

@@ -32,7 +32,7 @@ void	print_dir_long(char **contents, char *path, char **sub, t_ls *ls)
 			if (S_ISDIR(buf->st_mode))
 				sub[j++] = ft_strdup(temp);
 			get_mode(temp, buf, ls);
-			get_name(contents[i], buf);
+			get_name(temp, contents[i], buf, ls);
 		}
 		else
 			perror(temp);
@@ -74,6 +74,7 @@ void	print_rec(t_ls *ls, char **sub)
 	i = 0;
 	while (sub[i])
 	{
+		ls->first++;
 		list_dir(&sub[i], ls);
 		i++;
 	}
@@ -86,9 +87,9 @@ void	list_dir(char **path, t_ls *ls)
 
 	contents = read_dir(*path, ls);
 	sub = copy_2d(contents);
-	if (ls->first > 0)
+	if (ls->first++ > 0)
 	{
-		if (ls->first++ > 1)
+		if (ls->first > 2)
 			ft_putchar('\n');
 		ft_putstr(*path);
 		ft_putendl(":");
@@ -97,7 +98,7 @@ void	list_dir(char **path, t_ls *ls)
 	alpha_sort(contents);
 	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
 		sort_files(contents, ls);
-	if (ft_strchr(ls->flags, 'l'))
+	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1'))
 		print_dir_long(contents, *path, sub, ls);
 	else
 		print_dir(contents, *path, sub);

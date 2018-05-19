@@ -44,7 +44,9 @@ char	**read_dir(char *path, t_ls *ls)
 	dir = opendir(path);
 	while ((entry = readdir(dir)))
 	{
-		if (ft_strchr(ls->flags, 'a') || entry->d_name[0] != '.')
+		if (ft_strchr(ls->flags, 'a') || entry->d_name[0] != '.' ||
+			(ft_strchr(ls->flags, 'A') && ft_strcmp(".", entry->d_name)
+			!= 0 && ft_strcmp("..", entry->d_name) != 0))
 			contents[count++] = ft_strdup(entry->d_name);
 	}
 	contents[count] = NULL;

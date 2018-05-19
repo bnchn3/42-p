@@ -12,14 +12,21 @@
 
 #include "ft_ls.h"
 
-time_t	get_time(char *str)
+time_t	get_time(char *str, t_ls *ls)
 {
 	time_t		t;
 	struct stat	*buf;
 
 	buf = (struct stat *)malloc(sizeof(struct stat));
 	if (lstat(str, buf) == 0)
-		t = buf->st_mtimespec.tv_sec;
+	{
+		if (ft_strrchr(ls->flags, 'c') > ft_strrchr(ls->flags, 'u'))
+			t = buf->st_ctimespec.tv_sec;
+		else if (ft_strrchr(ls->flags, 'u') > ft_strrchr(ls->flags, 'c'))
+			t = buf->st_atimespec.tv_sec;
+		else
+			t = buf->st_mtimespec.tv_sec;
+	}
 	else
 	{
 		perror("stat");
@@ -29,7 +36,7 @@ time_t	get_time(char *str)
 	return (t);
 }
 
-void	get_name(char *path, struct stat *buf)
+void	get_name(char *abs_path, char *path, struct stat *buf, t_ls *ls)
 {
 	char	buf2[PATH_MAX];
 	ssize_t	len;
@@ -38,19 +45,26 @@ void	get_name(char *path, struct stat *buf)
 	if (S_ISLNK(buf->st_mode))
 	{
 		ft_putstr(" -> ");
-		len = readlink(path, buf2, PATH_MAX);
+		len = readlink(abs_path, buf2, PATH_MAX);
 		if (len != -1)
 		{
 			buf2[len] = '\0';
 			ft_putstr(buf2);
 		}
+		else
+		{
+			perror(abs_path);
+			exit(EXIT_FAILURE);
+		}
 	}
 	ft_putchar('\n');
+	if ((ft_strchr(ls->flags, '@')) || (ft_strchr(ls->flags, 'e')))
+		print_xattr(abs_path, ls);
 }
 
-void	get_year(time_t *t, char *temp, time_t *t2, int i)
+void	get_year(time_t t, char *temp, time_t *t2, int i)
 {
-	if (*t - *t2 > 15778800 || *t2 - *t > 15778800)
+	if (t - *t2 > 15778800 || *t2 - t > 15778800)
 	{
 		i = 19;
 		while (i < 24)
@@ -62,21 +76,19 @@ void	get_year(time_t *t, char *temp, time_t *t2, int i)
 			ft_putchar(temp[i++]);
 	}
 	ft_putchar(' ');
-	ft_memdel((void **)&t);
 	ft_memdel((void **)&t2);
 }
 
-void	get_time_long(struct stat *buf)
+void	get_time_long(char *path, t_ls *ls)
 {
-	time_t	*t;
+	time_t	t;
 	char	*temp;
 	time_t	*t2;
 	int		i;
 
-	t = (time_t *)malloc(sizeof(time_t));
 	t2 = (time_t *)malloc(sizeof(time_t));
-	*t = buf->st_mtimespec.tv_sec;
-	temp = ctime(t);
+	t = get_time(path, ls);
+	temp = ctime(&t);
 	i = 4;
 	while (i < 11)
 		ft_putchar(temp[i++]);

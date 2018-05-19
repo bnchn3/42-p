@@ -16,9 +16,9 @@ void	get_ext_attr(char *path, struct stat *buf, t_ls *ls)
 {
 	acl_t	acl;
 
-	if (listxattr(path, NULL, 0, XATTR_NOFOLLOW))
+	if (listxattr(path, NULL, 0, XATTR_NOFOLLOW) > 0)
 		ft_putchar('@');
-	else if ((acl = acl_get_file(path, ACL_TYPE_ACCESS)))
+	else if ((acl = acl_get_link_np(path, ACL_TYPE_EXTENDED)))
 	{
 		if (acl_valid(acl) == 0)
 			ft_putchar('+');
@@ -27,7 +27,7 @@ void	get_ext_attr(char *path, struct stat *buf, t_ls *ls)
 	else
 		ft_putchar(' ');
 	ft_putchar(' ');
-	get_links(buf, ls);
+	get_links(path, buf, ls);
 }
 
 void	get_other_per(char *path, struct stat *buf, t_ls *ls)

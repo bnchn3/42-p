@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-void	get_size(struct stat *buf, t_ls *ls)
+void	get_size(char *path, struct stat *buf, t_ls *ls)
 {
 	int	pad;
 
@@ -24,10 +24,10 @@ void	get_size(struct stat *buf, t_ls *ls)
 	}
 	ft_putnbr(buf->st_size);
 	ft_putchar(' ');
-	get_time_long(buf);
+	get_time_long(path, ls);
 }
 
-void	get_group(struct stat *buf, t_ls *ls)
+void	get_group(char *path, struct stat *buf, t_ls *ls)
 {
 	int				pad;
 	struct group	*g;
@@ -49,10 +49,10 @@ void	get_group(struct stat *buf, t_ls *ls)
 		perror("getgrgid");
 		exit(EXIT_FAILURE);
 	}
-	get_size(buf, ls);
+	get_size(path, buf, ls);
 }
 
-void	get_user(struct stat *buf, t_ls *ls)
+void	get_user(char *path, struct stat *buf, t_ls *ls)
 {
 	int				pad;
 	struct passwd	*p;
@@ -74,10 +74,10 @@ void	get_user(struct stat *buf, t_ls *ls)
 		perror("getpwuid");
 		exit(EXIT_FAILURE);
 	}
-	get_group(buf, ls);
+	get_group(path, buf, ls);
 }
 
-void	get_links(struct stat *buf, t_ls *ls)
+void	get_links(char *path, struct stat *buf, t_ls *ls)
 {
 	int pad;
 
@@ -89,5 +89,5 @@ void	get_links(struct stat *buf, t_ls *ls)
 	}
 	ft_putnbr(buf->st_nlink);
 	ft_putchar(' ');
-	get_user(buf, ls);
+	get_user(path, buf, ls);
 }

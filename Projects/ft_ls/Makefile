@@ -12,7 +12,7 @@
 
 NAME = ft_ls
 SRC = delete.c dir_aux.c dir.c files.c long1.c long2.c long3.c main.c pads.c \
-	  parse.c sort.c
+	  parse.c sort.c xattr.c
 SOURCES = $(addprefix src/, $(SRC))
 OBJ = $(SRC:.c=.o)
 INC = src/ft_ls.h
