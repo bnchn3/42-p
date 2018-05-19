@@ -32,22 +32,25 @@ void	get_group(char *path, struct stat *buf, t_ls *ls)
 	int				pad;
 	struct group	*g;
 
-	g = getgrgid(buf->st_gid);
-	if (g)
+	if (!(ft_strchr(ls->flags, 'o')))
 	{
-		ft_putstr(g->gr_name);
-		pad = ls->group_pad - ft_strlen(g->gr_name);
-		while (pad)
+		g = getgrgid(buf->st_gid);
+		if (g)
 		{
-			ft_putchar(' ');
-			pad--;
+			ft_putstr(g->gr_name);
+			pad = ls->group_pad - ft_strlen(g->gr_name);
+			while (pad)
+			{
+				ft_putchar(' ');
+				pad--;
+			}
+			ft_putstr("  ");
 		}
-		ft_putstr("  ");
-	}
-	else
-	{
-		perror("getgrgid");
-		exit(EXIT_FAILURE);
+		else
+		{
+			perror("getgrgid");
+			exit(EXIT_FAILURE);
+		}
 	}
 	get_size(path, buf, ls);
 }

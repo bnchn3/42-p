@@ -17,7 +17,7 @@ void 	flag_error(char c)
 	ft_putstr_fd("ft_ls: illegal option -- ", 2);
 	ft_putchar_fd(c, 2);
 	ft_putchar_fd('\n', 2);
-	ft_putendl_fd("usage: ls [-1@ARacelrtu] [file ...]", 2);
+	ft_putendl_fd("usage: ls [-AR@acelortu1] [file ...]", 2);
 	exit(EXIT_FAILURE);
 }
 
@@ -38,7 +38,7 @@ t_ls	*parse_flags(char **argv)
 			if (argv[i][j] != 'l' && argv[i][j] != 'R' && argv[i][j] != 'a' &&
 				argv[i][j] != 'r' && argv[i][j] != 't' && argv[i][j] != '@' &&
 				argv[i][j] != 'e' && argv[i][j] != '1' && argv[i][j] != 'A' &&
-				argv[i][j] != 'c' && argv[i][j] != 'u')
+				argv[i][j] != 'c' && argv[i][j] != 'u' && argv[i][j] != 'o')
 					flag_error(argv[i][j]);
 			ft_strpchar(&(ls->flags), argv[i][j++]);
 		}
