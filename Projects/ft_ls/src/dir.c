@@ -98,7 +98,8 @@ void	list_dir(char **path, t_ls *ls)
 	alpha_sort(contents);
 	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
 		sort_files(contents, ls);
-	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1'))
+	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1') ||
+		ft_strchr(ls->flags, 'o'))
 		print_dir_long(contents, *path, sub, ls);
 	else
 		print_dir(contents, *path, sub);

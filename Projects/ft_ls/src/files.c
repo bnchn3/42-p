@@ -66,7 +66,8 @@ void	print_files(t_ls *ls)
 	alpha_sort(ls->files);
 	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
 		sort_files(ls->files, ls);
-	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1'))
+	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1') ||
+		ft_strchr(ls->flags, 'o'))
 		print_files_long(ls);
 	else
 	{
