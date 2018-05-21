@@ -60,7 +60,7 @@ void	reverse(char **str)
 		swap_str(str, i--, j++);
 }
 
-void	sort_time(char **str, t_ls *ls)
+void	sort_time(char **str, char *path, t_ls *ls)
 {
 	time_t	t1;
 	time_t	t2;
@@ -71,10 +71,10 @@ void	sort_time(char **str, t_ls *ls)
 	while (str[++i])
 	{
 		j = i;
-		t1 = get_time(str[i], ls);
+		t1 = get_time(str[i], path, ls);
 		while (str[++j])
 		{
-			t2 = get_time(str[j], ls);
+			t2 = get_time(str[j], path, ls);
 			if (t1 < t2 || (t1 == t2 && ft_strcmp(str[i], str[j]) > 0))
 			{
 				swap_str(str, i, j);
@@ -85,15 +85,10 @@ void	sort_time(char **str, t_ls *ls)
 	}
 }
 
-void	sort_files(char **contents, t_ls *ls)
+void	sort_files(char **contents, char *path, t_ls *ls)
 {
-	if (ft_strchr(ls->flags, 'r') && ft_strchr(ls->flags, 't'))
-	{
-		sort_time(contents, ls);
+	if (ft_strchr(ls->flags, 't'))
+		sort_time(contents, path, ls);
+	if (ft_strchr(ls->flags, 'r'))
 		reverse(contents);
-	}
-	else if (ft_strchr(ls->flags, 'r'))
-		reverse(contents);
-	else if (ft_strchr(ls->flags, 't'))
-		sort_time(contents, ls);
 }

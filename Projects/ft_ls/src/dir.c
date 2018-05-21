@@ -12,6 +12,31 @@
 
 #include "ft_ls.h"
 
+void	get_sub(char **contents, char *path, char **sub)
+{
+	int			i;
+	int			j;
+	struct stat	*buf;
+	char		*temp;
+
+	i = 0;
+	j = 0;
+	buf = (struct stat *)malloc(sizeof(struct stat));
+	while (contents[i])
+	{
+		temp = ft_strjoin(path, contents[i++]);
+		if (lstat(temp, buf) == 0)
+		{
+			if (S_ISDIR(buf->st_mode))
+				sub[j++] = ft_strdup(temp);
+		}
+		else
+			perror(temp);
+		ft_strdel(&temp);
+	}
+	ft_memdel((void **)&buf);
+}
+
 void	print_dir_long(char **contents, char *path, char **sub, t_ls *ls)
 {
 	int			i;
@@ -41,30 +66,19 @@ void	print_dir_long(char **contents, char *path, char **sub, t_ls *ls)
 	ft_memdel((void **)&buf);
 }
 
-void	print_dir(char **contents, char *path, char **sub)
+void	print_dir(char **contents, char *path, char **sub, t_ls *ls)
 {
 	int			i;
-	int			j;
-	struct stat	*buf;
-	char		*temp;
 
-	i = 0;
-	j = 0;
-	buf = (struct stat *)malloc(sizeof(struct stat));
-	while (contents[i])
+	get_sub(contents, path, sub);
+	if (ft_strchr(ls->flags, '1'))
 	{
-		temp = ft_strjoin(path, contents[i]);
-		if (lstat(temp, buf) == 0)
-		{
-			if (S_ISDIR(buf->st_mode))
-				sub[j++] = ft_strdup(temp);
-		}
-		else
-			perror(temp);
-		ft_putendl(contents[i++]);
-		ft_strdel(&temp);
+		i = 0;
+		while (contents[i])
+			ft_putendl(contents[i++]);
 	}
-	ft_memdel((void **)&buf);
+	else
+		get_col(contents);
 }
 
 void	print_rec(t_ls *ls, char **sub)
@@ -97,12 +111,12 @@ void	list_dir(char **path, t_ls *ls)
 	ft_strpchar(path, '/');
 	alpha_sort(contents);
 	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
-		sort_files(contents, ls);
+		sort_files(contents, *path, ls);
 	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1') ||
 		ft_strchr(ls->flags, 'o'))
 		print_dir_long(contents, *path, sub, ls);
 	else
-		print_dir(contents, *path, sub);
+		print_dir(contents, *path, sub, ls);
 	char_del(contents);
 	if (ft_strchr(ls->flags, 'R'))
 		print_rec(ls, sub);

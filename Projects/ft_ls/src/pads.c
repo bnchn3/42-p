@@ -20,6 +20,22 @@ void	reset_pads(t_ls *ls)
 	ls->size_pad = 0;
 }
 
+int		get_col_pad(char **contents)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (contents[i])
+	{
+		if ((int)ft_strlen(contents[i]) > j)
+			j = ft_strlen(contents[i]);
+		i++;
+	}
+	return (j);
+}
+
 void	get_user_pad(t_ls *ls, struct stat *buf)
 {
 	struct passwd *p;

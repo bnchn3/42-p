@@ -6,13 +6,13 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 14:11:44 by bchan             #+#    #+#             */
-/*   Updated: 2018/05/19 14:11:52 by bchan            ###   ########.fr       */
+/*   Updated: 2018/05/21 12:35:31 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void 	print_xattr_2(char *path, t_ls *ls, char *namebuf, ssize_t max)
+void	print_xattr_2(char *path, t_ls *ls, char *namebuf, ssize_t max)
 {
 	ssize_t	size;
 	int		i;

@@ -93,3 +93,13 @@ void	get_dir_size(char **contents, char *path, struct stat *buf)
 	ft_putendl(temp);
 	ft_strdel(&temp);
 }
+
+void	sort_dir(t_ls *ls)
+{
+	ls->first = 0;
+	if (ls->num_dir + ls->num_files > 1)
+		ls->first = 1;
+	alpha_sort(ls->dirs);
+	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
+		sort_files(ls->dirs, NULL, ls);
+}

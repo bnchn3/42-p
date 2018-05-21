@@ -12,13 +12,21 @@
 
 #include "ft_ls.h"
 
-time_t	get_time(char *str, t_ls *ls)
+time_t	get_time(char *str, char *path, t_ls *ls)
 {
 	time_t		t;
 	struct stat	*buf;
+	char		*temp;
 
+	t = 0;
+	temp = ft_strdup(str);
+	if (path)
+	{
+		ft_strdel(&temp);
+		temp = ft_strjoin(path, str);
+	}
 	buf = (struct stat *)malloc(sizeof(struct stat));
-	if (lstat(str, buf) == 0)
+	if (lstat(temp, buf) == 0)
 	{
 		if (ft_strrchr(ls->flags, 'c') > ft_strrchr(ls->flags, 'u'))
 			t = buf->st_ctimespec.tv_sec;
@@ -27,11 +35,7 @@ time_t	get_time(char *str, t_ls *ls)
 		else
 			t = buf->st_mtimespec.tv_sec;
 	}
-	else
-	{
-		perror("stat");
-		exit(EXIT_FAILURE);
-	}
+	ft_strdel(&temp);
 	ft_memdel((void **)&buf);
 	return (t);
 }
@@ -87,7 +91,7 @@ void	get_time_long(char *path, t_ls *ls)
 	int		i;
 
 	t2 = (time_t *)malloc(sizeof(time_t));
-	t = get_time(path, ls);
+	t = get_time(path, NULL, ls);
 	temp = ctime(&t);
 	i = 4;
 	while (i < 11)

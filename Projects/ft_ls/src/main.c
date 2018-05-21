@@ -28,12 +28,10 @@ int	main(int argc, char **argv)
 		list_dir(&temp, ls);
 		ft_strdel(&temp);
 	}
-	else
+	else if (ls->num_dir > 0)
 	{
 		i = 0;
-		ls->first = 0;
-		if (ls->num_dir + ls->num_files > 1)
-			ls->first = 1;
+		sort_dir(ls);
 		while (i < ls->num_dir)
 			list_dir(&(ls->dirs[i++]), ls);
 	}

@@ -6,13 +6,13 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:07:52 by bchan             #+#    #+#             */
-/*   Updated: 2018/05/16 17:34:19 by bchan            ###   ########.fr       */
+/*   Updated: 2018/05/21 12:34:33 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void 	flag_error(char c)
+void	flag_error(char c)
 {
 	ft_putstr_fd("ft_ls: illegal option -- ", 2);
 	ft_putchar_fd(c, 2);
@@ -39,7 +39,9 @@ t_ls	*parse_flags(char **argv)
 				argv[i][j] != 'r' && argv[i][j] != 't' && argv[i][j] != '@' &&
 				argv[i][j] != 'e' && argv[i][j] != '1' && argv[i][j] != 'A' &&
 				argv[i][j] != 'c' && argv[i][j] != 'u' && argv[i][j] != 'o')
-					flag_error(argv[i][j]);
+			{
+				flag_error(argv[i][j]);
+			}
 			ft_strpchar(&(ls->flags), argv[i][j++]);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:14:08 by bchan             #+#    #+#             */
-/*   Updated: 2018/05/16 17:35:17 by bchan            ###   ########.fr       */
+/*   Updated: 2018/05/21 12:35:15 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,63 @@ void	print_files(t_ls *ls)
 
 	alpha_sort(ls->files);
 	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
-		sort_files(ls->files, ls);
+		sort_files(ls->files, NULL, ls);
 	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1') ||
 		ft_strchr(ls->flags, 'o'))
 		print_files_long(ls);
 	else
 	{
-		i = 0;
-		while (i < ls->num_files)
-			ft_putendl(ls->files[i++]);
+		if (ft_strchr(ls->flags, '1'))
+		{
+			i = 0;
+			while (i < ls->num_files)
+				ft_putendl(ls->files[i++]);
+		}
+		else
+			get_col(ls->files);
 	}
 	if (ls->num_dir > 0)
 		ft_putchar('\n');
+}
+
+void	get_col(char **contents)
+{
+	struct winsize	w;
+	int				col;
+	int				pad;
+	int				i;
+
+	i = open("/dev/tty", O_RDONLY);
+	ioctl(i, TIOCGWINSZ, &w);
+	i = 0;
+	while (contents[i])
+		i++;
+	pad = get_col_pad(contents) + 4;
+	col = w.ws_col / pad;
+	if (!col)
+		col = 1;
+	if (pad * i < w.ws_col)
+		col = i;
+	print_col(contents, col, pad);
+}
+
+void	print_col(char **contents, int col, int pad)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = 0;
+	while (contents[i])
+	{
+		j = 0;
+		while (j++ < col && contents[i])
+		{
+			ft_putstr(contents[i]);
+			len = ft_strlen(contents[i++]);
+			while (len++ < pad)
+				ft_putchar(' ');
+		}
+		ft_putchar('\n');
+	}
 }
