@@ -48,6 +48,7 @@ int				is_file(char *str);
 int				get_col_pad(char **contents);
 t_ls			*parse_flags(char **argv);
 void			flag_error(char c);
+void			check_dir(DIR *dir, char *path);
 void			parse_args(int argc, char **argv, t_ls *ls);
 void			swap_str(char **str, int i, int j);
 void			alpha_sort(char **str);

@@ -21,6 +21,15 @@ void	flag_error(char c)
 	exit(EXIT_FAILURE);
 }
 
+void	check_dir(DIR *dir, char *path)
+{
+	if (!dir)
+	{
+		perror(path);
+		exit(EXIT_FAILURE);
+	}
+}
+
 t_ls	*parse_flags(char **argv)
 {
 	int		i;
@@ -66,9 +75,9 @@ void	parse_args(int argc, char **argv, t_ls *ls)
 	ls->files = (char **)malloc(sizeof(char *) * (argc - i + 1));
 	while (i < argc)
 	{
-		if (is_file(argv[i]))
+		if (is_file(argv[i]) == 1)
 			ls->files[ls->num_files++] = ft_strdup(argv[i]);
-		else
+		else if (is_file(argv[i]) == 0)
 			ls->dirs[ls->num_dir++] = ft_strdup(argv[i]);
 		i++;
 	}

@@ -19,12 +19,15 @@ void	get_sub(char **contents, char *path, char **sub)
 	struct stat	*buf;
 	char		*temp;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	buf = (struct stat *)malloc(sizeof(struct stat));
-	while (contents[i])
+	while (contents[++i])
 	{
-		temp = ft_strjoin(path, contents[i++]);
+		if (ft_strcmp(contents[i], ".") != 0 && ft_strcmp(contents[i], "..") != 0)
+			temp = ft_strjoin(path, contents[i]);
+		else
+			continue ;
 		if (lstat(temp, buf) == 0)
 		{
 			if (S_ISDIR(buf->st_mode))
@@ -40,22 +43,22 @@ void	get_sub(char **contents, char *path, char **sub)
 void	print_dir_long(char **contents, char *path, char **sub, t_ls *ls)
 {
 	int			i;
-	int			j;
 	struct stat	*buf;
 	char		*temp;
 
 	i = -1;
-	j = 0;
+	get_sub(contents, path, sub);
 	buf = (struct stat *)malloc(sizeof(struct stat));
 	get_pads(ls, contents, path, buf);
 	get_dir_size(contents, path, buf);
 	while (contents[++i])
 	{
-		temp = ft_strjoin(path, contents[i]);
+		if (ft_strcmp(contents[i], ".") != 0 && ft_strcmp(contents[i], "..") != 0)
+			temp = ft_strjoin(path, contents[i]);
+		else
+			continue ;
 		if (lstat(temp, buf) == 0)
 		{
-			if (S_ISDIR(buf->st_mode))
-				sub[j++] = ft_strdup(temp);
 			get_mode(temp, buf, ls);
 			get_name(temp, contents[i], buf, ls);
 		}

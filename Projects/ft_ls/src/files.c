@@ -17,6 +17,7 @@ int		is_file(char *str)
 	struct stat	*buf;
 	int			result;
 
+	result = -1;
 	buf = (struct stat *)malloc(sizeof(struct stat));
 	if (lstat(str, buf) == 0)
 	{
@@ -26,10 +27,7 @@ int		is_file(char *str)
 			result = 1;
 	}
 	else
-	{
 		perror(str);
-		exit(EXIT_FAILURE);
-	}
 	ft_memdel((void **)&buf);
 	return (result);
 }

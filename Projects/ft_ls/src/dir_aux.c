@@ -36,6 +36,7 @@ char	**read_dir(char *path, t_ls *ls)
 
 	count = 0;
 	dir = opendir(path);
+	check_dir(dir, path);
 	while (readdir(dir))
 		count++;
 	closedir(dir);
