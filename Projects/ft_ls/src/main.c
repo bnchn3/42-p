@@ -25,15 +25,16 @@ int	main(int argc, char **argv)
 	if (ls->num_dir == 0 && ls->num_files == 0)
 	{
 		temp = ft_strdup(".");
-		list_dir(&temp, ls);
+		list_dir(&temp, ls, NULL);
 		ft_strdel(&temp);
 	}
 	else if (ls->num_dir > 0)
 	{
-		i = 0;
+		i = -1;
 		sort_dir(ls);
-		while (i < ls->num_dir)
-			list_dir(&(ls->dirs[i++]), ls);
+		while (++i < ls->num_dir)
+			if (valid_dir(ls->dirs[i]))
+				list_dir(&(ls->dirs[i]), ls, NULL);
 	}
 	ls_del(ls);
 	return (0);

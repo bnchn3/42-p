@@ -27,31 +27,32 @@ size_t	ft_intlen(uintmax_t n)
 	return (len);
 }
 
-char	**read_dir(char *path, t_ls *ls)
+char	**read_dir(char *path, t_ls *ls, int count)
 {
-	int				count;
 	char			**contents;
 	DIR				*dir;
 	struct dirent	*entry;
 
-	count = 0;
+	contents = NULL;
 	dir = opendir(path);
-	check_dir(dir, path);
-	while (readdir(dir))
-		count++;
-	closedir(dir);
-	contents = (char **)malloc(sizeof(char *) * (count + 1));
-	count = 0;
-	dir = opendir(path);
-	while ((entry = readdir(dir)))
+	if (check_dir(dir, path))
 	{
-		if (ft_strchr(ls->flags, 'a') || entry->d_name[0] != '.' ||
-			(ft_strchr(ls->flags, 'A') && ft_strcmp(".", entry->d_name)
-			!= 0 && ft_strcmp("..", entry->d_name) != 0))
-			contents[count++] = ft_strdup(entry->d_name);
+		while (readdir(dir))
+			count++;
+		closedir(dir);
+		contents = (char **)malloc(sizeof(char *) * (count + 1));
+		count = 0;
+		dir = opendir(path);
+		while ((entry = readdir(dir)))
+		{
+			if (ft_strchr(ls->flags, 'a') || entry->d_name[0] != '.' ||
+				(ft_strchr(ls->flags, 'A') && ft_strcmp(".", entry->d_name)
+				!= 0 && ft_strcmp("..", entry->d_name) != 0))
+				contents[count++] = ft_strdup(entry->d_name);
+		}
+		contents[count] = NULL;
+		closedir(dir);
 	}
-	contents[count] = NULL;
-	closedir(dir);
 	return (contents);
 }
 

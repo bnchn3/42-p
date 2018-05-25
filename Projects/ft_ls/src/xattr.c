@@ -19,14 +19,14 @@ void	print_xattr_2(char *path, t_ls *ls, char *namebuf, ssize_t max)
 	int		pad;
 
 	i = 0;
-	while (ft_strlen(&(namebuf[i])))
+	while (namebuf[i])
 	{
 		ft_putstr("        ");
 		ft_putstr(&(namebuf[i]));
 		size = getxattr(path, &(namebuf[i]), NULL, 0, 0, XATTR_NOFOLLOW);
 		pad = 9 + ls->link_pad + ls->user_pad + ls->group_pad -
 			ft_strlen(&(namebuf[i])) - ft_intlen(size);
-		while (pad--)
+		while (pad-- > 0)
 			ft_putchar(' ');
 		ft_putnbr(size);
 		ft_putchar('\n');

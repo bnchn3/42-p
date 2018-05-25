@@ -53,10 +53,7 @@ void	print_dir_long(char **contents, char *path, char **sub, t_ls *ls)
 	get_dir_size(contents, path, buf);
 	while (contents[++i])
 	{
-		if (ft_strcmp(contents[i], ".") != 0 && ft_strcmp(contents[i], "..") != 0)
-			temp = ft_strjoin(path, contents[i]);
-		else
-			continue ;
+		temp = ft_strjoin(path, contents[i]);
 		if (lstat(temp, buf) == 0)
 		{
 			get_mode(temp, buf, ls);
@@ -89,38 +86,41 @@ void	print_rec(t_ls *ls, char **sub)
 	int		i;
 
 	i = 0;
-	while (sub[i])
+	if (sub)
 	{
-		ls->first++;
-		list_dir(&sub[i], ls);
-		i++;
+		while (sub[i])
+		{
+			ls->first++;
+			list_dir(&sub[i], ls, NULL);
+			i++;
+		}
 	}
 }
 
-void	list_dir(char **path, t_ls *ls)
+void	list_dir(char **path, t_ls *ls, char **sub)
 {
 	char	**contents;
-	char	**sub;
 
-	contents = read_dir(*path, ls);
-	sub = copy_2d(contents);
-	if (ls->first++ > 0)
+	if ((contents = read_dir(*path, ls, 0)))
 	{
-		if (ls->first > 2)
-			ft_putchar('\n');
-		ft_putstr(*path);
-		ft_putendl(":");
-	}
-	ft_strpchar(path, '/');
-	alpha_sort(contents);
-	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
+		sub = copy_2d(contents);
+		if (ls->first++ > 0)
+		{
+			if (ls->first > 2)
+				ft_putchar('\n');
+			ft_putstr(*path);
+			ft_putendl(":");
+		}
+		if (ft_strcmp(*path, "/"))
+			ft_strpchar(path, '/');
 		sort_files(contents, *path, ls);
-	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1') ||
-		ft_strchr(ls->flags, 'o'))
-		print_dir_long(contents, *path, sub, ls);
-	else
-		print_dir(contents, *path, sub, ls);
-	char_del(contents);
+		if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1') ||
+			ft_strchr(ls->flags, 'o'))
+			print_dir_long(contents, *path, sub, ls);
+		else
+			print_dir(contents, *path, sub, ls);
+		char_del(contents);
+	}
 	if (ft_strchr(ls->flags, 'R'))
 		print_rec(ls, sub);
 	char_del(sub);

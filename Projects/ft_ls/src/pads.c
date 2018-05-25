@@ -65,7 +65,7 @@ void	get_group_pad(t_ls *ls, struct stat *buf)
 	}
 	else
 	{
-		perror("getpwuid");
+		perror("getgrgid");
 		exit(EXIT_FAILURE);
 	}
 }

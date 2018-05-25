@@ -27,7 +27,10 @@ int		is_file(char *str)
 			result = 1;
 	}
 	else
+	{
+		ft_putstr("ft_ls: ");
 		perror(str);
+	}
 	ft_memdel((void **)&buf);
 	return (result);
 }
@@ -47,11 +50,6 @@ void	print_files_long(t_ls *ls)
 			get_mode(ls->files[i], buf, ls);
 			get_name(ls->files[i], ls->files[i], buf, ls);
 		}
-		else
-		{
-			perror("stat");
-			exit(EXIT_FAILURE);
-		}
 		i++;
 	}
 	ft_memdel((void **)&buf);
@@ -61,9 +59,7 @@ void	print_files(t_ls *ls)
 {
 	int	i;
 
-	alpha_sort(ls->files);
-	if (ft_strchr(ls->flags, 'r') || ft_strchr(ls->flags, 't'))
-		sort_files(ls->files, NULL, ls);
+	sort_files(ls->files, NULL, ls);
 	if (ft_strrchr(ls->flags, 'l') > ft_strrchr(ls->flags, '1') ||
 		ft_strchr(ls->flags, 'o'))
 		print_files_long(ls);

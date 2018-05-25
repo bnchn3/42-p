@@ -87,6 +87,7 @@ void	sort_time(char **str, char *path, t_ls *ls)
 
 void	sort_files(char **contents, char *path, t_ls *ls)
 {
+	alpha_sort(contents);
 	if (ft_strchr(ls->flags, 't'))
 		sort_time(contents, path, ls);
 	if (ft_strchr(ls->flags, 'r'))

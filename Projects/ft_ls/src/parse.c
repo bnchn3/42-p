@@ -17,17 +17,32 @@ void	flag_error(char c)
 	ft_putstr_fd("ft_ls: illegal option -- ", 2);
 	ft_putchar_fd(c, 2);
 	ft_putchar_fd('\n', 2);
-	ft_putendl_fd("usage: ls [-AR@acelortu1] [file ...]", 2);
+	ft_putendl_fd("usage: ./ft_ls [-AR@acelortu1] [file ...]", 2);
 	exit(EXIT_FAILURE);
 }
 
-void	check_dir(DIR *dir, char *path)
+int		check_dir(DIR *dir, char *path)
 {
 	if (!dir)
 	{
+		ft_putstr("ft_ls: ");
 		perror(path);
-		exit(EXIT_FAILURE);
+		return (0);
 	}
+	return (1);
+}
+
+int		valid_dir(char *path)
+{
+	struct stat	*buf;
+	int			i;
+
+	buf = (struct stat *)malloc(sizeof(struct stat));
+	i = 0;
+	if (lstat(path, buf) == 0)
+		i = 1;
+	ft_memdel((void **)&buf);
+	return (i);
 }
 
 t_ls	*parse_flags(char **argv)
@@ -77,7 +92,7 @@ void	parse_args(int argc, char **argv, t_ls *ls)
 	{
 		if (is_file(argv[i]) == 1)
 			ls->files[ls->num_files++] = ft_strdup(argv[i]);
-		else if (is_file(argv[i]) == 0)
+		else
 			ls->dirs[ls->num_dir++] = ft_strdup(argv[i]);
 		i++;
 	}

@@ -43,12 +43,13 @@ typedef struct	s_ls
 size_t			ft_intlen(uintmax_t n);
 time_t			get_time(char *str, char *path, t_ls *ls);
 char			**copy_2d(char **contents);
-char			**read_dir(char *path, t_ls *ls);
+char			**read_dir(char *path, t_ls *ls, int count);
 int				is_file(char *str);
 int				get_col_pad(char **contents);
+int				check_dir(DIR *dir, char *path);
+int				valid_dir(char *path);
 t_ls			*parse_flags(char **argv);
 void			flag_error(char c);
-void			check_dir(DIR *dir, char *path);
 void			parse_args(int argc, char **argv, t_ls *ls);
 void			swap_str(char **str, int i, int j);
 void			alpha_sort(char **str);
@@ -86,7 +87,7 @@ void			print_dir_long(char **contents, char *path, char **sub,
 					t_ls *ls);
 void			print_dir(char **contents, char *path, char **sub, t_ls *ls);
 void			print_rec(t_ls *ls, char **sub);
-void			list_dir(char **path, t_ls *ls);
+void			list_dir(char **path, t_ls *ls, char **sub);
 void			char_del(char **str);
 void			ls_del(t_ls *ls);
 
