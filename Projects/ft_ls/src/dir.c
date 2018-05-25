@@ -24,7 +24,8 @@ void	get_sub(char **contents, char *path, char **sub)
 	buf = (struct stat *)malloc(sizeof(struct stat));
 	while (contents[++i])
 	{
-		if (ft_strcmp(contents[i], ".") != 0 && ft_strcmp(contents[i], "..") != 0)
+		if (ft_strcmp(contents[i], ".") != 0 &&
+			ft_strcmp(contents[i], "..") != 0)
 			temp = ft_strjoin(path, contents[i]);
 		else
 			continue ;
