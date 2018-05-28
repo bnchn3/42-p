@@ -24,6 +24,7 @@ int	main(int argc, char **argv)
 		print_files(ls);
 	if (ls->num_dir == 0 && ls->num_files == 0)
 	{
+		ls->first = 0;
 		temp = ft_strdup(".");
 		list_dir(&temp, ls, NULL);
 		ft_strdel(&temp);
