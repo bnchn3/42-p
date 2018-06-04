@@ -23,7 +23,8 @@ static t_list	*get_file(int fd, t_list **file)
 			return (tmp);
 		tmp = tmp->next;
 	}
-	tmp = ft_lstnew("\0", fd);
+	tmp = ft_lstnew(NULL, 0);
+	tmp->content_size = fd;
 	ft_lstadd(file, tmp);
 	tmp = *file;
 	return (tmp);
@@ -81,7 +82,6 @@ int				get_next_line(const int fd, char **line)
 	static t_list	*file;
 	char			buffer[BUFF_SIZE];
 	int				br;
-	int				len;
 	t_list			*tmp;
 
 	if (fd < 0 || !line || read(fd, buffer, 0) < 0)
@@ -95,12 +95,13 @@ int				get_next_line(const int fd, char **line)
 			break ;
 	}
 	if (br < BUFF_SIZE && ft_strlen(tmp->content) == 0)
+	{
+		ft_lstdelone(&tmp, free);
 		return (0);
-	len = find_newline(tmp->content);
-	*line = read_line(tmp->content, *line, len);
-	if (len < (int)ft_strlen(tmp->content))
-		tmp->content = advance_line(len, tmp->content);
-	else
-		ft_strclr(tmp->content);
+	}
+	br = find_newline(tmp->content);
+	*line = read_line(tmp->content, *line, br);
+	(br < (int)ft_strlen(tmp->content)) ?
+		tmp->content = advance_line(br, tmp->content) : ft_strclr(tmp->content);
 	return (1);
 }
