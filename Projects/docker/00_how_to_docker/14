@@ -1,0 +1,1 @@
+docker run -d --name lair -p $(docker-machine ip Char):8080:80 --volumes-from spawning-pool wordpress
