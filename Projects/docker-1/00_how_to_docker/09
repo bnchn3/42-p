@@ -1,4 +1,4 @@
-#debian run -it debian /bin/sh to start shell
+#docker run -it debian /bin/sh to start shell
 apt-get update
 apt-get upgrade
 apt-get install gcc
