@@ -101,6 +101,104 @@ body {
 	top: 20px;
 }
 
+.main {
+	position: relative;
+	height: 90px;
+	left: 35px;
+	top: 20px;
+}
+
+.oeil {
+	position: relative;
+	border: 5px solid red;
+	border-radius: 5px;
+	left: 40px;
+	top: 30px;
+}
+
+.outil {
+	position: relative;
+	width: 90px;
+	top: 30px;
+	left: 35px;
+}
+
+.chat {
+	position: relative;
+	width: 90px;
+	top: 30px;
+	left: 30px;
+}
+
+.rightbox {
+	position: relative;
+	background-color: #8c8c8c;
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px black;
+	margin: auto;
+	width: 160px;
+	height: 500px;
+	bottom: 1200px;
+	left: 650px;
+	z-index: -2;
+}
+
+.book {
+	position: relative;
+	width: 90px;
+	left: 35px;
+	top: 15px;
+}
+
+.towel{
+	position: relative;
+	width: 90px;
+	left: 35px;
+	top: 20px;
+}
+
+.wall {
+	position: relative;
+	top: 20px;
+	left: 15px;
+	width: 150px;
+	height: 100px;
+	z-index: -1;
+}
+
+.brick {
+	position: relative;
+}
+
+.col2 {
+	right: 4px;
+}
+
+.col3 {
+	right: 8px;
+}
+
+.col4 {
+	right: 12px;
+}
+
+.row2 {
+	bottom: 4px;
+}
+
+.row3 {
+	bottom: 8px;
+}
+
+.block {
+	position: relative;
+	background-color: #8c8c8c;
+	left: 15px;
+	width: 130px;
+	height: 24px;
+	bottom: 8px;
+}
+
 .box2 {
 	background-color: #99ff99;
     border-radius: 10px;
