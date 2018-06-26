@@ -1,0 +1,108 @@
+body {
+	background-color: #595959;
+}
+
+.topbox {
+	background-color: #8c8c8c;
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px black;
+	margin: auto;
+	width: 1500px;
+	height: 180px;
+	bottom: 20px;
+	z-index: -1;
+}
+
+.doft{
+	position: absolute;
+	height: 130px;
+	padding-top:25px;
+}
+
+.loupe {
+	position: relative;
+	left: 1150px;
+	height: 180px;
+	top: 30px;
+}
+
+.reload_link {
+	position: relative;
+	bottom: 140px;
+	left: 1140px;
+}
+
+.reload {
+	position: relative;
+	height: 25px;
+}
+
+.close_link {
+	position: relative;
+	left: 1110px;
+	bottom: 5px;
+}
+.close {
+	position: relative;
+	height: 25px;
+}
+
+.centerbox {
+	background-color: #8c8c8c;
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px black;
+	margin: auto;
+	margin-top: 20px;
+	width: 1050px;
+	height: 700px;
+	z-index: -1;
+}
+
+.cluster {
+	padding: 15px;
+	width: 1020px;
+	height: 670px;
+}
+
+.ikea {
+	display: block;
+	position: relative;
+	width: 200px;
+	height: 200px;
+	bottom: 300px;
+	left: 300px;
+}
+
+.apple {
+	display: block;
+	position: relative;
+	width: 200px;
+	height: 200px;
+	bottom: 500px;
+	left: 800px;
+}
+
+.leftbox {
+	position: relative;
+	background-color: #8c8c8c;
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px black;
+	margin: auto;
+	width: 160px;
+	height: 500px;
+	bottom: 700px;
+	right: 650px;
+}
+
+.arrow {
+	position: relative;
+	height: 90px;
+	left: 35px;
+	top: 20px;
+}
+
+.box2 {
+	background-color: #99ff99;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px black;
+}
