@@ -200,7 +200,90 @@ body {
 }
 
 .box2 {
+	position: relative;
 	background-color: #99ff99;
-    border-radius: 10px;
-    box-shadow: 10px 10px 5px black;
+	margin: auto;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px black;
+	height: 180px;
+	width: 500px;
+	bottom: 1100px;
+	right: 550px;
+}
+
+.text {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+}
+
+.p1 {
+	position: relative;
+	top: 25px;
+	left: 10px;
+}
+
+.p2 {
+	position: relative;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size: 33px;
+	bottom: 38px;
+	left: 55px;
+}
+
+.p3 {
+	position: relative;
+	bottom: 95px;
+	left: 150px;
+}
+
+.p4 {
+	position: relative;
+	bottom: 105px;
+	left: 10px;
+}
+
+.p5 {
+	position: relative;
+	text-shadow: 5px 5px 5px orangered, 5px 5px 5px #4d4d4d;
+	bottom: 138px;
+	left: 25px;
+}
+
+.p6 {
+	position: relative;
+	bottom: 171px;
+	left: 112px;
+}
+
+.p7 {
+	position: relative;
+	font-style: italic;
+	bottom: 180px;
+	left: 10px;
+}
+
+.search {
+	position: relative;
+	bottom: 190px;
+	left: 10px;
+}
+
+.search input[type=text] {
+	border: 2px inset lightgrey;
+	width: 350px;
+}
+
+.button{
+	position: relative;
+	bottom: 211px;
+	left: 370px;
+}
+
+.button button[type=button] {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 13px;
+	width: 80px;
+	background-color: #f2f2f2;
+	border: 1px solid grey;
+	border-radius: 2px;
 }
