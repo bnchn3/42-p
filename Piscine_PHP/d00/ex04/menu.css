@@ -1,0 +1,44 @@
+body {
+	background-color: grey;
+}
+
+.dropdown {
+	position: relative;
+	margin: auto;
+	width: 10%;
+	display: block;
+}
+
+.button {
+	background-color: lightblue;
+	padding: 16px;
+	font-size: 16px;
+	border: 2px inset lightblue;
+	cursor: pointer;
+}
+
+.content {
+	display: none;
+	position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.content a {
+	color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.content a:hover {background-color: #f1f1f1}
+
+.dropdown:active .content {
+	display: block;
+}
+
+.dropdown:active .button {
+	background-color: #3e8e41;
+}
