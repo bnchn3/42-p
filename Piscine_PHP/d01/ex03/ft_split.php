@@ -1,5 +1,3 @@
-#!/usr/bin/php
-
 <?PHP
 
 function ft_split($string)
