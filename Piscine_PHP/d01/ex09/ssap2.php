@@ -1,5 +1,4 @@
 #!/usr/bin/php
-
 <?PHP
 
 function to_upper($char)

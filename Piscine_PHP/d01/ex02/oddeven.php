@@ -1,5 +1,4 @@
 #!/usr/bin/php
-
 <?PHP
 while (1)
 {
