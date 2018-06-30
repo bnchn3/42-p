@@ -2,7 +2,7 @@
 
 session_start();
 
-if ($_GET["submit"] == "OK")
+if ($_GET["submit"] && $_GET["submit"] == "OK")
 {
 	if ($_GET["login"] && $_GET["passwd"])
 	{
