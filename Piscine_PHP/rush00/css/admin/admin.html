@@ -1,19 +1,19 @@
 <html>
 <head>
-	<title>Delete Account</title>
-	<link rel="stylesheet" href="main.css" />
+	<link rel="stylesheet" href="../css/style.css" />
+	<title>Admin Login</title>
 </head>
 <body>
 	<div name="spacer" class="spacer"></div>
 	<div name="login" class="login">
-			<form name="login.php" action="delete_acc.php" method="POST">
+			<form name="admin.php" action="admin.php" method="POST">
+				USERNAME: <br />
+				<input type="text" name="login" value="" /><br />
 				PASSWORD: <br />
 				<input type="password" name="passwd" value="" /><br />
-				CONFIRM PASSWORD: <br />
-				<input type="password" name="confirm" value="" /> <br />
 				<input type="submit" name="submit" value="OK" />
 			</form>
-			<a href="account.php">Back</a>
+			<a href="admin_modif.html">Change Admin Password</a>
 	</div>
 
 </body>

@@ -17,7 +17,7 @@ if ($_POST["login"] && $_POST["oldpw"] && $_POST["newpw"] && $_POST["submit"] &&
 	else
 	{
 		file_put_contents("private/passwd", serialize($arr));
-		header("Location: main.html");
+		header("Location: admin.html");
 		echo "OK\n";
 
 	}
