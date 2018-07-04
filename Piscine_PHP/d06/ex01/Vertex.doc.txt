@@ -1,0 +1,17 @@
+
+<- Vertex -------------------------------------------------------------------------------------------------
+The Vertex class handles 3D coordinates, aka vertices.
+
+An instance can be constructed with a vertex's x, y, and z coordinates:
+new Vertex( array( 'x' => 0.0, 'y' => 0.0, 'z' => 0.0 ) );
+
+X, y, and z coordinates are required for instantiation.
+Optional values include w (homogeneous coordinate) and an RGB color, using the Color class:
+new Vertex( array( 'x' => 0.0, 'y' => 0.0, 'z' => 0.0, 'w' => 1.0, new Color( array( 'rgb' => 12345 ) );
+
+W and Color are by default set to 1.0 and white (0xFFFFFF), respectively.
+
+Getter and setter methods are provided for each of the variables, in the form of:
+get_$var() and set_$var($value) (ex. get_x() )
+No additional methods are provided.
+------------------------------------------------------------------------------------------------- Vertex ->
