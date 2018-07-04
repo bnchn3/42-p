@@ -1,0 +1,33 @@
+
+<- Matrix ----------------------------------------------------------------------
+The Matrix class handles 4x4 matrices.
+
+An instance can be constructed from either an existing 4x4 matrix in the
+form of 2D array, or by specifying a preset:
+new Matrix( array ('preset' => IDENTITY));
+new Matrix( array ('matrix' => array $mat));
+
+Various constants are defined for preset matrices. Some presets require 
+additional properties to be passed in the constructor array:
+IDENTITY	Creates an identity matrix
+SCALE		Creates a scaling matrix given float 'scale' as the scale factor
+RX		Creates an x-axis rotation matrix given float 'angle' as the rotation angle in radians
+RY		Creates a y-axis rotation matrix given float 'angle' as the rotation angle in radians
+RZ		Creates a z-axis rotation matrix given float 'angle' as the rotation angle in radians
+TRANSLATION	Creates a translation matrix given Vector 'vtc' as the translation vector
+PROJECTION	Creates a projection matrix given float 'fov' as the projection field of view in degrees,
+		float 'ratio' as the projected image ratio, float 'near' as the projection's near clipping plane,
+		and float 'far' as the projection's far clipping plane
+
+All additional properties are required for the respective preset. Omitting them will
+cause undefined behavior.
+
+Matrices cannot be changed once instantiated. The matrix as a 2D array using a getter method:
+array get_matrix()
+
+Three additional methods are provided:
+Matrix mult( Matrix $mat) : returns the multiplication of both matrices
+Matrix invert( Matrix $mat ) : returns the inverse of the matrix
+Vertex transformVertex( Vertex $vtx ) : returns a new vertex resulting from the transformation
+					of the vertex by the matrix
+---------------------------------------------------------------------- Matrix ->

@@ -1,0 +1,18 @@
+
+<- Camera ----------------------------------------------------------------------
+The Camera class handles the positioning and orientation of a camera in
+3D space.
+
+An instance can be constructed from an array of the following values:
+'origin'		a Vertex representing the camera's position in the world
+'orientation'	a rotation Matrix representing the camera's orientation in the world
+'width'			width in pixel of desired image (not compatible with 'ratio')
+'height'		height in pixel of desired image (not compatible with 'ratio')
+'ratio'			image ratio (not compatible with 'width and 'height')
+'fov'			field of view in degrees
+'near'			near clipping plane
+'far'			far clipping plane
+
+Provided methods:
+Vertex watchVertex( Vertex $worldVertex ) : transforms a 3D vertex into 2D coordinates
+---------------------------------------------------------------------- Camera ->
