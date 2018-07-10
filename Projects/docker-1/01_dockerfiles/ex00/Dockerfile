@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk update && apk upgrade
+RUN apk update
 RUN apk add vim
 
 ENTRYPOINT vim

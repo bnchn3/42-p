@@ -1,6 +1,6 @@
 FROM ruby
 
-RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get update -y
 RUN gem install rails
 RUN apt-get install nodejs -y
 
