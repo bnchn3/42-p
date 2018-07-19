@@ -47,4 +47,5 @@ RUN gdk install
 RUN echo 0.0.0.0 > host
 RUN gdk reconfigure
 
+EXPOSE 3000
 ENTRYPOINT gdk run
