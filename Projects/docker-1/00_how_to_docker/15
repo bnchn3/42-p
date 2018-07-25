@@ -1,1 +1,1 @@
-docker run -d --name roach-warden -p $(docker-machine ip Char):8081:80 --volumes-from spawning-pool phpmyadmin/phpmyadmin
+docker run -d --name roach-warden -p $(docker-machine ip Char):8081:80 --link spawning-pool:db phpmyadmin/phpmyadmin
