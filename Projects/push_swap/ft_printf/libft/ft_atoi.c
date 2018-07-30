@@ -36,7 +36,7 @@ intmax_t		ft_atoi(const char *str)
 		nbr += (int)str[i++] - '0';
 	}
 	if (isnegative == -1)
-		return (-nbr);
+		return (-1 * nbr);
 	else
 		return (nbr);
 }

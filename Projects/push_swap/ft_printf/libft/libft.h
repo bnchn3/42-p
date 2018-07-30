@@ -17,6 +17,8 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <limits.h>
+# include <fcntl.h>
+# define BUFF_SIZE 32
 
 typedef struct		s_list
 {
@@ -116,5 +118,6 @@ char				*ft_dtoa(long double n, int i, long double base);
 void				ft_capitalize(char *result);
 void				ft_swap(char *tmp1, char *tmp2);
 void 				ft_lstadd_end(t_list **begin_list, t_list *new);
+int				get_next_line(const int fd, char **line);
 
 #endif
