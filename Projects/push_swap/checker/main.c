@@ -59,7 +59,7 @@ int	check_dup(int argc, char **argv)
 	return (1);
 }
 
-int	*get_a(int argc, char **argv)
+t_list	*get_a(int argc, char **argv)
 {
 	t_list	*a;
 	int	i;
@@ -73,22 +73,49 @@ int	*get_a(int argc, char **argv)
 	}
 	while (i > 0)
 	{
-		ft_lstadd(&a, ft_lstnew(ft_atoi(argv[i]), sizeof(int)));
+		ft_lstadd(&a, ft_lstnew(argv[i], ft_strlen(argv[i])));
 		i--;
 	}
 	return (a);
 }
 
+t_list	*get_commands()
+{
+	t_list	*commands;
+	t_list	*temp;
+	char	*line;
+	int		i;
+
+	commands = ft_lstnew(NULL, 0);
+	while ((i = get_next_line(0, &line)))
+	{
+		if (i == -1)
+		{
+			ft_putendl_fd("Error", 2);
+			exit(EXIT_FAILURE);
+		}
+		ft_lstadd_end(&commands, ft_lstnew(line, ft_strlen(line)));
+	}
+	temp = commands;
+	commands = commands->next;
+	ft_memdel(&temp);
+	return (commands);
+}
+
 int main (int argc, char **argv)
 {
 	t_check	*check;
-	char	**line;
 
 	if (argc == 1)
 		exit(EXIT_FAILURE);
 	check = (t_check *)malloc(sizeof(t_check));
 	check->a = get_a(argc, argv);
 	check->a_size = argc - 1;
-	while (get_next_line(0, line))
-		;
+	check->commands = get_commands();
+	execute(check);
+	if (sort_check(check))
+		ft_putendl("OK");
+	else
+		ft_putendl("KO");
+	return (1);
 }

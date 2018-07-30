@@ -20,7 +20,7 @@ typedef struct	s_check
 	t_list *b;
 	int a_size;
 	int b_size;
-	char *commands;
+	t_list *commands;
 }				t_check;
 
 #endif

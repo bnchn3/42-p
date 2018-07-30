@@ -115,5 +115,6 @@ char				*ft_max_itoa(long long n);
 char				*ft_dtoa(long double n, int i, long double base);
 void				ft_capitalize(char *result);
 void				ft_swap(char *tmp1, char *tmp2);
+void 				ft_lstadd_end(t_list **begin_list, t_list *new);
 
 #endif
