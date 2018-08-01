@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/01 12:57:24 by bchan             #+#    #+#             */
+/*   Updated: 2018/08/01 12:58:11 by bchan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "checker.h"
 
-int	check_arg(int argc, char **argv)
+int		check_arg(int argc, char **argv)
 {
 	int i;
 	int j;
@@ -9,7 +21,7 @@ int	check_arg(int argc, char **argv)
 	while (i < argc)
 	{
 		j = 0;
-		while (j < ft_strlen(argv[i]))
+		while (j < (int)ft_strlen(argv[i]))
 		{
 			if (!(ft_isdigit(argv[i][j])))
 			{
@@ -27,7 +39,7 @@ int	check_arg(int argc, char **argv)
 	return (1);
 }
 
-int	check_dup(int argc, char **argv)
+int		check_dup(int argc, char **argv)
 {
 	int i;
 	int j;
@@ -50,7 +62,7 @@ int	check_dup(int argc, char **argv)
 t_list	*get_a(int argc, char **argv, t_check *check)
 {
 	t_list	*a;
-	int	i;
+	int		i;
 
 	a = NULL;
 	i = argc - 1;
@@ -61,7 +73,7 @@ t_list	*get_a(int argc, char **argv, t_check *check)
 	}
 	while (i > 0)
 	{
-		ft_lstadd(&a, ft_lstnew(argv[i], ft_strlen(argv[i])));
+		ft_lstadd(&a, ft_lstnew(argv[i], ft_strlen(argv[i]) + 1));
 		i--;
 	}
 	return (a);
@@ -82,11 +94,12 @@ t_list	*get_commands(t_check *check)
 			check->error = 1;
 			return (NULL);
 		}
-		ft_lstadd_end(&commands, ft_lstnew(line, ft_strlen(line)));
+		ft_lstadd_end(&commands, ft_lstnew(line, ft_strlen(line) + 1));
+		ft_strdel(&line);
 	}
 	temp = commands;
 	commands = commands->next;
-	ft_memdel(&(temp->content));
-	ft_memdel(&temp);
+	ft_memdel((void **)&(temp->content));
+	ft_memdel((void **)&temp);
 	return (commands);
 }

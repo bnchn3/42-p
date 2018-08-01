@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_check.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/01 12:58:43 by bchan             #+#    #+#             */
+/*   Updated: 2018/08/01 12:58:50 by bchan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "checker.h"
 
-int	sort_check(t_check *check)
+int		sort_check(t_check *check)
 {
 	t_list *tmp;
 
@@ -23,23 +35,23 @@ void	check_del(t_check *check)
 	while (check->a)
 	{
 		tmp = check->a->next;
-		ft_memdel(&(check->a->content));
-		ft_memdel(&(check->a));
+		ft_memdel((void **)&(check->a->content));
+		ft_memdel((void **)&(check->a));
 		check->a = tmp;
 	}
 	while (check->b)
 	{
 		tmp = check->b->next;
-		ft_memdel(&(check->b->content));
-		ft_memdel(&(check->b));
+		ft_memdel((void **)&(check->b->content));
+		ft_memdel((void **)&(check->b));
 		check->b = tmp;
 	}
 	while (check->commands)
 	{
 		tmp = check->commands->next;
-		ft_memdel(&(check->commands->content));
-		ft_memdel(&(check->commands));
+		ft_memdel((void **)&(check->commands->content));
+		ft_memdel((void **)&(check->commands));
 		check->commands = tmp;
 	}
-	ft_memdel(&check);
+	ft_memdel((void **)&check);
 }

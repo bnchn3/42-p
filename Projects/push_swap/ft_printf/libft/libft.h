@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 13:11:54 by bchan             #+#    #+#             */
-/*   Updated: 2018/03/02 11:47:43 by bchan            ###   ########.fr       */
+/*   Updated: 2018/08/01 13:01:58 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdint.h>
 # include <limits.h>
 # include <fcntl.h>
-# define BUFF_SIZE 32
+# define BUFF_SIZE 1
 
 typedef struct		s_list
 {
@@ -55,7 +55,7 @@ char				*ft_strnstr(const char *big, const char *little,
 									size_t len);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-intmax_t				ft_atoi(const char *str);
+intmax_t			ft_atoi(const char *str);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(int c);
@@ -117,7 +117,7 @@ char				*ft_max_itoa(long long n);
 char				*ft_dtoa(long double n, int i, long double base);
 void				ft_capitalize(char *result);
 void				ft_swap(char *tmp1, char *tmp2);
-void 				ft_lstadd_end(t_list **begin_list, t_list *new);
-int				get_next_line(const int fd, char **line);
+void				ft_lstadd_end(t_list **begin_list, t_list *new);
+int					get_next_line(const int fd, char **line);
 
 #endif

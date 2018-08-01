@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/01 12:58:34 by bchan             #+#    #+#             */
+/*   Updated: 2018/08/01 12:58:38 by bchan            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "checker.h"
 
 void	exec_command_2(char *command, t_check *check)
@@ -48,8 +60,6 @@ void	execute(t_check *check)
 	t_list *tmp;
 
 	tmp = check->commands;
-	check->b = NULL;
-	check->b_size = 0;
 	while (tmp)
 	{
 		exec_command(tmp->content, check);

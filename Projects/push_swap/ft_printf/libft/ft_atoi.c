@@ -6,7 +6,7 @@
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 16:26:49 by bchan             #+#    #+#             */
-/*   Updated: 2017/12/05 12:18:40 by bchan            ###   ########.fr       */
+/*   Updated: 2018/08/01 12:56:29 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 intmax_t		ft_atoi(const char *str)
 {
-	int i;
-	intmax_t nbr;
-	int isnegative;
+	int			i;
+	intmax_t	nbr;
+	int			isnegative;
 
 	nbr = 0;
 	isnegative = 1;
