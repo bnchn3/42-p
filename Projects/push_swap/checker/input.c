@@ -86,7 +86,6 @@ t_list	*get_commands(t_check *check)
 	char	*line;
 	int		i;
 
-	commands = ft_lstnew(NULL, 0);
 	while ((i = get_next_line(0, &line)))
 	{
 		if (i == -1)
@@ -97,9 +96,5 @@ t_list	*get_commands(t_check *check)
 		ft_lstadd_end(&commands, ft_lstnew(line, ft_strlen(line) + 1));
 		ft_strdel(&line);
 	}
-	temp = commands;
-	commands = commands->next;
-	ft_memdel((void **)&(temp->content));
-	ft_memdel((void **)&temp);
 	return (commands);
 }

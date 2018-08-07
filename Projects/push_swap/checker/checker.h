@@ -21,6 +21,7 @@ typedef struct		s_check
 	unsigned int	a_size;
 	unsigned int	b_size;
 	t_list			*commands;
+	unsigned int	c_size;
 	int				error;
 }					t_check;
 

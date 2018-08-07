@@ -1,28 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_end.c                                    :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/01 12:54:49 by bchan             #+#    #+#             */
-/*   Updated: 2018/08/01 13:01:12 by bchan            ###   ########.fr       */
+/*   Created: 2018/08/06 12:36:25 by bchan             #+#    #+#             */
+/*   Updated: 2018/08/06 12:36:31 by bchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+# include "../checker/checker.h"
 
-void	ft_lstadd_end(t_list **begin_list, t_list *new)
-{
-	t_list	*lst;
-
-	if (!(*begin_list))
-		*begin_list = new;
-	else
-	{
-		lst = *begin_list;
-		while (lst->next != NULL)
-			lst = lst->next;
-		lst->next = new;
-	}
-}
+#endif

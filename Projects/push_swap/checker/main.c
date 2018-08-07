@@ -23,6 +23,7 @@ t_check	*create_check(int argc, char **argv)
 	check->b = NULL;
 	check->b_size = 0;
 	check->commands = NULL;
+	check->c_size = 0;
 	return (check);
 }
 
