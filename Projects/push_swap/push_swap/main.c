@@ -12,11 +12,43 @@
 
 #include "push_swap.h"
 
+char	*get_last(t_list *a)
+{
+	t_list *tmp;
+
+	tmp = a;
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp->content);
+}
+
+int		reverse_sort_check(t_list *b)
+{
+	t_list *temp;
+
+	temp = b;
+	while (temp->next)
+	{
+		if (ft_atoi(temp->content) < ft_atoi(temp->next->content))
+			return (0);
+		temp = temp->next;
+	}
+	return (1);
+}
+
 void	find_solution_1(t_check *one)
 {
 	char *temp;
 
-	if (ft_atoi(one->a->content) > ft_atoi(one->a->next->content) &&
+	temp = NULL;
+	if (sort_check(one->a->next) && ft_atoi(one->a->content) > ft_atoi(get_last(one->a)) &&
+		reverse_sort_check(one->b->next) && ft_atoi(one->b->content) < ft_atoi(get_last(one->b)))
+		temp = "rr";
+	else if (sort_check(one->a->next) && ft_atoi(one->a->content) > ft_atoi(get_last(one->a)))
+		temp = "ra";
+	else if (reverse_sort_check(one->b->next) && ft_atoi(one->b->content) < ft_atoi(get_last(one->b)))
+		temp = "rb";
+	else if (ft_atoi(one->a->content) > ft_atoi(one->a->next->content) &&
 			ft_atoi(one->b->content) < ft_atoi(one->b->next->content))
 		temp = "ss";
 	else if (ft_atoi(one->a->content) > ft_atoi(one->a->next->content))
@@ -30,7 +62,17 @@ void	find_solution_1(t_check *one)
 		temp = "rra";
 	else if (ft_atoi(one->b->content) < ft_atoi(get_last(one->b)))
 		temp = "rrb";
-	else if ()
+	else if (!(sort_check(one->a)))
+		temp = "pb";
+	else if (one->b != NULL)
+		temp = "pa";
+	if (temp)
+	{
+		exec_command(temp, one);
+		ft_lstadd_end(&(one->commands), ft_lstnew(temp, ft_strlen(temp) + 1));
+		one->c_size++;
+		find_solution_1(one);
+	}
 }
 
 void	print_commands(t_list *commands)

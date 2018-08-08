@@ -12,13 +12,11 @@
 
 #include "checker.h"
 
-int		sort_check(t_check *check)
+int		sort_check(t_list *a)
 {
 	t_list *tmp;
 
-	tmp = check->a;
-	if (check->b_size != 0 || check->b != NULL)
-		return (0);
+	tmp = a;
 	while (tmp->next)
 	{
 		if (ft_atoi(tmp->content) > ft_atoi(tmp->next->content))

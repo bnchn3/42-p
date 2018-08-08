@@ -44,7 +44,7 @@ int		main(int argc, char **argv)
 	execute(check);
 	if (check->error == 1)
 		ft_putendl_fd("Error", 2);
-	else if (sort_check(check))
+	else if (sort_check(check->a) && check->b == NULL)
 		ft_putendl("OK");
 	else
 		ft_putendl("KO");
