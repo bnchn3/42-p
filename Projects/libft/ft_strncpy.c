@@ -12,6 +12,14 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strncpy(). The function will copy the first
+** len bytes of the string src to dst, returning a pointer to dst. If len is
+** less than the length of src, the copied string is not null terminated. If
+** len is greater than the length of src, null terminators are added onto the
+** end of the copied string until len bytes are written.
+*/
+
 char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
 	int i;

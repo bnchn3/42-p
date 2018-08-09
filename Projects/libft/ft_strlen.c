@@ -12,6 +12,11 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strlen(). The function will return the length
+** of the string s, not including the null terminator.
+*/
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;

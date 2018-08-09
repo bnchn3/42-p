@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strcpy(). The function will copy the string
+** pointed to by src to dst, including the null terminator, and return a
+** pointer to dst. The strings must not overlap and dst must be large enough
+** to hold the copy.
+*/
+
 char	*ft_strcpy(char *dst, const char *src)
 {
 	int		i;

@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function memcmp(). The function will compare the first
+** n bytes of the memory areas s1 and s2 and return an integer greater than,
+** equal to, or less than zero depending on whether the first n bytes in s1 are
+** greater than, equal to, or less than the first n bytes of s2, respectively.
+*/
+
 int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	size_t			i;

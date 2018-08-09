@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strdup(). The function will return a pointer
+** to a new duplicate string of the string s1. The duplicated string is
+** allocated memory with malloc() and can be freed with free(). If there is
+** insufficient memory to hold the duplicated string, NULL is returned.
+*/
+
 char	*ft_strdup(const char *s1)
 {
 	char	*str;

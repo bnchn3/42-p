@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function memmove(). The function will copy len bytes
+** from memory area src to memory area dst and return a pointer to dst. The
+** memory areas can overlap; copying is done in a non-destructive manner.
+*/
+
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t		i;

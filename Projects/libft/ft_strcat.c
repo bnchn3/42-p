@@ -12,6 +12,14 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strcat(). The function will concatenate the
+** string s2 onto the end of the string s1, returning a pointer to s1. The null
+** terminator in s1 is overwritten and a new terminator is placed at the end of
+** the concatenated string. The strings must not overlap, and s1 must have
+** enough space for the result.
+*/
+
 char	*ft_strcat(char *s1, const char *s2)
 {
 	int		i;

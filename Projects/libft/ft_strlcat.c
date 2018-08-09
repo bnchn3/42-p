@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strlcat(). The function will append at most
+** size - strlen(dst) - 1 bytes of the string src onto the end of dst, null
+** terminating the result. The function will return the total length of the
+** string it tried to create (initial length of dst plus the length of src).
+*/
+
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	i;

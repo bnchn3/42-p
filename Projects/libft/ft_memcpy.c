@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function memcpy(). The function will copy n bytes of
+** the memory pointed to by src to the memory pointed to by dst and return a
+** pointer to dst. The memory areas must not overlap, otherwise it is
+** considered undefined behavior.
+*/
+
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t				i;

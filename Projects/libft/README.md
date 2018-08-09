@@ -1,5 +1,5 @@
 # libft
-This is the first project in the 42 curriculum. Cadets must recode a variety of basic libc functions as well as write new functions, all of which can be used in future projects at 42.
+This is the first project in the 42 curriculum. Cadets must recode a variety of basic libc functions as well as write new functions, all of which can be used in future projects at 42. The full project guidelines can be found [here](libft.en.pdf).
 ## Makefile
 The library can be compiled with
 ```

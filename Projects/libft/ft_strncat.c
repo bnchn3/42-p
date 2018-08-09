@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strncat(). The function will concatenate up
+** to n bytes of s2 onto the end of s1, overwriting the null terminator and
+** terminating the result. A pointer to s1 is then returned. The strings must
+** not overlap and s1 must be large enough to hold the result.
+*/
+
 char	*ft_strncat(char *s1, const char *s2, size_t n)
 {
 	size_t	i;
