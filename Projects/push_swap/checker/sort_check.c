@@ -28,28 +28,8 @@ int		sort_check(t_list *a)
 
 void	check_del(t_check *check)
 {
-	t_list *tmp;
-
-	while (check->a)
-	{
-		tmp = check->a->next;
-		ft_memdel((void **)&(check->a->content));
-		ft_memdel((void **)&(check->a));
-		check->a = tmp;
-	}
-	while (check->b)
-	{
-		tmp = check->b->next;
-		ft_memdel((void **)&(check->b->content));
-		ft_memdel((void **)&(check->b));
-		check->b = tmp;
-	}
-	while (check->commands)
-	{
-		tmp = check->commands->next;
-		ft_memdel((void **)&(check->commands->content));
-		ft_memdel((void **)&(check->commands));
-		check->commands = tmp;
-	}
+	ft_lstdel(&(check->a));
+	ft_lstdel(&(check->b));
+	ft_lstdel(&(check->commands));
 	ft_memdel((void **)&check);
 }

@@ -82,10 +82,10 @@ t_list	*get_a(int argc, char **argv, t_check *check)
 t_list	*get_commands(t_check *check)
 {
 	t_list	*commands;
-	t_list	*temp;
 	char	*line;
 	int		i;
 
+	commands = NULL;
 	while ((i = get_next_line(0, &line)))
 	{
 		if (i == -1)
@@ -96,5 +96,6 @@ t_list	*get_commands(t_check *check)
 		ft_lstadd_end(&commands, ft_lstnew(line, ft_strlen(line) + 1));
 		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	return (commands);
 }

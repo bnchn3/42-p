@@ -47,33 +47,58 @@ static int		find_newline(char *buffer)
 	return (count);
 }
 
-static char		*read_line(char *buffer, char *line, int br)
+static char		*read_line(char *buffer, char *line, int br, int i)
 {
 	char		*temp;
 
-	temp = ft_strnew(ft_strlen(line) + br);
-	if (temp && line)
-		ft_memcpy(temp, line, ft_strlen(line));
-	if (line)
-		free(line);
-	line = temp;
-	ft_memcpy(line + ft_strlen(line), buffer, br);
+	if (i == 0)
+	{
+		temp = ft_strnew(ft_strlen(line) + br);
+		if (temp && line)
+			ft_memcpy(temp, line, ft_strlen(line));
+		if (line)
+			free(line);
+		line = temp;
+		ft_memcpy(line + ft_strlen(line), buffer, br);
+	}
+	else if (i == 1)
+	{
+		i = ft_strlen(line) - br - 1;
+		temp = ft_strnew(i);
+		if (temp && line)
+			ft_memcpy(temp, line + br + 1, i);
+		if (line)
+			free(line);
+		line = temp;
+	}
 	return (line);
 }
 
-static char		*advance_line(int len, char *line)
+int				file_del(int fd, t_list **file)
 {
-	char	*temp;
-	int		i;
+	t_list *tmp1;
+	t_list *tmp2;
 
-	i = ft_strlen(line) - len - 1;
-	temp = ft_strnew(i);
-	if (temp && line)
-		ft_memcpy(temp, line + len + 1, i);
-	if (line)
-		free(line);
-	line = temp;
-	return (line);
+	tmp1 = *file;
+	tmp2 = tmp1->next;
+	if (!tmp2)
+		ft_lstdel(file);
+	else if ((int)tmp1->content_size == fd)
+	{
+		ft_lstdelone(&tmp1);
+		*file = tmp2;
+	}
+	while (tmp2)
+	{
+		if ((int)tmp2->content_size == fd)
+		{
+			tmp1->next = tmp2->next;
+			ft_lstdelone(&tmp2);
+		}
+		tmp1 = tmp2;
+		tmp2 = tmp2->next;
+	}
+	return (0);
 }
 
 int				get_next_line(const int fd, char **line)
@@ -81,7 +106,6 @@ int				get_next_line(const int fd, char **line)
 	static t_list	*file;
 	char			buffer[BUFF_SIZE];
 	int				br;
-	int				len;
 	t_list			*tmp;
 
 	if (fd < 0 || !line || read(fd, buffer, 0) < 0)
@@ -90,16 +114,16 @@ int				get_next_line(const int fd, char **line)
 	*line = ft_strnew(1);
 	while ((br = read(fd, buffer, BUFF_SIZE)))
 	{
-		tmp->content = read_line(buffer, tmp->content, br);
+		tmp->content = read_line(buffer, tmp->content, br, 0);
 		if (ft_strchr(tmp->content, '\n'))
 			break ;
 	}
 	if (br < BUFF_SIZE && ft_strlen(tmp->content) == 0)
-		return (0);
-	len = find_newline(tmp->content);
-	*line = read_line(tmp->content, *line, len);
-	if (len < (int)ft_strlen(tmp->content))
-		tmp->content = advance_line(len, tmp->content);
+		return (file_del(fd, &file));
+	br = find_newline(tmp->content);
+	*line = read_line(tmp->content, *line, br, 0);
+	if (br < (int)ft_strlen(tmp->content))
+		tmp->content = read_line(NULL, tmp->content, br, 1);
 	else
 		ft_strclr(tmp->content);
 	return (1);

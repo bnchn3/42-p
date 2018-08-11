@@ -44,7 +44,7 @@ void				execute(t_check *check);
 void				exec_command(char *command, t_check *check);
 void				exec_command_2(char *command, t_check *check);
 
-int					sort_check(t_check *check);
+int					sort_check(t_list *a);
 void				check_del(t_check *check);
 
 #endif
