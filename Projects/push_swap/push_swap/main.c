@@ -101,7 +101,7 @@ int 	main(int argc, char **argv)
 	else
 	{
 		find_solution_1(one);
-		find_solution_2(two);
+		//find_solution_2(two);
 		if (one->c_size > two->c_size)
 			print_commands(one->commands);
 		else
