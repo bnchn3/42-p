@@ -12,6 +12,14 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strnstr(). The function will search up to len
+** characters of the string big for the substring little, returning a pointer
+** to the first matching substring found. If little is not found within len
+** characters, the function returns NULL. If little is an empty string, the
+** function returns a pointer to big.
+*/
+
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;

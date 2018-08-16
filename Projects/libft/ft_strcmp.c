@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strcmp(). The function will return an integer
+** value that will be greater than, equal to, or less than zero based on the
+** difference between the strings s1 and s2. 
+*/
+
 int		ft_strcmp(const char *s1, const char *s2)
 {
 	int		i;

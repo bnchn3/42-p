@@ -17,3 +17,7 @@ The library can be recompiled with
 ```
 make re
 ```
+## Allowed functions
+- malloc(3)
+- free(3)
+- write(2)

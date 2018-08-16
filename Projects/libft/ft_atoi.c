@@ -12,6 +12,11 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function atoi(). The function will return the integer
+** value of the numerical string str. Leading whitespaces will be ignored.
+*/
+
 int		ft_atoi(const char *str)
 {
 	int i;

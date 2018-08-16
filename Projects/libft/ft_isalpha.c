@@ -12,6 +12,11 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function isalpha(). The function will return 1 if the
+** character c is an alphabetic character and 0 if otherwise.
+*/
+
 int		ft_isalpha(int c)
 {
 	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))

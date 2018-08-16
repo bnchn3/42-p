@@ -12,6 +12,11 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function isprint(). The function will return 1 if the
+** character c is a printable ASCII character and 0 if otherwise.
+*/
+
 int		ft_isprint(int c)
 {
 	if (c >= ' ' && c <= '~')

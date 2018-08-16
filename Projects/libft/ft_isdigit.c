@@ -12,6 +12,11 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function isdigit(). The function will return 1 if the
+** character c is a numerical digit and 0 if otherwise.
+*/
+
 int		ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')

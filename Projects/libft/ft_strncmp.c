@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strncmp(). The function will return an integer
+** value greater than, equal to, or less than zero based on the difference
+** between the first n characters of the strings s1 and s2.
+*/
+
 int		ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;

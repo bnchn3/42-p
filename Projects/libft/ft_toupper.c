@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function toupper(). If the character c is a lowercase
+** letter, the function will return the letter in uppercase. Otherwise, c is
+** returned unchanged.
+*/
+
 int		ft_toupper(int c)
 {
 	if (c >= 'a' && c <= 'z')

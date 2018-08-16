@@ -12,6 +12,13 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strstr(). The function will search the string
+** big for the substring little, returning a pointer to the first matching
+** substring. If little is not found, the function returns NULL. If little is
+** an empty string, the function returns a pointer to big.
+*/
+
 char	*ft_strstr(const char *big, const char *little)
 {
 	int		i;

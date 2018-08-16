@@ -12,6 +12,11 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function isalnum(). The function will return 1 if the
+** character c is alphanumeric and 0 if otherwise.
+*/
+
 int		ft_isalnum(int c)
 {
 	if (ft_isalpha(c) || ft_isdigit(c))

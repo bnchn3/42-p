@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function strrchr(). The function will scan the string
+** s for the character c and return a pointer to the last matching character in
+** the string. If c is not found, the function returns NULL.
+*/
+
 char	*ft_strrchr(const char *s, int c)
 {
 	int		i;

@@ -12,6 +12,12 @@
 
 #include "libft.h"
 
+/*
+** Identical to the libc function tolower(). If the character c is an uppercase
+** letter, the function will return the letter in lowercase. Otherwise, c is
+** returned unchanged.
+*/
+
 int		ft_tolower(int c)
 {
 	if (c >= 'A' && c <= 'Z')
