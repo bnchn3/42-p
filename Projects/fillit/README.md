@@ -23,6 +23,7 @@ The executable must take in the name of no more than one file as a parameter
 ./fillit filename
 ```
 This file must contain a list of Tetriminos to assemble. Each Tetrimino must fit within a 4x4 char square and each square must be separated by a newline. Tetrimino blocks must be represented by '#' characters and empty spaces must be represented by '.' characters. Valid Tetriminos are any of the classic 4-block [Tetris pieces](https://tetris.wiki/Tetromino). The program will only accept files with up to 26 Tetriminos.
+
 Example input:
 ```
 ...#
@@ -36,6 +37,7 @@ Example input:
 ..##
 ```
 The output will be the smallest possible square using the inputted pieces. Each piece will be represented by a capital letter, starting with 'A' and continuing based on the order of the Tetriminos in the input file. In the case of multiple final solutions with the same area, the solution with the pieces in the most upper left position will be given.
+
 Example output:
 ```
 ABB.
