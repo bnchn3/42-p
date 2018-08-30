@@ -24,7 +24,8 @@ To execute the program use:
 ```
 File examples are given in the [test_maps folder](test_maps).
 ## Additional Commands
-Within the program, these additional commands have been added.
+Within the program, these additional commands have been added:
+
 | Command | Description |
 | --- | --- |
 | Arrow Keys | Move the map in X-Y space |
