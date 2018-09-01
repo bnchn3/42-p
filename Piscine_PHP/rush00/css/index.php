@@ -21,7 +21,7 @@ $arr = unserialize(file_get_contents("admin/private/database"));
 				<ul class="adjust-right">
 					<li><a href="index.html">Home</a></li>
 					<li><a href="cart/cart.php">Cart</a></li>
-					<li><a href="./user/html/newlogin.html">Login</a></li>
+					<li><a href="./user/php/okta_log.php">Login</a></li>
 				</ul>
 			</nav>
 		</header>
