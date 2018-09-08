@@ -6,6 +6,7 @@ if(array_key_exists('state', $_REQUEST) && $_REQUEST['state'] !== $state) {
 
 if(array_key_exists('code', $_REQUEST)) {
     $exchange = exchangeCode($_REQUEST['code']);
+		$jwks = get_jwks();
 }
 
 function exchangeCode($code) {
@@ -37,6 +38,22 @@ function exchangeCode($code) {
     curl_close($ch);
     return json_decode($output);
 }
+
+function get_jwks() {
+	$url = 'https://dev-593612.oktapreview.com/oauth2/default/.well-known/openid-configuration';
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	$output = curl_exec($ch);
+	$arr = json_decode($output);
+	$url = $arr->jwks_uri;
+	curl_setopt($ch, CURLOPT_URL, $url);
+	$output = curl_exec($ch);
+	return json_decode($output);
+}
+
+$jwks = get_jwks();
 
 //$jwt = $exchange->access_token;
 ?>
